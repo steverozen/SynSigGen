@@ -1,5 +1,3 @@
-# ReadWriteCatalogs.R
-
 #' Read a COMPOSITE catalog
 #'
 #' A COMPOSITE catalog is an rbind

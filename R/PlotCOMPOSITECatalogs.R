@@ -1,5 +1,3 @@
-# PlotCatalogs.R
-
 #' Plot the SBS96 part of a SignatureAnalyzer COMPOSITE signature or catalog
 #'
 #' @param catalog Catalog or signature matrix
