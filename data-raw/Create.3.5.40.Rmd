@@ -40,7 +40,7 @@ In the end we take the cross product of the two choices, that is,
 ## Required libraries
 
 ```{r library}
-library(SynSig)
+library(SynSigGen)
 ```
 
 ## Version 1, Kidney-RCC and ovarian adenocarcinoma to explore SBS3, SBS5, and SBS40

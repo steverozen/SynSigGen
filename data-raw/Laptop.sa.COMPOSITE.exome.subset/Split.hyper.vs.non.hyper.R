@@ -2,7 +2,7 @@
 # spectra catalogs for hyper-mutated and non-hyper-mutated spectra based on Jaegil's
 # previous classification.
 
-library(SynSig)
+library(SynSigGen)
 
 setwd("C:/Users/steve/Documents/SynSig/data-raw/sa.COMPOSITE.exome.subset/")
 

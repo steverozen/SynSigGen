@@ -2,7 +2,7 @@
 # Must setwd the data-raw directory.
 
 library(ICAMS)
-library(SynSig) # FixSASigNames
+library(SynSigGen) # FixSASigNames
 library(usethis)
 
 ### Read SignatureAnalyzer exposures.

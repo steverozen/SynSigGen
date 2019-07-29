@@ -3,7 +3,7 @@
 # Jaegil calls this "PRIMARY". Run this from SynSig/data-raw/
 
 library(ICAMS)
-library(SynSig)
+library(SynSigGen)
 
 laptop.test <- FALSE
 

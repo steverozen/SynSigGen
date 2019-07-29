@@ -24,7 +24,7 @@ APOBEC (SBS2) and UV (SBS7a,b).
 ## Required libraries
 
 ```{r library}
-library(SynSig)
+library(SynSigGen)
 ```
 
 ## Data set 1, bladder and skin melanoma to explore SBS2 and SBS7a,b

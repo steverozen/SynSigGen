@@ -1,4 +1,4 @@
 library(testthat)
-library(SynSig)
+library(SynSigGen)
 
-test_check("SynSig")
+test_check("SynSigGen")

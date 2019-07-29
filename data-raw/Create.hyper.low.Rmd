@@ -36,7 +36,7 @@ catlog containing  both the non-hyper and hyper tumors.
 
 ```{r readSPprofiles}
 library(ICAMS)
-library(SynSig)
+library(SynSigGen)
 ```
 
 ## Get actual exposures for high-mutational burden signatures, SBS26 and SBS44

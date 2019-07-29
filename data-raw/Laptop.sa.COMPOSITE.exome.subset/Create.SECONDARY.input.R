@@ -3,7 +3,7 @@
 # The folder sa.COMPOSITE.exome.subset/PRIMARY/ should
 # have subdirectories sa.run.1, ..., sa.run.<n>
 
-library(SynSig)
+library(SynSigGen)
 
 SignatureAnalyzerPrepHyper1Secondary(
   non.hyper.results = "PRIMARY",

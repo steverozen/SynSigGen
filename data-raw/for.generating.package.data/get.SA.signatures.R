@@ -7,7 +7,7 @@
 #####################################################################
 
 library(ICAMS)
-library(SynSig) # ReadSASigCOMPOSITE, ReadSASig96
+library(SynSigGen) # ReadSASigCOMPOSITE, ReadSASig96
 library(usethis)
 
 library(data.table)

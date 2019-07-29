@@ -1,7 +1,7 @@
 # Create in-memory R data from SigProfiler signature 96 changel signature profile.
 
 library(ICAMS)
-library(SynSig) # ReadSASigCOMPOSITE, ReadSASig96
+library(SynSigGen) # ReadSASigCOMPOSITE, ReadSASig96
 library(usethis)
 
 # Source: https://www.synapse.org/#!Synapse:syn11738319
