@@ -65,6 +65,6 @@
 #' \code{\link{MatchSigsAndRelabel}}
 #'
 #' @docType package
-#' @name SynSig
+#' @name SynSigGen
 
 NULL
