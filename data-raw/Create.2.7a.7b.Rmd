@@ -92,7 +92,7 @@ CreateAndWriteCatalog(
   sa.96.sigs,
   sa.bladder.skin.syn.exp,
   "sa.sa.96",
-  WriteCatSNS96)
+  WriteCatalog)
 
 ```
 
@@ -124,7 +124,7 @@ CreateAndWriteCatalog(
   sp.sigs,
   sp.bladder.skin.syn.exp,
   "sp.sp",
-  WriteCatSNS96)
+  WriteCatalog)
 
 ```
 
@@ -224,7 +224,7 @@ CreateAndWriteCatalog(
   sa.96.sigs, 
   sa.abst.info$syn.exp,
   "sa.sa.96",
-  WriteCatSNS96)
+  WriteCatalog)
 
 ```
 
@@ -250,7 +250,7 @@ CreateAndWriteCatalog(
   sp.sigs, 
   sp.abst.info$syn.exp,
   "sp.sp",
-  WriteCatSNS96)
+  WriteCatalog)
 
 ```
 

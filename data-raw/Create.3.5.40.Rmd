@@ -105,7 +105,7 @@ CreateAndWriteCatalog(
   sa.96.sigs,
   sa.rcc.ova.syn.exp,
   "sa.sa.96",
-  ICAMS::WriteCatSNS96)
+  ICAMS::WriteCatalog)
 
 ```
 
@@ -140,7 +140,7 @@ CreateAndWriteCatalog(
   sp.sigs,
   sp.rcc.ova.syn.exp,
   "sp.sp",
-  ICAMS::WriteCatSNS96)
+  ICAMS::WriteCatalog)
 
 ```
 
@@ -219,7 +219,7 @@ CreateAndWriteCatalog(
   sa.96.sigs, 
   sa.abst.info$syn.exp,
   "sa.sa.96",
-  ICAMS::WriteCatSNS96)
+  ICAMS::WriteCatalog)
 
 ```
 
@@ -242,7 +242,7 @@ CreateAndWriteCatalog(
   sp.sigs, 
   sp.abst.info$syn.exp,
   "sp.sp",
-  ICAMS::WriteCatSNS96)
+  ICAMS::WriteCatalog)
 
 ```
 

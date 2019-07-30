@@ -251,7 +251,7 @@ CreateOneSetOfRandomCatalogs <-
       syn.96.sigs,
       exp,
       x96.dir.name,
-      WriteCatSNS96,
+      WriteCatalog,
       overwrite = overwrite)
 }
 

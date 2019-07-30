@@ -56,7 +56,7 @@ CreateAndWriteCatalog(
   sa.96.sigs,
   panc.info$sa.syn.exp,
   "sa.sa.96",
-  ICAMS::WriteCatSNS96)
+  ICAMS::WriteCatalog)
 
 ```
 
@@ -103,7 +103,7 @@ CreateAndWriteCatalog(
   sp.sigs,
   panc.info$sp.syn.exp,
   "sp.sp",
-  ICAMS::WriteCatSNS96)
+  ICAMS::WriteCatalog)
 
 AddAllScripts(maxK = 30)
 

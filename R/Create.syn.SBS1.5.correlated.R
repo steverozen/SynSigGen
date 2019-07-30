@@ -520,7 +520,7 @@ plot.correlation.scatterplot.for.exposures <-
 #' the main.stdev.log and correlated.stdev.log.
 #' Otherwise, the exposure generation will keep generating and discarding datasets!
 #'
-#' @importFrom ICAMS WriteCatSNS96
+#' @importFrom ICAMS WriteCatalog
 #'
 #' @export
 #'
@@ -604,7 +604,7 @@ CreateSBS1SBS5CorrelatedSyntheticData <-
     cat("Spectra generated.")
 
     #### Output Duke-NUS formatted mutational spectra and exposure.counts
-    ICAMS::WriteCatSNS96(dataset$spectra$ground.truth.catalog,
+    ICAMS::WriteCatalog(dataset$spectra$ground.truth.catalog,
                          paste0(dir.name,"/ground.truth.syn.catalog.csv"))
     WriteExposure(dataset$exposure,
                   paste0(dir.name,"/ground.truth.syn.exposures.csv"))

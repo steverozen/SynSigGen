@@ -251,7 +251,7 @@ CreateAndWriteCatalog(
   sa.96.sigs,
   no.hyper.syn.info$sa.syn.exp,
   "sa.sa.96",
-  WriteCatSNS96,
+  WriteCatalog,
   overwrite = overwrite)
 ```
 
@@ -275,7 +275,7 @@ CreateAndWriteCatalog(
   sp.sigs,
   no.hyper.syn.info$sp.syn.exp,
   "sp.sp",
-  WriteCatSNS96,
+  WriteCatalog,
   overwrite = overwrite)
 ```
 
@@ -301,7 +301,7 @@ CreateAndWriteCatalog(
   sa.96.sigs,
   sa.hyper.syn.exp,
   "sa.sa.96",
-  WriteCatSNS96,
+  WriteCatalog,
   overwrite = overwrite)
 ```
 
@@ -324,7 +324,7 @@ CreateAndWriteCatalog(
   sp.sigs,
   sp.hyper.syn.exp,
   "sp.sp",
-  WriteCatSNS96,
+  WriteCatalog,
   overwrite = overwrite)
 ```
 
@@ -347,7 +347,7 @@ CreateAndWriteCatalog(
   sa.96.sigs,
   sa.merge.syn.exp,
   "sa.sa.96",
-  WriteCatSNS96,
+  WriteCatalog,
   overwrite = overwrite)
 ```
 
@@ -361,7 +361,7 @@ CreateAndWriteCatalog(
   sp.sigs,
   sp.merge.syn.exp,
   "sp.sp",
-  WriteCatSNS96,
+  WriteCatalog,
   overwrite = overwrite)
 ```
 
