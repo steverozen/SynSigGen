@@ -245,18 +245,16 @@ CreateOneSetOfRandomCatalogs <-
     exp <- exp[ , 1:num.syn.tumors]
     colnames(exp) <- paste0(sample.name.prefix, 1:num.syn.tumors)
 
-    CreateAndWriteCatalog(
-      syn.COMPOSITE.sigs,
-      exp,
-      composite.dir.name,
-      WriteCatCOMPOSITE,
+    NewCreateAndWriteCatalog(
+      sigs = syn.COMPOSITE.sigs,
+      exp  = exp,
+      dir  = composite.dir.name,
       overwrite = overwrite)
 
-    CreateAndWriteCatalog(
-      syn.96.sigs,
-      exp,
-      x96.dir.name,
-      WriteCatalog,
+    NewCreateAndWriteCatalog(
+      sig = syn.96.sigs,
+      exp = exp,
+      dir = x96.dir.name,
       overwrite = overwrite)
 }
 
@@ -273,14 +271,19 @@ CreateOneSetOfRandomCatalogs <-
 
 CreateRandomSAAndSPSynCatalogs <-
   function(top.level.dir, num.syn.tumors, overwrite = FALSE) {
-  SetNewOutDir(top.level.dir, overwrite)
 
   COMPOSITE.features <- c(ICAMS::catalog.row.order[["SBS1536"]],
                           ICAMS::catalog.row.order[["DBS78"]],
                           ICAMS::catalog.row.order[["ID"]])
   stopifnot(length(COMPOSITE.features) == 1697)
 
-  # The following are for choosing the mean number of mutations due to each
+  if (dir.exists(top.level.dir)) {
+    if (!overwrite) stop(top.level.dir, " exists and overwrite is FALSE")
+  } else {
+    MustCreateDir(top.level.dir)
+  }
+
+# The following are for choosing the mean number of mutations due to each
   # synthetic signature.
   sa.mut.mean <- 2.349  # mean(log10(sa.all.real.exposures[sa.all.real.exposures >= 1]))
   sa.mut.sd   <- 0.6641 # sd(log10(sa.all.real.exposures[sa.all.real.exposures >= 1]))
@@ -309,8 +312,8 @@ CreateRandomSAAndSPSynCatalogs <-
     num.sigs.sd        = sa.num.sigs.sd,
     sig.name.prefix    = "SARandSig",
     sample.name.prefix = "SARandSample",
-    composite.dir.name = "sa.sa.COMPOSITE",
-    x96.dir.name       = "sa.sa.96",
+    composite.dir.name = file.path(top.level.dir, "sa.sa.COMPOSITE"), # HERE
+    x96.dir.name       = file.path(top.level.dir, "sa.sa.96"),        # HERE
     COMPOSITE.features = COMPOSITE.features,
     overwrite = overwrite)
 
@@ -323,23 +326,28 @@ CreateRandomSAAndSPSynCatalogs <-
     num.sigs.sd        = sp.num.sigs.sd,
     sig.name.prefix    = "SPRandSig",
     sample.name.prefix = "SPRandSample",
-    composite.dir.name = "sp.sa.COMPOSITE",
-    x96.dir.name       = "sp.sp",
+    composite.dir.name = file.path(top.level.dir, "sp.sa.COMPOSITE"), # HERE
+    x96.dir.name       = file.path(top.level.dir, "sp.sp"),           # HERE
     COMPOSITE.features = COMPOSITE.features,
     overwrite = overwrite)
 
-  AddAllScripts(maxK = 50)
+  # AddAllScripts(maxK = 50)
   }
 
 Create.syn.30.random <- function(regress = FALSE) {
+  suppressWarnings(RNGkind(sample.kind="Rounding"))
+  # For compatibility with R < 3.6.0
   set.seed(1443196)
+
   CreateRandomSAAndSPSynCatalogs("tmp.syn.30.random.sigs",
                            1000, overwrite = TRUE)
   if (regress) {
-    if (Diff4SynDataSets("syn.30.random.sigs", unlink = TRUE) != 0) {
-      cat("\nThere was a difference, investigate\n")
+    diff.result <- Diff4SynDataSets("syn.30.random.sigs", unlink = TRUE)
+    if (diff.result[1] != "ok") {
+      message("\nThere was a difference, investigate\n",
+              paste0(diff.result, "\n"))
     } else {
-      cat("\nok\n")
+      message("\nok\n")
     }
   }
 }

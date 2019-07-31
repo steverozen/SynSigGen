@@ -630,6 +630,7 @@ CreateAndWriteCatalog <-
     } else {
       dir.create(OutDir(dir))
     }
+
     if (extra.file.suffix == "") {
       suffix <- ".csv"
     } else {
@@ -649,6 +650,67 @@ CreateAndWriteCatalog <-
                  OutDir(paste0(dir, "/ground.truth.syn.catalog", suffix)))
     WriteExposure(info$ground.truth.exposures,
                   OutDir(paste0(dir, "/ground.truth.syn.exposures", suffix)))
+    invisible(info$ground.truth.catalog)
+  }
+
+#' @keywords internal
+MustCreateDir <- function(dir) {
+  if (!dir.create(dir, recursive = TRUE)) {
+    stop("Unable to create dir ", dir )
+  }
+}
+
+#' Create and write a mutational spectra catalog
+#'
+#' @export
+#'
+#' @param sigs Signatures to use.
+#'
+#' @param exp (Synthetic) exposures.
+#'
+#' @param dir Directory in which to put the signatures;
+#' NOTE: this will be a subdirectory based on \code{\link{OutDir}}.
+#'
+#' @param extra.file.suffix Extra string to put before ".csv".
+#'
+#' @param overwrite If TRUE, overwrite existing directory; useful for
+#' debugging / testing.
+#'
+#' @return Invisibly, the generated catalog.
+#'
+#' @details Create a file with the catalog \code{syn.data.csv}
+#'  and writes \code{sigs} to \code{input.sigs.csv}.
+#'
+NewCreateAndWriteCatalog <-
+  function(sigs, exp, dir, extra.file.suffix = "",
+           overwrite = FALSE) {
+    info <- CreateSynCatalogs(sigs, exp)
+
+    if (dir.exists(dir)) {
+    if (!overwrite) stop("\nDirectory ", dir, " exists\n")
+    } else {
+      MustCreateDir(dir)
+    }
+
+    if (extra.file.suffix == "") {
+      suffix <- ".csv"
+    } else {
+      suffix = paste0(".", extra.file.suffix, ".csv")
+    }
+    ICAMS::WriteCatalog(info$ground.truth.signatures,
+                        paste0(dir, "/ground.truth.syn.sigs", suffix))
+
+    zero.mutation <- which(colSums(info$ground.truth.catalog) == 0)
+
+    if (length(zero.mutation) > 0) {
+      warning("Tumors with no mutation:\n\n",
+              colnames(info$ground.truth.catalog)[zero.mutation],
+              "in", dir)
+    }
+    ICAMS::WriteCatalog(info$ground.truth.catalog,
+                        paste0(dir, "/ground.truth.syn.catalog", suffix))
+    WriteExposure(info$ground.truth.exposures,
+                  paste0(dir, "/ground.truth.syn.exposures", suffix))
     invisible(info$ground.truth.catalog)
   }
 
