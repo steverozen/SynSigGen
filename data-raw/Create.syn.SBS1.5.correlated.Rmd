@@ -1,0 +1,54 @@
+---
+title: Create synthetic spectra data with only two signatures,  SBS1 and SBS5. Their
+  exposures are highly correlated.
+author: "Steve Rozen"
+date: "2019/7/30"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Required libraries and set output path
+
+```{r librariesEtc}
+library(SynSigGen)
+SetNewOutDir("tmp.syn.SBS1.5.correlated")
+```
+
+## Generate synthetic exposures
+
+```{r SetGlobalVariables}
+set.seed(1)
+num.syn.tumors <- 500
+```
+
+```{r Load Experimental Parameters}
+set.seed(1)
+num.syn.tumors <- 500
+```
+
+
+
+
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

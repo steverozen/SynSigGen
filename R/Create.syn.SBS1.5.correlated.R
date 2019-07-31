@@ -512,7 +512,8 @@ plot.correlation.scatterplot.for.exposures <-
 #'
 #' @param max.main.to.correlated.ratio.linear (Default: Inf)
 #'
-#' @section Warning Exposure generation function will repeat generating exposure counts
+#' \strong{Warning} \cr
+#' Exposure generation function will repeat generating exposure counts
 #' using mean and stdev parameters, until the dataset has a Pearson's R^2
 #' which falls between two boundaries of Pearson's R^2.
 #' Below are a group of parameters which have been tested successfully.
@@ -557,8 +558,6 @@ CreateSBS1SBS5CorrelatedSyntheticData <-
     seedInUse <- .Random.seed ## Save the seed used so that we can restore the pseudorandom series
     RNGInUse <- RNGkind() ## Save the random number generator (RNG) used
 
-    #### Load SigProfiler signature profiles
-    data(sp.sigs,package = "SynSig")
 
     ## make a directory to store the dataset,
     ## and set the working directory to it.

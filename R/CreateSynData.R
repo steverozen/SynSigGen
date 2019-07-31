@@ -310,10 +310,19 @@ GenerateSynExposureOneSample <-
 #'
 #' @return A list of three elements that comprise the
 #' synthetic data: \enumerate{
-#'  \item \code{ground.truth.catalog}
-#'  \item \code{ground.truth.signatures}
-#'  \item \code{ground.truth.exposures}
+#'  \item \code{ground.truth.catalog}: Spectra catalog for
+#'  the software input.
+#'  \item \code{ground.truth.signatures}: Signatures active
+#'  in \code{ground.truth.catalog}.
+#'  \item \code{ground.truth.exposures}: Exposures of \code{ground.truth.signatures}
+#'  in \code{ground.truth.catalog}.
 #' }
+#'
+#'  ## Return a list with:
+#' $ground.truth.catalog:
+#' $ground.truth.signatures:
+#' $ground.truth.exposures:
+#'
 #'
 #' @export
 
@@ -358,6 +367,23 @@ CreateSynCatalogs <-
     colnames(i.cat) <- newcolnames
     colnames(exposures) <- newcolnames
   }
+
+  ## Convert ground.truth.catalog and ground.truth.signatures
+  ## into ICAMS acceptable catalogs before outputting the list
+  i.cat <- ICAMS::as.catalog(object = i.cat,
+                             ref.genome = "hg19",
+                             region = "genome",
+                             catalog.type = "counts")
+  signatures <- ICAMS::as.catalog(object = signatures,
+                                  ref.genome = "hg19",
+                                  region = "genome",
+                                  catalog.type = "counts.signature")
+
+  ## Return a list with:
+  ## $ground.truth.catalog: Spectra catalog for the software input
+  ## $ground.truth.signatures: Signatures active in $ground.truth.catalog
+  ## $ground.truth.exposures: Exposures of $ground.truth.signatures in
+  ## $ground.truth.catalog.
   return(list(ground.truth.catalog=i.cat,
               ground.truth.signatures=signatures,
               ground.truth.exposures=exposures))

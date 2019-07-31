@@ -4,7 +4,7 @@
 #' Create one "random" artificial signature profile.
 #'
 #' @param row.names One of the \code{\link{ICAMS}} package variable such as
-#'  \code{catalog.row.order[["SNS96"]]}.
+#'  \code{catalog.row.order[["SBS96"]]}.
 #'
 #' @return A single column matrix with \code{rownames} \code{row.headers} and
 #'   \code{colnames} \code{"RandSig"}.
@@ -14,6 +14,8 @@
 #' @keywords internal
 
 CreateOneRandomMutSigProfile <- function(row.names) {
+  stopifnot(!is.null(row.names))
+
   retval <- matrix(10^runif(length(row.names)), ncol = 1)
   # retval <- matrix(10^rnorm(length(row.names)), ncol = 1) # Too spiky
   retval <- retval / sum(retval)
@@ -25,7 +27,7 @@ CreateOneRandomMutSigProfile <- function(row.names) {
 #' Create a matrix of "random" signature profiles.
 #'
 #' @param row.headers One of the \code{\link{ICAMS}} package variable such as
-#'  \code{catalog.row.order[["SNS96"]]}.
+#'  \code{catalog.row.order[["SBS96"]]}.
 #'
 #' @param num.signatures Number of signatures to create.
 #'
@@ -39,6 +41,9 @@ CreateOneRandomMutSigProfile <- function(row.names) {
 
 CreateRandomMutSigProfiles <-
   function(row.headers, num.signatures, sig.name.prefix) {
+
+  stopifnot(!is.null(row.headers))
+
   retval <- lapply(1:num.signatures,
                 function (x) CreateOneRandomMutSigProfile(row.headers))
   retval <- as.matrix(data.frame(retval))
@@ -194,7 +199,7 @@ CreateOneSetOfRandomCatalogs <-
 
     syn.96.sigs <-
       CreateRandomMutSigProfiles(
-        ICAMS::catalog.row.order[["SNS96"]], total.num.sigs, sig.name.prefix)
+        ICAMS::catalog.row.order[["SBS96"]], total.num.sigs, sig.name.prefix)
 
     syn.COMPOSITE.sigs <-
       CreateRandomMutSigProfiles(
@@ -270,8 +275,8 @@ CreateRandomSAAndSPSynCatalogs <-
   function(top.level.dir, num.syn.tumors, overwrite = FALSE) {
   SetNewOutDir(top.level.dir, overwrite)
 
-  COMPOSITE.features <- c(ICAMS::catalog.row.order[["SNS1536"]],
-                          ICAMS::catalog.row.order[["DNS78"]],
+  COMPOSITE.features <- c(ICAMS::catalog.row.order[["SBS1536"]],
+                          ICAMS::catalog.row.order[["DBS78"]],
                           ICAMS::catalog.row.order[["ID"]])
   stopifnot(length(COMPOSITE.features) == 1697)
 
