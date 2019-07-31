@@ -479,7 +479,10 @@ SetNewOutDir <- function(dir,
   } else {
     dir.create(dir, recursive = recursive)
   }
-  OutDir.dir <<- dir
+
+  ## To assign globally, don't use `<<-`.
+  ## Otherwise it won't pass the devtools::check().
+  assign("OutDir.dir", "dir", envir = .GlobalEnv)
 }
 
 #' Generate synthetic exposures from abstract parameters.

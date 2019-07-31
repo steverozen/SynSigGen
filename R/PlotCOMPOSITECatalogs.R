@@ -20,7 +20,8 @@ Plot96PartOfComposite <- function(catalog, name, type = "density") {
     cn[all.0] <- paste(cn[all.0], "WARNING all 0")
     colnames(cat96) <- cn
   }
-  PlotCatalogToPdf(catalog = cat96/sum(cat96), filename = name, type = type)
+  PlotCatalogToPdf(catalog = cat96/sum(cat96),
+                   file = name)
 }
 
 #' Plot the a SignatureAnalyzer COMPOSITE signature or catalog into separate pdfs

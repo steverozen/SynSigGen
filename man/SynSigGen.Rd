@@ -55,18 +55,6 @@ on parameters derived from signature profiles
 and attributions (exposures).
 }
 
-\section{Summarize results (of signature extraction)}{
-
-
-Relevant functions are: \enumerate{
-
-\item \code{\link{SummarizeSigProfiler}}
-\item \code{\link{SignatureAnalyzerSummarizeTopLevel}}
-\item \code{\link{SignatureAnalyzerSummarizeSBS1SBS5}}
-
-}
-}
-
 \section{Comparing two sets of mutational signatures}{
 
 
