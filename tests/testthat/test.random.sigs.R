@@ -5,6 +5,6 @@ test_that("CreateRandomMutSigProfiles", {
   set.seed(5)
   expect_equal(
     CreateRandomMutSigProfiles(
-      ICAMS::catalog.row.order[["SNS96"]], 5, "prefix"),
+      ICAMS::catalog.row.order[["SBS96"]], 5, "prefix"),
     rand.syn.96.sigs)
 })

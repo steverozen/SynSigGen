@@ -1,6 +1,7 @@
 context("Test create synthetic catalogs representing several tumor types")
 
 test_that("CreateMixedTumorTypeSyntheticData", {
+  skip("COMPOSITE catalog not yet handled. Still Illegal.")
   load("mixed.types.Rdata")
   set.seed(191906)
   num.syn.tumors <- 10
