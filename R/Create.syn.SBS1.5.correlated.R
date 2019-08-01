@@ -611,8 +611,8 @@ CreateSBS1SBS5CorrelatedSyntheticData <-
     #### Plot out the scatter plot for the two correlated exposures
     cat("Plotting correlation scatterplot for exposures of two signatures...\n")
     PlotCorrelationScatterplotForExposures(pdf.filename = paste(dir.name,"/scatterplot.pdf",sep = ""),
-                                           main.signature = "SBS5",
-                                           correlated.signature = "SBS1",
+                                           main.signature = main.signature,
+                                           correlated.signature = correlated.signature,
                                            slope.linear,
                                            exposure.counts = dataset$exposure,
                                            xlim = c(0,4),
@@ -631,6 +631,10 @@ CreateSBS1SBS5CorrelatedSyntheticData <-
                  paste0(dir.name,"/ground.truth.syn.catalog.csv"))
     WriteExposure(dataset$exposure,
                   paste0(dir.name,"/ground.truth.syn.exposures.csv"))
+
+    #### Copy ground-truth signatures
+    WriteCatalog(dataset$spectra$ground.truth.signatures,
+                 paste0(dir.name,"/ground.truth.syn.sigs.csv"))
 
     #### Output parameters used for better reproducibility
     write.table(t(data.frame(dataset$parameter)),
