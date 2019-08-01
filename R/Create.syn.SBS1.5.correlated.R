@@ -700,18 +700,15 @@ CreateSBS1SBS5CorrelatedSyntheticDataDemo <-
 
     datasetNames <- rownames(SBS1SBS5parameter)
 
-    ## Fetch the parameters required by CreateSBS1SBS5CorrelatedSyntheticData().
-    parametersToFetch <- names(as.list(formals(CreateSBS1SBS5CorrelatedSyntheticData)))
-
     for(datasetName in datasetNames){
       ## Before calling the generation function, assign the parameters
       ## as provided in SBS1SBS5parameter.
-      for(parameter in parametersToFetch){
+      for(parameter in colnames(SBS1SBS5parameter)){
         assign(x = parameter,
                value = SBS1SBS5parameter[datasetName,parameter])
       }
       dataset.name <- datasetName
-      dir.name <- paste0(top.level.dir,"/",datasetName)
+      dir.name <- paste0(top.level.dir,"/",datasetName,"/sp.sp")
 
       ## Call the spectra generation function.
       CreateSBS1SBS5CorrelatedSyntheticData(dir.name = dir.name,

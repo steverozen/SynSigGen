@@ -318,12 +318,6 @@ GenerateSynExposureOneSample <-
 #'  in \code{ground.truth.catalog}.
 #' }
 #'
-#'  ## Return a list with:
-#' $ground.truth.catalog:
-#' $ground.truth.signatures:
-#' $ground.truth.exposures:
-#'
-#'
 #' @export
 
 CreateSynCatalogs <-

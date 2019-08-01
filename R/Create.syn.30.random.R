@@ -283,7 +283,7 @@ CreateRandomSAAndSPSynCatalogs <-
     MustCreateDir(top.level.dir)
   }
 
-# The following are for choosing the mean number of mutations due to each
+  # The following are for choosing the mean number of mutations due to each
   # synthetic signature.
   sa.mut.mean <- 2.349  # mean(log10(sa.all.real.exposures[sa.all.real.exposures >= 1]))
   sa.mut.sd   <- 0.6641 # sd(log10(sa.all.real.exposures[sa.all.real.exposures >= 1]))
