@@ -698,37 +698,40 @@ CreateSBS1SBS5CorrelatedSyntheticData <-
 CreateSBS1SBS5CorrelatedSyntheticDataDemo <-
   function(top.level.dir = "./",overwrite = FALSE){
 
-    datasetNames <- rownames(SBS1SBS5parameter)
+    datasetNames <- rownames(SynSigGen::SBS1SBS5parameter)
 
     for(datasetName in datasetNames){
       ## Before calling the generation function, assign the parameters
-      ## as provided in SBS1SBS5parameter.
-      for(parameter in colnames(SBS1SBS5parameter)){
+      ## as provided in SynSigGen::SBS1SBS5parameter.
+      for(parameter in colnames(SynSigGen::SBS1SBS5parameter)){
         assign(x = parameter,
-               value = SBS1SBS5parameter[datasetName,parameter])
+               value = SynSigGen::SBS1SBS5parameter[datasetName,parameter])
       }
-      dataset.name <- datasetName
+      # dataset.name <- datasetName
       dir.name <- paste0(top.level.dir,"/",datasetName,"/sp.sp")
 
       ## Call the spectra generation function.
-      CreateSBS1SBS5CorrelatedSyntheticData(dir.name = dir.name,
-                                            dataset.name = dataset.name,
-                                            overwrite = overwrite,
-                                            seed = 1,
-                                            main.signature = main.signature,
-                                            correlated.signature = correlated.signature,
-                                            name.prefix = "TwoCorreSigsGen",
-                                            sample.number = sample.number,
-                                            main.mean.log = main.mean.log,
-                                            main.stdev.log = main.stdev.log,
-                                            correlated.stdev.log = correlated.stdev.log,
-                                            slope.linear = slope.linear,
-                                            main.signature.lower.thres = main.signature.lower.thres,
-                                            correlated.signature.lower.thres = correlated.signature.lower.thres,
-                                            pearson.r.2.lower.thres = pearson.r.2.lower.thres,
-                                            pearson.r.2.higher.thres = pearson.r.2.higher.thres,
-                                            min.main.to.correlated.ratio.linear = 1/3,
-                                            max.main.to.correlated.ratio.linear = Inf)
+      CreateSBS1SBS5CorrelatedSyntheticData(
+        SynSigGen::SBS1SBS5parameter[datasetName, ],
+        dir.name = dir.name,
+        dataset.name = datasetName,
+        overwrite = overwrite,
+        seed = 1
+        # main.signature = main.signature,
+        # correlated.signature = correlated.signature,
+        # name.prefix = "TwoCorreSigsGen",
+        # sample.number = sample.number,
+        # main.mean.log = main.mean.log,
+        # main.stdev.log = main.stdev.log,
+        # correlated.stdev.log = correlated.stdev.log,
+        # slope.linear = slope.linear,
+        # main.signature.lower.thres = main.signature.lower.thres,
+        # correlated.signature.lower.thres = correlated.signature.lower.thres,
+        # pearson.r.2.lower.thres = pearson.r.2.lower.thres,
+        # pearson.r.2.higher.thres = pearson.r.2.higher.thres,
+        # min.main.to.correlated.ratio.linear = 1/3,
+        # max.main.to.correlated.ratio.linear = Inf
+        )
     }
 
   }

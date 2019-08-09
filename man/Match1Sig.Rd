@@ -22,7 +22,6 @@ to query.sig.
 }
 \seealso{
 Other signature matching functions: \code{\link{MatchSigs1Direction}},
-  \code{\link{MatchSigs2Directions}},
-  \code{\link{MatchSigsAndRelabel}}
+  \code{\link{MatchSigs2Directions}}
 }
 \concept{signature matching functions}

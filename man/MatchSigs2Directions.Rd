@@ -38,7 +38,6 @@ and the average of the similarities.
 }
 \seealso{
 Other signature matching functions: \code{\link{Match1Sig}},
-  \code{\link{MatchSigs1Direction}},
-  \code{\link{MatchSigsAndRelabel}}
+  \code{\link{MatchSigs1Direction}}
 }
 \concept{signature matching functions}

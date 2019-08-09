@@ -85,6 +85,11 @@ NULL
 "sp.sigs"
 
 
+#' Parameters used to generate synthetic spectra with correlated SBS1 and SBS5 exposures.
+#'
+#' @format A data.frame with parameters for generating the synthetic data.
+"SBS1SBS5parameter"
+
 # Quiets concerns of R CMD check about no visible binding for global variable
 if(getRversion() >= "2.15.1") {
   utils::globalVariables(

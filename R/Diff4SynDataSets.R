@@ -10,7 +10,10 @@
 #' @export
 
 Diff4SynDataSets <- function(dirname, unlink) {
-  regressdirname <- paste0("long.test.regression.data/", dirname)
+  regressdirname <- paste0("data-raw/long.test.regression.data/", dirname)
+  regressdirname <-
+    system.file(regressdirname, package = "SynSigGen", mustWork = TRUE)
+
   if (!file.exists(regressdirname)) stop(regressdirname, " does not exist")
   tmpdirname <- paste0("tmp.", dirname)
   if (!file.exists(tmpdirname)) stop(tmpdirname, " does not exist")

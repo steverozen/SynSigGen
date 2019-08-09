@@ -28,7 +28,6 @@ Find the closest match in \code{other.sigs} for each signature in \code{query.si
 }
 \seealso{
 Other signature matching functions: \code{\link{Match1Sig}},
-  \code{\link{MatchSigs2Directions}},
-  \code{\link{MatchSigsAndRelabel}}
+  \code{\link{MatchSigs2Directions}}
 }
 \concept{signature matching functions}

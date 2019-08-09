@@ -66,6 +66,5 @@ ground-truth signature profiles.
 \code{\link{Match1Sig}},
 \code{\link{MatchSigs1Direction}},
 \code{\link{MatchSigs2Directions}},
-\code{\link{MatchSigsAndRelabel}}
 }
 

@@ -114,6 +114,8 @@ CreateMixedTumorTypeSyntheticData <-
 #' @export
 
 Create.syn.many.types <- function(regress = FALSE) {
+  suppressWarnings(RNGkind(sample.kind="Rounding"))
+  # For compatibility with R < 3.6.0
   set.seed(191906)
   num.syn.tumors <- 300 # number of tumor of each type
   top.level.dir <- "tmp.syn.many.types"
@@ -132,10 +134,12 @@ Create.syn.many.types <- function(regress = FALSE) {
     )
 
   if (regress) {
-    if (Diff4SynDataSets("syn.many.types", unlink = TRUE) != 0) {
-      cat("\nThere was a difference, investigate\n")
+    diff.result <- Diff4SynDataSets("syn.many.types", unlink = TRUE)
+    if (diff.result[1] != "ok") {
+      message("\nThere was a difference, investigate\n",
+              paste0(diff.result, "\n"))
     } else {
-      cat("\nok\n")
+      message("\nok\n")
     }
   }
 

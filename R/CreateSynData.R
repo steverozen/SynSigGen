@@ -441,7 +441,7 @@ MergeExposures <- function(list.of.exposures) {
 #' @return \code{file.name} prefixed by \code{OutDir.dir}.
 #'
 #' @export
-#'
+# Paste of OutDir.dir / file.name (or just file.name)
 OutDir <- function(file.name) {
   if (is.null(OutDir.dir)) return(file.name)
   tmp <- OutDir.dir

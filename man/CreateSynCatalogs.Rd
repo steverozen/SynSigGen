@@ -29,11 +29,6 @@ synthetic data: \enumerate{
  \item \code{ground.truth.exposures}: Exposures of \code{ground.truth.signatures}
  in \code{ground.truth.catalog}.
 }
-
- ## Return a list with:
-$ground.truth.catalog:
-$ground.truth.signatures:
-$ground.truth.exposures:
 }
 \description{
 Generate synthetic spectra catalogs given
