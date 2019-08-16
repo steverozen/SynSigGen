@@ -159,3 +159,49 @@ for.ludmil.2019.08.16 <- function() {
     Create.syn.many.types(seed = seed)
   }
 }
+
+#' Create a specific synthetic data set of 2,700 tumors.
+#'
+#' @param regress If \code{TRUE}, then compare to data in \code{data-raw}
+#' and report any differences; if no differences, unlink the result
+#' directory.
+#'
+#' @export
+
+Create.syn.pancreas <- function(regress = FALSE, seed = NULL) {
+  if (is.null(seed)) {
+    suppressWarnings(RNGkind(sample.kind = "Rounding"))
+    # For compatibility with R < 3.6.0
+    set.seed(191907)
+    num.syn.tumors <- 1000
+    # set.seed(191906)
+    top.level.dir <- "tmp.syn.pancreas"
+
+  } else {
+    set.seed(seed)
+    top.level.dir <- paste0("../1000.pancreas.seed.", seed)
+  }
+  num.syn.tumors <-  1000 # number of tumor of each type
+
+  cancer.types <- "Panc-AdenoCA"
+
+  retval <-
+    CreateMixedTumorTypeSyntheticData(
+      top.level.dir = top.level.dir,
+      cancer.type.strings = cancer.types,
+      num.syn.tumors = num.syn.tumors,
+      overwrite = TRUE
+    )
+
+  if (regress) {
+    diff.result <- Diff4SynDataSets("syn.pancreas", unlink = TRUE)
+    if (diff.result[1] != "ok") {
+      message("\nThere was a difference, investigate\n",
+              paste0(diff.result, "\n"))
+    } else {
+      message("\nok\n")
+    }
+  }
+
+  invisible(retval)
+}

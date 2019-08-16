@@ -20,7 +20,6 @@ Diff4SynDataSets <- function(dirname, unlink) {
     }
   }
 
-  if (!file.exists(regressdirname)) stop(regressdirname, " does not exist")
   tmpdirname <- paste0("tmp.", dirname)
   if (!file.exists(tmpdirname)) stop(tmpdirname, " does not exist")
   cmd.result <-

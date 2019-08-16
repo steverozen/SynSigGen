@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 ## Required libraries and set output path
 
 ```{r librariesEtc}
-library(SynSigGen)
+# library(SynSigGen)
 SetNewOutDir("tmp.syn.pancreas")
 ```
 
@@ -37,7 +37,7 @@ panc.info <-
     sp.no.hyper.real.exposures,
     ca.type = "Panc-AdenoCA",
     num.syn.tumors,
-    file.prefix = "PANC")
+    file.prefix = "Panc-AdenoCA")
 WriteSynSigParams(panc.info$sa.parms, OutDir("sa.parms.csv"))
 WriteSynSigParams(panc.info$sp.parms, OutDir("sp.parms.csv"))
 ```
@@ -105,7 +105,7 @@ CreateAndWriteCatalog(
   "sp.sp",
   ICAMS::WriteCatalog)
 
-AddAllScripts(maxK = 30)
+# AddAllScripts(maxK = 30)
 
 ```
 
@@ -115,5 +115,5 @@ Set <tt>unlink = FALSE</tt> if you want to keep the results.
 Return values are `"ok"` on success.
 
 ```{r}
-Diff4SynDataSets("syn.pancreas", unlink = TRUE)
+Diff4SynDataSets("syn.pancreas", unlink = FALSE)
 ```
