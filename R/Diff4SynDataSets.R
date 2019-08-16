@@ -11,8 +11,14 @@
 
 Diff4SynDataSets <- function(dirname, unlink) {
   regressdirname <- paste0("data-raw/long.test.regression.data/", dirname)
-  regressdirname <-
-    system.file(regressdirname, package = "SynSigGen", mustWork = TRUE)
+  if (!file.exists(regressdirname)) {
+    regressdirname1 <- system.file(regressdirname, package = "SynSigGen")
+    if (!file.exists(regressdirname1)) {
+      stop("Cannot find ", regressdirname, " or ", regressdirname1)
+    } else {
+      regressdirname <- regressdirname1
+    }
+  }
 
   if (!file.exists(regressdirname)) stop(regressdirname, " does not exist")
   tmpdirname <- paste0("tmp.", dirname)
