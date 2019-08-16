@@ -5,7 +5,7 @@
 \title{Create scripts to run SignatureAnalyzer in all subdirectories
 of \code{OutDir()}.}
 \usage{
-AddAllScripts(maxK = 30)
+AddAllScripts(maxK = 30, top.level.dir = NULL)
 }
 \arguments{
 \item{maxK}{The \code{maxK} argument for SignatureAnalyzer.}

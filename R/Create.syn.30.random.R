@@ -246,15 +246,15 @@ CreateOneSetOfRandomCatalogs <-
     colnames(exp) <- paste0(sample.name.prefix, 1:num.syn.tumors)
 
     NewCreateAndWriteCatalog(
-      sigs = syn.COMPOSITE.sigs,
-      exp  = exp,
-      dir  = composite.dir.name,
+      sigs      = syn.COMPOSITE.sigs,
+      exp       = exp,
+      dir       = composite.dir.name,
       overwrite = overwrite)
 
     NewCreateAndWriteCatalog(
-      sig = syn.96.sigs,
-      exp = exp,
-      dir = x96.dir.name,
+      sigs      = syn.96.sigs,
+      exp       = exp,
+      dir       = x96.dir.name,
       overwrite = overwrite)
 }
 

@@ -443,6 +443,7 @@ MergeExposures <- function(list.of.exposures) {
 #' @export
 # Paste of OutDir.dir / file.name (or just file.name)
 OutDir <- function(file.name) {
+  warning("Use of function OutDir is deprecated")
   if (is.null(OutDir.dir)) return(file.name)
   tmp <- OutDir.dir
   n <- nchar(tmp)
@@ -466,6 +467,7 @@ OutDir <- function(file.name) {
 SetNewOutDir <- function(dir,
                          overwrite = FALSE,
                          recursive = TRUE) {
+  warning("Use of SetNewOutDir is deprecated")
   if (dir.exists(dir)) {
     if (overwrite) {
       warning("\nOverwriting ", dir)
@@ -474,9 +476,7 @@ SetNewOutDir <- function(dir,
     dir.create(dir, recursive = recursive)
   }
 
-  ## To assign globally, don't use `<<-`.
-  ## Otherwise it won't pass the devtools::check().
-  assign("OutDir.dir", "dir", envir = .GlobalEnv)
+  OutDir.dir <<- dir
 }
 
 #' Generate synthetic exposures from abstract parameters.
@@ -506,9 +506,12 @@ SetNewOutDir <- function(dir,
 #' @keywords internal
 
 GenerateSynAbstract <-
-  function(parms, num.syn.tumors, file.prefix, sample.id.prefix) {
+  function(parms, num.syn.tumors, file.prefix, sample.id.prefix, froot = NULL) {
     stopifnot(!is.null(parms))
-    froot <- OutDir(file.prefix)
+
+    if (is.null(froot)) {
+      froot <- OutDir(file.prefix)
+    }
 
     parm.file <- paste0(froot, ".parms.csv")
     cat("# Original paramaters\n", file = parm.file)
@@ -577,18 +580,28 @@ GenerateSynAbstract <-
 #' }
 #'
 #' @export
-GenerateSynFromReal <-
-  function(real.exp, num.syn.tumors, file.prefix, sample.id.prefix) {
+GenerateSynFromReal <- function(real.exp,
+                                num.syn.tumors,
+                                file.prefix,
+                                sample.id.prefix,
+                                top.level.dir = NULL) {
 
   parms <- GetSynSigParamsFromExposures(real.exp)
 
+  if (is.null(top.level.dir)) {
+    new.file.prefix <- OutDir(file.prefix)
+    warning("Calling GenerateSynFromReal witout top.level.dir is deprecated")
+  } else {
+    new.file.prefix <- file.path(top.level.dir, file.prefix)
+  }
+
   WriteExposure(real.exp,
-                paste0(OutDir(file.prefix), ".real.input.exposure.csv"))
+                paste0(new.file.prefix, ".real.input.exposure.csv"))
 
   return(
     GenerateSynAbstract(
       parms, num.syn.tumors, file.prefix, sample.id.prefix))
-  }
+}
 
 #' Create and write a mutational spectra catalog
 #'
@@ -681,7 +694,7 @@ NewCreateAndWriteCatalog <-
     info <- CreateSynCatalogs(sigs, exp)
 
     if (dir.exists(dir)) {
-    if (!overwrite) stop("\nDirectory ", dir, " exists\n")
+      if (!overwrite) stop("\nDirectory ", dir, " exists\n")
     } else {
       MustCreateDir(dir)
     }
@@ -763,11 +776,15 @@ AddScript <- function(maxK, slice,
 #'
 #' @export
 
-AddAllScripts <- function(maxK = 30) {
-  AddScript(maxK = maxK, 1, "sa.sa.96")
-  AddScript(maxK = maxK, 2, "sp.sp")
-  AddScript(maxK = maxK, 3, "sa.sa.COMPOSITE")
-  AddScript(maxK = maxK, 4, "sp.sa.COMPOSITE")
+AddAllScripts <- function(maxK = 30, top.level.dir = NULL) {
+  if (is.null(top.level.dir)) {
+    warning("Need to supply non.null top.level.dir to AddAllScripts; no scripts generated")
+    return(NULL)
+  }
+  AddScript(maxK = maxK, 1, file.path(top.level.dir, "sa.sa.96"))
+  AddScript(maxK = maxK, 2, file.path(top.level.dir, "sp.sp"))
+  AddScript(maxK = maxK, 3, file.path(top.level.dir, "sa.sa.COMPOSITE"))
+  AddScript(maxK = maxK, 4, file.path(top.level.dir, "sp.sa.COMPOSITE"))
 }
 
 

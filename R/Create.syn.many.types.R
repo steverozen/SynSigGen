@@ -35,7 +35,8 @@ CreateMixedTumorTypeSyntheticData <-
                    sp.all.real.exposures,
                    ca.type = ca.type.str,
                    num.syn.tumors,
-                   file.prefix = ca.type.str)
+                   file.prefix = ca.type.str,
+                   top.level.dir = top.level.dir)
                return(retval)
              })
 
@@ -52,8 +53,8 @@ CreateMixedTumorTypeSyntheticData <-
 
 
     # We will need the exposures later when evaluating the attributed signatures
-    WriteExposure(sa.exp, OutDir("sa.exposure.csv"))
-    WriteExposure(sp.exp, OutDir("sp.exposure.csv"))
+    WriteExposure(sa.exp, file.path(top.level.dir, "sa.exposure.csv"))
+    WriteExposure(sp.exp, file.path(top.level.dir, "sp.exposure.csv"))
 
     # Create catalogs of synthetic mutational spectra
     # based on SignatureAnalyzer attributions
@@ -113,12 +114,18 @@ CreateMixedTumorTypeSyntheticData <-
 #'
 #' @export
 
-Create.syn.many.types <- function(regress = FALSE) {
-  suppressWarnings(RNGkind(sample.kind="Rounding"))
-  # For compatibility with R < 3.6.0
-  set.seed(191906)
+Create.syn.many.types <- function(regress = FALSE, seed = NULL) {
+  if (is.null(seed)) {
+    suppressWarnings(RNGkind(sample.kind = "Rounding"))
+    # For compatibility with R < 3.6.0
+    set.seed(191906)
+    top.level.dir <- "tmp.syn.many.types"
+
+  } else {
+    set.seed(seed)
+    top.level.dir <- paste0("../2700.tumors.seed.", seed)
+  }
   num.syn.tumors <- 300 # number of tumor of each type
-  top.level.dir <- "tmp.syn.many.types"
 
   cancer.types <- c("Bladder-TCC",    "Eso-AdenoCA",
                     "Breast-AdenoCA", "Lung-SCC",
@@ -144,4 +151,11 @@ Create.syn.many.types <- function(regress = FALSE) {
   }
 
   invisible(retval)
+}
+
+for.ludmil.2019.08.16 <- function() {
+  seeds <- sample(10000, size = 9)
+  for (seed in seeds) {
+    Create.syn.many.types(seed = seed)
+  }
 }

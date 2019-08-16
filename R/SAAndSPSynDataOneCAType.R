@@ -56,7 +56,8 @@ SAAndSPSynDataOneCAType <-
            sp.real.exp,
            ca.type,
            num.syn.tumors,
-           file.prefix) {
+           file.prefix,
+           top.level.dir = NULL) {
     # TODO(Steve): fix this in the package data; neither
     # exposure data set is sorted lexicographically, and
     # the two data sets have columns in different orders.
@@ -73,14 +74,18 @@ SAAndSPSynDataOneCAType <-
 
     sa.info <-
       GenerateSynFromReal(
-        sa.real.exp, num.syn.tumors,
+        sa.real.exp,
+        num.syn.tumors,
         file.prefix = paste0("sa.", file.prefix),
-        sample.id.prefix = paste0("SA.Syn.", ca.type, "S"))
+        sample.id.prefix = paste0("SA.Syn.", ca.type, "S"),
+        top.level.dir = top.level.dir)
     sp.info <-
       GenerateSynFromReal(
-        sp.real.exp, num.syn.tumors,
+        sp.real.exp,
+        num.syn.tumors,
         file.prefix = paste0("sp.", file.prefix),
-        sample.id.prefix = paste0("SP.Syn.", ca.type, "S"))
+        sample.id.prefix = paste0("SP.Syn.", ca.type, "S"),
+        top.level.dir = top.level.dir)
     return(list(
       sa.parms  = sa.info$parms,
       sa.syn.exp = sa.info$syn.exp,
