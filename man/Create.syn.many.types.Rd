@@ -4,7 +4,7 @@
 \alias{Create.syn.many.types}
 \title{Create a specific synthetic data set of 2,700 tumors.}
 \usage{
-Create.syn.many.types(regress = FALSE)
+Create.syn.many.types(regress = FALSE, seed = NULL, unlink = FALSE)
 }
 \arguments{
 \item{regress}{If \code{TRUE}, then compare to data in \code{data-raw}

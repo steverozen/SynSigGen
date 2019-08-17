@@ -780,7 +780,11 @@ AddScript <- function(maxK, slice,
 #'
 #' @param maxK The \code{maxK} argument for SignatureAnalyzer.
 #'
-#' @export
+#' @param top.level.dir Add the scripts to sub-directories
+#'    \code{sa.sa.96}, \code{sp.sp}, etc. of this
+#'    directory.
+#'
+#' @keywords internal
 
 AddAllScripts <- function(maxK = 30, top.level.dir = NULL) {
   if (is.null(top.level.dir)) {

@@ -117,14 +117,13 @@ CreateMixedTumorTypeSyntheticData <- function(top.level.dir,
 
 #' Create a specific synthetic data set of 2,700 tumors.
 #'
-#' @param regress If \code{TRUE}, then compare to data in \code{data-raw}
-#' and report any differences; if no differences, unlink the result
-#' directory.
-#'
-#' @export
+#' @keywords internal
 
-Create.syn.many.types <- function(regress = FALSE, seed = NULL, unlink = FALSE) {
-  if (is.null(seed)) {
+Create.syn.many.types <-
+  function(regress = FALSE, seed = NULL, unlink = FALSE) {
+  stop("This function is no longer used")
+
+    if (is.null(seed)) {
     suppressWarnings(RNGkind(sample.kind = "Rounding"))
     # For compatibility with R < 3.6.0
     set.seed(191906)
@@ -169,14 +168,6 @@ for.ludmil.2019.08.16 <- function() {
   }
 }
 
-#' Create a specific synthetic data set of 1000 pancreatic adenocarcinomas.
-#'
-#' @param regress If \code{TRUE}, then compare to data in \code{data-raw}
-#' and report any differences; if no differences, unlink the result
-#' directory.
-#'
-#' @export
-
 
 #' Create a specific synthetic data set based on real exposures in one or more cancer types.
 #'
@@ -187,8 +178,8 @@ CreateFromReal <- function(seed,
                            num.syn.tumors,
                            cancer.types,
                            data.suite.name,
-                           sa.exp      = sa.all.real.exposures,
-                           sp.exp      = sp.all.real.exposures,
+                           sa.exp      = SynSigGen::sa.all.real.exposures,
+                           sp.exp      = SynSigGen::sp.all.real.exposures,
                            overwrite   = TRUE,
                            regress.dir = NULL,
                            unlink      = FALSE) {
@@ -232,8 +223,8 @@ PancAdenoCA1000 <- function(seed = 191907, regress = FALSE) {
     num.syn.tumors = 1000,
     cancer.types   = "Panc-AdenoCA",
     data.suite.name = "Panc-AdenoCA",
-    sa.exp      = sa.no.hyper.real.exposures,
-    sp.exp      = sp.no.hyper.real.exposures,
+    sa.exp      = SynSigGen::sa.no.hyper.real.exposures,
+    sp.exp      = SynSigGen::sp.no.hyper.real.exposures,
     regress.dir = regress.dir
   )
 }
@@ -248,8 +239,8 @@ RCCOvary1000 <- function(seed = 191905, regress = FALSE) {
     num.syn.tumors = 500,
     cancer.types   = c("Kidney-RCC", "Ovary-AdenoCA" ),
     data.suite.name = "3.5.40.RCC.and.ovary",
-    sa.exp      = sa.no.hyper.real.exposures,
-    sp.exp      = sp.no.hyper.real.exposures,
+    sa.exp      = SynSigGen::sa.no.hyper.real.exposures,
+    sp.exp      = SynSigGen::sp.no.hyper.real.exposures,
     regress.dir = regress.dir
   )
 }

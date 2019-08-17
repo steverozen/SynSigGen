@@ -34,7 +34,8 @@ and 500 synthetic skin melanomas (high in SBS7a,b,c,d).  The potential interfere
 SBS2 (mainly C > T) and SBS7a,b (mainly C > T).
 
 ```{r}
-SetNewOutDir("tmp.syn.2.7a.7b.bladder.and.melanoma")
+top.level.dir <- "tmp.syn.2.7a.7b.bladder.and.melanoma"
+SetNewOutDir(top.level.dir)
 ```
 
 ```{r}
@@ -47,7 +48,8 @@ bladder.info <-
     sp.no.hyper.real.exposures,
     ca.type = "Bladder-TCC",
     num.syn.tumors,
-    file.prefix = "BLADDER")
+    file.prefix = "Bladder-TCC",
+    top.level.dir = top.level.dir)
 ```
 
 ```{r}
@@ -57,7 +59,8 @@ skin.info <-
     sp.all.real.exposures,
     ca.type = "Skin-Melanoma",
     num.syn.tumors,
-    file.prefix = "SKIN")
+    file.prefix = "Skin-Melanoma",
+    top.level.dir = top.level.dir)
 ```
 
 Combine the bladder and skin melanoma synthetic exposures.
@@ -131,7 +134,7 @@ CreateAndWriteCatalog(
 ### Copy in the scripts
 
 ```{r}
-AddAllScripts()
+# AddAllScripts()
 ```
 
 ## Version 2: "abstract" synthetic data set from only SBS2, SBS7a, and SBS7b 
