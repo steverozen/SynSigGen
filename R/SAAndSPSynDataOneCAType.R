@@ -62,18 +62,27 @@ SAAndSPSynDataOneCAType <-
            num.syn.tumors,
            file.prefix,
            top.level.dir = NULL) {
-    # TODO(Steve): fix this in the package data; neither
-    # exposure data set is sorted lexicographically, and
-    # the two data sets have columns in different orders.
+
+
     sp.real.exp <- sp.real.exp[ , colnames(sa.real.exp)]
+
     stopifnot(colnames(sp.real.exp) == colnames(sa.real.exp))
-    if (!is.null(ca.type)) {
-      ca.type <- paste0(ca.type, "::")
-      samples.to.use <-
-        grep(ca.type, colnames(sa.real.exp), fixed = TRUE)
-      sa.real.exp <- sa.real.exp[ , samples.to.use]
-      sp.real.exp <- sp.real.exp[ , samples.to.use]
-    }
+
+
+    sa.real.exp <- GetExpForOneCancerType(ca.type, sa.real.exp)
+    sp.real.exp <- GetExpForOneCancerType(ca.type, sp.real.exp)
+    # ca.type <- paste0(ca.type, "::")
+    # samples.to.use <-
+    #  grep(ca.type, colnames(sa.real.exp), fixed = TRUE)
+    # sa.real.exp <- sa.real.exp[ , samples.to.use]
+    # sp.real.exp <- sp.real.exp[ , samples.to.use]
+
+
+    # stopifnot(sa.real.exp == sa2)
+    # stopifnot(sp.real.exp == sp2)
+
+    # Make sure the 2 exposure data sets have the same colummns
+    # in the same order.
     stopifnot(colnames(sa.real.exp) == colnames(sp.real.exp))
 
     sa.info <-
@@ -81,14 +90,14 @@ SAAndSPSynDataOneCAType <-
         sa.real.exp,
         num.syn.tumors,
         file.prefix = paste0("sa.", file.prefix),
-        sample.id.prefix = paste0("SA.Syn.", ca.type, "S"),
+        sample.id.prefix = paste0("SA.Syn.", ca.type, "::S"),
         top.level.dir = top.level.dir)
     sp.info <-
       GenerateSynFromReal(
         sp.real.exp,
         num.syn.tumors,
         file.prefix = paste0("sp.", file.prefix),
-        sample.id.prefix = paste0("SP.Syn.", ca.type, "S"),
+        sample.id.prefix = paste0("SP.Syn.", ca.type, "::S"),
         top.level.dir = top.level.dir)
     return(list(
       sa.parms  = sa.info$parms,
@@ -97,3 +106,8 @@ SAAndSPSynDataOneCAType <-
       sp.syn.exp = sp.info$syn.exp))
   }
 
+GetExpForOneCancerType <- function(ca.type, exp) {
+  ca.type <- paste0(ca.type, "::")
+  samples.to.use <- grep(ca.type, colnames(exp), fixed = TRUE)
+  return(exp[ , samples.to.use, drop = FALSE])
+}

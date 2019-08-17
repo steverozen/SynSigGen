@@ -245,6 +245,40 @@ RCCOvary1000 <- function(seed = 191905, regress = FALSE) {
   )
 }
 
+#####
+BladderSkin1000 <- function(seed = 191905, regress = FALSE) {
+  if (regress) {
+    regress.dir <- "data-raw/long.test.regression.data/syn.2.7a.7b.bladder.and.melanoma/"
+  } else regress.dir <- NULL
+
+  # Unusual code because we need non-hyper exposures from bladder and and all
+  # exposures from melanoma.
+  stop("need to fill in sa.exp1 with zeros for the hyper signatures")
+
+  sa.exp1 <- GetExpForOneCancerType("Bladder-TCC",
+                                    SynSigGen::sa.no.hyper.real.exposures)
+  sp.exp1 <- GetExpForOneCancerType("Bladder-TCC",
+                                    SynSigGen::sp.no.hyper.real.exposures)
+
+  sa.exp2 <- GetExpForOneCancerType("Skin-Melanoma",
+                                    SynSigGen::sa.all.real.exposures)
+  sp.exp2 <- GetExpForOneCancerType("Skin-Melanoma",
+                                    SynSigGen::sp.all.real.exposures)
+
+
+  CreateFromReal(
+    seed           = seed,
+    enclosing.dir = "..",
+    num.syn.tumors = 500,
+    cancer.types   = c("Bladder-TCC", "Skin-Melanoma" ),
+    data.suite.name = "2.7a.7b.bladder.and.melanoma",
+    sa.exp      = cbind(sa.exp1, sa.exp2),
+    sp.exp      = cbind(sp.exp1, sp.exp2),
+    regress.dir = regress.dir
+  )
+}
+
+
 
 ManyTypes2700 <- function(seed = 191906, regress = FALSE) {
   if (regress) {
