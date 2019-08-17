@@ -2,11 +2,10 @@
 % Please edit documentation in R/SAAndSPSynDataOneCAType.R
 \name{SAAndSPSynDataOneCAType}
 \alias{SAAndSPSynDataOneCAType}
-\title{Generate parallel synthetic exposures from SA and SP
-attributions and signatures}
+\title{Generate parallel synthetic exposures from real SA and SP exposures and signatures}
 \usage{
 SAAndSPSynDataOneCAType(sa.real.exp, sp.real.exp, ca.type, num.syn.tumors,
-  file.prefix)
+  file.prefix, top.level.dir = NULL)
 }
 \arguments{
 \item{sa.real.exp}{Exposure matrix from SignatureAnalyzer.}
@@ -18,47 +17,51 @@ which SigProfiler expects.}
 
 \item{num.syn.tumors}{Number of synthetic tumors to generate.}
 
-\item{file.prefix}{To explain later}
+\item{file.prefix}{To explain later.}
+
+\item{top.level.dir}{Specifies the location to generate files.}
 }
 \value{
-A list with the following elements
+A list with the following elements:
 
 \enumerate{
 
  \item \code{sa.parms} The parameters computed from \code{sa.real.exp}.
- This a matrix with a column for each signature
- and 3 rows:
+       This a matrix with a column for each signature
+       and 3 rows:
 
  \enumerate{
 
-   \item The proportion of tumors with
- a given signature (in sa.real.exp).
+   \item The proportion of tumors with given signature (in
+         \code{sa.real.exp}).
 
- \item The mean of the log10 of the number of mutations.
+   \item The mean of the log10 of the number of mutations for a
+         given siganture.
 
- \item The standard
- deviation of log10 of the number of mutations.
+   \item The standard deviation of log10 of the number of mutations
+         for a given signature.
+ }
 
- \item \code{sa.syn.exp} The synthetic exposures
-  computed from \code{sa.parms}.
+ \item \code{sa.syn.exp} The synthetic exposures computed from
+       \code{sa.parms}.
 
- \item \code{sp.parms} The parameters computed from \code{sp.real.exp}.
+ \item \code{sp.parms} The parameters computed from \code{sp.real.exp}, with
+        rows analogous to the rows in \code{sa.parms}.
 
  \item \code{sp.syn.exp} The synthetic exposures computed from
- \code{sp.parms}.
+       \code{sp.parms}.
 
- }
  }
 
  @details Creates a bunch of files in location
- governed by \code{\link{OutDir}}. The main rationale for packaging this
+ governed by \code{top.level.dir}. The main rationale for packaging this
  as one function is to ensure that some conventions regarding file
  naming are followed.
 
  This function does \strong{not} create the synthetic
- mutational spectra catalogs.
+ mutational spectra catalogs but \strong{does} generate the
+ synthetic exposures.
 }
 \description{
-Generate parallel synthetic exposures from SA and SP
-attributions and signatures
+Generate parallel synthetic exposures from real SA and SP exposures and signatures
 }

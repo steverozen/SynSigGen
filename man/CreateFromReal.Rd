@@ -5,8 +5,8 @@
 \title{Create a specific synthetic data set based on real exposures in one or more cancer types.}
 \usage{
 CreateFromReal(seed, enclosing.dir, num.syn.tumors, cancer.types,
-  data.suite.name, sa.exp = sa.all.real.exposures,
-  sp.exp = sp.all.real.exposures, overwrite = TRUE,
+  data.suite.name, sa.exp = SynSigGen::sa.all.real.exposures,
+  sp.exp = SynSigGen::sp.all.real.exposures, overwrite = TRUE,
   regress.dir = NULL, unlink = FALSE)
 }
 \description{

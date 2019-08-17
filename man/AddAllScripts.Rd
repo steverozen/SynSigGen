@@ -9,8 +9,13 @@ AddAllScripts(maxK = 30, top.level.dir = NULL)
 }
 \arguments{
 \item{maxK}{The \code{maxK} argument for SignatureAnalyzer.}
+
+\item{top.level.dir}{Add the scripts to sub-directories
+\code{sa.sa.96}, \code{sp.sp}, etc. of this
+directory.}
 }
 \description{
 Create scripts to run SignatureAnalyzer in all subdirectories
 of \code{OutDir()}.
 }
+\keyword{internal}
