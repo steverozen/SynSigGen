@@ -221,6 +221,7 @@ CreateFromReal <- function(seed,
   invisible(retval)
 }
 
+
 PancAdenoCA1000 <- function(seed = 191907, regress = FALSE) {
   if (regress) {
     regress.dir <- "data-raw/long.test.regression.data/syn.pancreas/"
@@ -235,25 +236,24 @@ PancAdenoCA1000 <- function(seed = 191907, regress = FALSE) {
     sp.exp      = sp.no.hyper.real.exposures,
     regress.dir = regress.dir
   )
-
 }
 
-RCCOvary1000 <- function(seed = 191907, regress = FALSE) {
+RCCOvary1000 <- function(seed = 191905, regress = FALSE) {
   if (regress) {
-    regress.dir <- "data-raw/long.test.regression.data/syn.pancreas/"
+    regress.dir <- "data-raw/long.test.regression.data/syn.3.5.40.rcc.and.ovary/"
   } else regress.dir <- NULL
   CreateFromReal(
     seed           = seed,
     enclosing.dir = "..",
-    num.syn.tumors = 1000,
-    cancer.types   = c("Kidney-RCC", "Ovary-AdenoCA", ),
+    num.syn.tumors = 500,
+    cancer.types   = c("Kidney-RCC", "Ovary-AdenoCA" ),
     data.suite.name = "3.5.40.RCC.and.ovary",
     sa.exp      = sa.no.hyper.real.exposures,
     sp.exp      = sp.no.hyper.real.exposures,
     regress.dir = regress.dir
   )
-
 }
+
 
 ManyTypes2700 <- function(seed = 191906, regress = FALSE) {
   if (regress) {
@@ -276,5 +276,26 @@ ManyTypes2700 <- function(seed = 191906, regress = FALSE) {
     regress.dir     = regress.dir
   )
 
+}
+
+for.ludmil.2019.08.17 <- function() {
+  seeds <- sample(10000, size = 9)
+  for (seed in seeds) {
+    ManyTypes2700(seed = seed)
+  }
+}
+
+panc.for.ludmil.2019.08.17 <- function() {
+  seeds <- sample(10000, size = 9)
+  for (seed in seeds) {
+    PancAdenoCA1000(seed = seed)
+  }
+}
+
+three.5.40.for.ludmil.2019.08.17 <- function() {
+  seeds <- sample(10000, size = 9)
+  for (seed in seeds) {
+    RCCOvary1000(seed = seed)
+  }
 }
 
