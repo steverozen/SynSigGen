@@ -46,7 +46,8 @@ library(SynSigGen)
 ## Version 1, Kidney-RCC and ovarian adenocarcinoma to explore SBS3, SBS5, and SBS40
 
 ```{r}
-SetNewOutDir("tmp.syn.3.5.40.rcc.and.ovary")
+top.level.dir<- "tmp.syn.3.5.40.rcc.and.ovary"
+SetNewOutDir(top.level.dir)
 ```
 
 ```{r}
@@ -59,7 +60,8 @@ rcc.info <-
     sp.no.hyper.real.exposures,
     ca.type = "Kidney-RCC",
     num.syn.tumors,
-    file.prefix = "RCC")
+    file.prefix = "Kidney-RCC",
+    top.level.dir = top.level.dir)
 ```
 
 ```{r}
@@ -69,7 +71,8 @@ ovary.info <-
     sp.no.hyper.real.exposures,
     ca.type = "Ovary-AdenoCA",
     num.syn.tumors,
-    file.prefix = "OVA")
+    file.prefix = "Ovary-AdenoCA",
+    top.level.dir = top.level.dir)
 ```
 
 Combine the RCC and ovarian adenocarcinoma synthetic exposures.
@@ -252,7 +255,7 @@ Set <tt>unlink = FALSE</tt> if you want to keep the results.
 Return values are `"ok"` on success.
 
 ```{r}
-Diff4SynDataSets("syn.3.5.40.rcc.and.ovary", unlink = TRUE)
+Diff4SynDataSets("syn.3.5.40.rcc.and.ovary", unlink = FALSE)
 
 Diff4SynDataSets("syn.3.5.40.abst", unlink = TRUE)
 ```
