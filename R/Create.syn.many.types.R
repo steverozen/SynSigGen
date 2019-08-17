@@ -18,12 +18,19 @@
 #'
 #' @export
 
-CreateMixedTumorTypeSyntheticData <-
-  function(top.level.dir, cancer.type.strings,
-           num.syn.tumors, overwrite = FALSE,
-           verbose = 0) {
+CreateMixedTumorTypeSyntheticData <- function(top.level.dir,
+                                              cancer.type.strings,
+                                              num.syn.tumors,
+                                              overwrite = FALSE,
+                                              sa.exp = sa.all.real.exposures,
+                                              sp.exp = sp.all.real.exposures,
+                                              verbose = 0) {
 
     SetNewOutDir(top.level.dir, overwrite)
+
+    odigits <- getOption("digits")
+    options(digits = 9)
+    on.exit(options(digits = odigits))
 
     info.list <-
       lapply(cancer.type.strings,
@@ -31,10 +38,10 @@ CreateMixedTumorTypeSyntheticData <-
                if (verbose) cat("\n\nProcessing", ca.type.str, "\n\n\n")
                retval <-
                  SAAndSPSynDataOneCAType(
-                   sa.all.real.exposures,
-                   sp.all.real.exposures,
+                   sa.real.exp = sa.exp,
+                   sp.real.exp = sp.exp,
                    ca.type = ca.type.str,
-                   num.syn.tumors,
+                   num.syn.tumors = num.syn.tumors,
                    file.prefix = ca.type.str,
                    top.level.dir = top.level.dir)
                return(retval)
@@ -45,11 +52,13 @@ CreateMixedTumorTypeSyntheticData <-
 
     sa.exposures <- lapply(info.list, function(x) x$sa.syn.exp)
     sa.exp <- MergeExposures(sa.exposures)
-    if (verbose) cat("Dimension sa.exp", dim(sa.exp), "\n")
+    sa.exp <- sa.exp[rowSums(sa.exp) > 0.5, ]
+    if (verbose) message("Dimension sa.exp", dim(sa.exp))
 
     sp.exposures <- lapply(info.list, function(x) x$sp.syn.exp)
     sp.exp <- MergeExposures(sp.exposures)
-    if (verbose) cat("Dimension sp.exp", dim(sp.exp), "\n")
+    sp.exp <- sp.exp[rowSums(sp.exp) > 0.5, ]
+    if (verbose) message("Dimension sp.exp", dim(sp.exp))
 
 
     # We will need the exposures later when evaluating the attributed signatures
@@ -114,7 +123,7 @@ CreateMixedTumorTypeSyntheticData <-
 #'
 #' @export
 
-Create.syn.many.types <- function(regress = FALSE, seed = NULL) {
+Create.syn.many.types <- function(regress = FALSE, seed = NULL, unlink = FALSE) {
   if (is.null(seed)) {
     suppressWarnings(RNGkind(sample.kind = "Rounding"))
     # For compatibility with R < 3.6.0
@@ -141,7 +150,7 @@ Create.syn.many.types <- function(regress = FALSE, seed = NULL) {
     )
 
   if (regress) {
-    diff.result <- Diff4SynDataSets("syn.many.types", unlink = TRUE)
+    diff.result <- Diff4SynDataSets("syn.many.types", unlink = unlink)
     if (diff.result[1] != "ok") {
       message("\nThere was a difference, investigate\n",
               paste0(diff.result, "\n"))
@@ -160,7 +169,7 @@ for.ludmil.2019.08.16 <- function() {
   }
 }
 
-#' Create a specific synthetic data set of 2,700 tumors.
+#' Create a specific synthetic data set of 1000 pancreatic adenocarcinomas.
 #'
 #' @param regress If \code{TRUE}, then compare to data in \code{data-raw}
 #' and report any differences; if no differences, unlink the result
@@ -168,33 +177,39 @@ for.ludmil.2019.08.16 <- function() {
 #'
 #' @export
 
-Create.syn.pancreas <- function(regress = FALSE, seed = NULL) {
-  if (is.null(seed)) {
-    suppressWarnings(RNGkind(sample.kind = "Rounding"))
-    # For compatibility with R < 3.6.0
-    set.seed(191907)
-    num.syn.tumors <- 1000
-    # set.seed(191906)
-    top.level.dir <- "tmp.syn.pancreas"
 
-  } else {
-    set.seed(seed)
-    top.level.dir <- paste0("../1000.pancreas.seed.", seed)
-  }
-  num.syn.tumors <-  1000 # number of tumor of each type
+#' Create a specific synthetic data set based on real exposures in one or more cancer types.
+#'
+#' @keywords internal
 
-  cancer.types <- "Panc-AdenoCA"
+CreateFromReal <- function(seed,
+                           enclosing.dir,
+                           num.syn.tumors,
+                           cancer.types,
+                           data.suite.name,
+                           sa.exp      = sa.all.real.exposures,
+                           sp.exp      = sp.all.real.exposures,
+                           overwrite   = TRUE,
+                           regress.dir = NULL,
+                           unlink      = FALSE) {
+  set.seed(seed)
+
+  top.level.dir <-
+    file.path(enclosing.dir, paste0(data.suite.name, ".", seed))
 
   retval <-
     CreateMixedTumorTypeSyntheticData(
       top.level.dir = top.level.dir,
       cancer.type.strings = cancer.types,
       num.syn.tumors = num.syn.tumors,
-      overwrite = TRUE
+      sa.exp = sa.exp,
+      sp.exp = sp.exp,
+      overwrite = overwrite
     )
 
-  if (regress) {
-    diff.result <- Diff4SynDataSets("syn.pancreas", unlink = TRUE)
+  if (!is.null(regress.dir)) {
+    diff.result <-
+      NewDiff4SynDataSets(top.level.dir, regress.dir, unlink = unlink)
     if (diff.result[1] != "ok") {
       message("\nThere was a difference, investigate\n",
               paste0(diff.result, "\n"))
@@ -205,3 +220,61 @@ Create.syn.pancreas <- function(regress = FALSE, seed = NULL) {
 
   invisible(retval)
 }
+
+PancAdenoCA1000 <- function(seed = 191907, regress = FALSE) {
+  if (regress) {
+    regress.dir <- "data-raw/long.test.regression.data/syn.pancreas/"
+  } else regress.dir <- NULL
+  CreateFromReal(
+    seed           = seed,
+    enclosing.dir = "..",
+    num.syn.tumors = 1000,
+    cancer.types   = "Panc-AdenoCA",
+    data.suite.name = "Panc-AdenoCA",
+    sa.exp      = sa.no.hyper.real.exposures,
+    sp.exp      = sp.no.hyper.real.exposures,
+    regress.dir = regress.dir
+  )
+
+}
+
+RCCOvary1000 <- function(seed = 191907, regress = FALSE) {
+  if (regress) {
+    regress.dir <- "data-raw/long.test.regression.data/syn.pancreas/"
+  } else regress.dir <- NULL
+  CreateFromReal(
+    seed           = seed,
+    enclosing.dir = "..",
+    num.syn.tumors = 1000,
+    cancer.types   = c("Kidney-RCC", "Ovary-AdenoCA", ),
+    data.suite.name = "3.5.40.RCC.and.ovary",
+    sa.exp      = sa.no.hyper.real.exposures,
+    sp.exp      = sp.no.hyper.real.exposures,
+    regress.dir = regress.dir
+  )
+
+}
+
+ManyTypes2700 <- function(seed = 191906, regress = FALSE) {
+  if (regress) {
+    regress.dir <- "data-raw/long.test.regression.data/syn.many.types/"
+  } else regress.dir <- NULL
+  # suppressWarnings(RNGkind(sample.kind = "Rounding"))
+  # For compatibility with R < 3.6.0
+  CreateFromReal(
+    seed           = seed,
+    enclosing.dir  = "..",
+    num.syn.tumors = 300,
+    cancer.types   = c("Bladder-TCC",    "Eso-AdenoCA",
+                       "Breast-AdenoCA", "Lung-SCC",
+                       "Kidney-RCC",     "Ovary-AdenoCA",
+                       "Bone-Osteosarc", "Cervix-AdenoCA",
+                       "Stomach-AdenoCA"),
+    data.suite.name = "Many.types",
+    sa.exp          = sa.all.real.exposures,
+    sp.exp          = sp.all.real.exposures,
+    regress.dir     = regress.dir
+  )
+
+}
+

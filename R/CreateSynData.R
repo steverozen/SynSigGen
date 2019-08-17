@@ -524,10 +524,10 @@ GenerateSynAbstract <-
 
     WriteExposure(syn.exp, paste0(froot, ".generic.syn.exposure.csv"))
 
-    # Sanity check
+    # Sanity check; we regenerate the parameters from the synthetic exposures.
     check.params <- GetSynSigParamsFromExposures(syn.exp)
 
-    # sa.check.param should be similar to parms
+    # check.params should be similar to parms
     cat("# Parameters derived from synthetic exposures\n",
         file = parm.file, append = TRUE)
     suppressWarnings(
@@ -552,7 +552,7 @@ GenerateSynAbstract <-
     cat("# The difference should be small\n",
         file = parm.file, append = TRUE)
 
-    return(list(parms=parms, syn.exp=syn.exp))
+    return(list(parms=parms, syn.exp=syn.exp, check.parms = check.params))
   }
 
 #' Generate synthetic exposures from real exposures.
@@ -600,7 +600,13 @@ GenerateSynFromReal <- function(real.exp,
 
   return(
     GenerateSynAbstract(
-      parms, num.syn.tumors, file.prefix, sample.id.prefix))
+      parms = parms,
+      num.syn.tumors = num.syn.tumors,
+      file.prefix = file.prefix,
+      sample.id.prefix = sample.id.prefix,
+      froot = file.path(top.level.dir, file.prefix)))
+
+  #   function(parms, num.syn.tumors, file.prefix, sample.id.prefix, froot = NULL)
 }
 
 #' Create and write a mutational spectra catalog
