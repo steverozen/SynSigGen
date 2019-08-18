@@ -50,25 +50,19 @@ SynSigParamsOneSignature <- function(counts, target.size = 1 ) {
 #'
 #' @export
 
-GetSynSigParamsFromExposures <-
-  function(exposures, # target.size = 1,
-           verbose = 0) {
-    # target.size Deprecated - was the length of sequence
-    # from which the counts were derived; in the future
-    # make any adjustments (e.g exome to genome) before
-    # providing the exposure matrix.
+GetSynSigParamsFromExposures <- function(exposures, verbose = 0) {
+  stopifnot(ncol(exposures) > 0)
 
-  integer.counts <- round(exposures, digits=0)
-  integer.counts <- integer.counts[rowSums(integer.counts) >0 , ]
-  ret1 <- apply(X=integer.counts,
-                MARGIN=1,
-                FUN=SynSigParamsOneSignature)
-                #, target.size)
+  integer.counts <- round(exposures, digits = 0)
+  integer.counts <- integer.counts[rowSums(integer.counts) > 0 , ]
+  ret1 <- apply(X      = integer.counts,
+                MARGIN = 1,
+                FUN    = SynSigParamsOneSignature)
 
   # Some standard deviations can be NA (if there is only one tumor
   # with mutations for that signature). We pretend we did not see
   # these signatures. TODO(Steve): impute from similar signatures.
-  if(any(is.na(ret1['stdev', ]))) {
+  if (any(is.na(ret1['stdev', ]))) {
     if (verbose > 0) {
       cat("\nWarning, some signatures present in only one sample, dropping:\n")
       cat(colnames(ret1)[is.na(ret1['stdev', ])], "\n")
@@ -486,7 +480,7 @@ SetNewOutDir <- function(dir,
 #' inferred from the synthetic data approximate those
 #' inferred from \code{real.exp}.
 #'
-#' @param parms The actually exposures upon which to base
+#' @param parms The actual exposures upon which to base
 #' the parameters and synthetic exposures.
 #'
 #' @param num.syn.tumors Generate this number of synthetic tumors.
@@ -506,7 +500,7 @@ SetNewOutDir <- function(dir,
 #' @keywords internal
 
 GenerateSynAbstract <-
-  function(parms, num.syn.tumors, file.prefix, sample.id.prefix, froot = NULL) {
+  function(parms, num.syn.tumors, file.prefix = NULL, sample.id.prefix, froot = NULL) {
     stopifnot(!is.null(parms))
 
     if (is.null(froot)) {
@@ -538,7 +532,7 @@ GenerateSynAbstract <-
       cat("# Some signatures not represented in the synthetic data:\n",
           file = parm.file, append =  TRUE)
       cat("#", missing.sig.names, "\n", file = parm.file, append = TRUE)
-      check.param2 <- matrix(NA, nrow=dim(parms)[1], ncol = dim(parms)[2])
+      check.param2 <- matrix(NA, nrow = dim(parms)[1], ncol = dim(parms)[2])
       dimnames(check.param2) <- dimnames(parms)
       check.param2[ , colnames(check.params)] <- check.params
       check.params <- check.param2
@@ -552,7 +546,7 @@ GenerateSynAbstract <-
     cat("# The difference should be small\n",
         file = parm.file, append = TRUE)
 
-    return(list(parms=parms, syn.exp=syn.exp, check.parms = check.params))
+    return(list(parms = parms, syn.exp = syn.exp, check.parms = check.params))
   }
 
 #' Generate synthetic exposures from real exposures.
@@ -586,6 +580,7 @@ GenerateSynFromReal <- function(real.exp,
                                 sample.id.prefix,
                                 top.level.dir = NULL) {
 
+  stopifnot(ncol(real.exp) > 0)
   parms <- GetSynSigParamsFromExposures(real.exp)
 
   if (is.null(top.level.dir)) {
@@ -628,20 +623,28 @@ GenerateSynFromReal <- function(real.exp,
 #' @param overwrite If TRUE, overwrite existing directory; useful for
 #' debugging / testing.
 #'
+#' @param my.dir The directory in which to write the catalog
+#'  and several additonal files.
+#'
 #' @return Invisibly, the generated catalog.
 #'
 #' @details Create a file with the catalog \code{syn.data.csv}
 #'  and writes \code{sigs} to \code{input.sigs.csv}.
 #'
 CreateAndWriteCatalog <-
-  function(sigs, exp, dir, write.cat.fn, extra.file.suffix = "",
-           overwrite = FALSE) {
+  function(sigs, exp, dir = NULL, write.cat.fn, extra.file.suffix = "",
+           overwrite = FALSE, my.dir = NULL) {
     info <- CreateSynCatalogs(sigs, exp)
 
-    if (dir.exists(OutDir(dir))) {
-      if (!overwrite) stop("\nDirectory ", OutDir(dir), " exists\n")
+    if (is.null(my.dir)) {
+      warning("In CreateAndWriteCatalog top.level.dir is NULL, using deprecated work-around")
+      my.dir <-  OutDir(dir)
+    }
+
+    if (dir.exists(my.dir)) {
+      if (!overwrite) stop("\nDirectory ", my.dir, " exists\n")
     } else {
-      dir.create(OutDir(dir))
+      dir.create(my.dir)
     }
 
     if (extra.file.suffix == "") {
@@ -650,19 +653,19 @@ CreateAndWriteCatalog <-
       suffix = paste0(".", extra.file.suffix, ".csv")
     }
     write.cat.fn(info$ground.truth.signatures,
-                  OutDir(paste0(dir, "/ground.truth.syn.sigs", suffix)))
+                  paste0(my.dir, "/ground.truth.syn.sigs", suffix))
 
     zero.mutation <- which(colSums(info$ground.truth.catalog) == 0)
 
     if (length(zero.mutation) > 0) {
       warning("Tumors with no mutation:\n\n",
               colnames(info$ground.truth.catalog)[zero.mutation],
-              "in", OutDir(dir))
+              "in", my.dir)
     }
     write.cat.fn(info$ground.truth.catalog,
-                 OutDir(paste0(dir, "/ground.truth.syn.catalog", suffix)))
+                 paste0(my.dir, "/ground.truth.syn.catalog", suffix))
     WriteExposure(info$ground.truth.exposures,
-                  OutDir(paste0(dir, "/ground.truth.syn.exposures", suffix)))
+                  paste0(my.dir, "/ground.truth.syn.exposures", suffix))
     invisible(info$ground.truth.catalog)
   }
 

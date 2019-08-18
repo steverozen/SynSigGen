@@ -4,8 +4,8 @@
 \alias{CreateAndWriteCatalog}
 \title{Create and write a mutational spectra catalog}
 \usage{
-CreateAndWriteCatalog(sigs, exp, dir, write.cat.fn,
-  extra.file.suffix = "", overwrite = FALSE)
+CreateAndWriteCatalog(sigs, exp, dir = NULL, write.cat.fn,
+  extra.file.suffix = "", overwrite = FALSE, my.dir = NULL)
 }
 \arguments{
 \item{sigs}{Signatures to use.}
@@ -22,6 +22,9 @@ spectra to files.}
 
 \item{overwrite}{If TRUE, overwrite existing directory; useful for
 debugging / testing.}
+
+\item{my.dir}{The directory in which to write the catalog
+and several additonal files.}
 }
 \value{
 Invisibly, the generated catalog.

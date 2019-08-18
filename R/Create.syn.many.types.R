@@ -24,9 +24,8 @@ CreateMixedTumorTypeSyntheticData <- function(top.level.dir,
                                               overwrite = FALSE,
                                               sa.exp = sa.all.real.exposures,
                                               sp.exp = sp.all.real.exposures,
-                                              verbose = 0) {
-
-    SetNewOutDir(top.level.dir, overwrite)
+                                              verbose = 0,
+                                              bladder.regress.hack = FALSE) {
 
     odigits <- getOption("digits")
     options(digits = 9)
@@ -35,15 +34,22 @@ CreateMixedTumorTypeSyntheticData <- function(top.level.dir,
     info.list <-
       lapply(cancer.type.strings,
              function(ca.type.str) {
-               if (verbose) cat("\n\nProcessing", ca.type.str, "\n\n\n")
+               if (verbose) message("\n\nProcessing", ca.type.str, "\n\n\n")
+               local.sa.exp <- sa.exp
+               local.sp.exp <- sp.exp
+               if (bladder.regress.hack && ca.type.str == "Bladder-TCC") {
+                 local.sa.exp <- SynSigGen::sa.no.hyper.real.exposures
+                 local.sp.exp <- SynSigGen::sp.no.hyper.real.exposures
+                 message("bladder.regress.hack deployed for ", ca.type.str)
+               }
                retval <-
                  SAAndSPSynDataOneCAType(
-                   sa.real.exp = sa.exp,
-                   sp.real.exp = sp.exp,
-                   ca.type = ca.type.str,
+                   sa.real.exp    = local.sa.exp,
+                   sp.real.exp    = local.sp.exp,
+                   ca.type        = ca.type.str,
                    num.syn.tumors = num.syn.tumors,
-                   file.prefix = ca.type.str,
-                   top.level.dir = top.level.dir)
+                   file.prefix    = ca.type.str,
+                   top.level.dir  = top.level.dir)
                return(retval)
              })
 
@@ -71,16 +77,18 @@ CreateMixedTumorTypeSyntheticData <- function(top.level.dir,
     CreateAndWriteCatalog(
       sa.COMPOSITE.sigs,
       sa.exp,
-      "sa.sa.COMPOSITE",
+      dir = NULL, # "sa.sa.COMPOSITE",
       WriteCatCOMPOSITE,
-      overwrite = overwrite)
+      overwrite = overwrite,
+      my.dir = file.path(top.level.dir, "sa.sa.COMPOSITE"))
 
     CreateAndWriteCatalog(
       sa.96.sigs,
       sa.exp,
-      "sa.sa.96",
+      dir = NULL, # "sa.sa.96",
       WriteCatalog,
-      overwrite = overwrite)
+      overwrite = overwrite,
+      my.dir = file.path(top.level.dir, "sa.sa.96"))
 
     # Create catalogs of synthetic mutational spectra
     # based on SigProfiler attributions
@@ -94,9 +102,10 @@ CreateMixedTumorTypeSyntheticData <- function(top.level.dir,
     CreateAndWriteCatalog(
       sa.COMPOSITE.sigs,
       sp.sa.map.info$exp2,
-      "sp.sa.COMPOSITE",
+      dir = NULL, # "sp.sa.COMPOSITE",
       WriteCatCOMPOSITE,
-      overwrite = overwrite)
+      overwrite = overwrite,
+      my.dir = file.path(top.level.dir, "sp.sa.COMPOSITE"))
 
 
     if (verbose) print(sp.sa.map.info$sp.to.sa.sig.match)
@@ -104,9 +113,10 @@ CreateMixedTumorTypeSyntheticData <- function(top.level.dir,
     CreateAndWriteCatalog(
       sp.sigs,
       sp.exp,
-      "sp.sp",
+      dir = NULL, # "sp.sp",
       WriteCatalog,
-      overwrite = overwrite)
+      overwrite = overwrite,
+      my.dir = file.path(top.level.dir, "sp.sp"))
 
     # AddAllScripts(maxK = 50)
 
@@ -182,7 +192,8 @@ CreateFromReal <- function(seed,
                            sp.exp      = SynSigGen::sp.all.real.exposures,
                            overwrite   = TRUE,
                            regress.dir = NULL,
-                           unlink      = FALSE) {
+                           unlink      = FALSE,
+                           bladder.regress.hack = FALSE) {
   set.seed(seed)
 
   top.level.dir <-
@@ -195,7 +206,8 @@ CreateFromReal <- function(seed,
       num.syn.tumors = num.syn.tumors,
       sa.exp = sa.exp,
       sp.exp = sp.exp,
-      overwrite = overwrite
+      overwrite = overwrite,
+      bladder.regress.hack = bladder.regress.hack
     )
 
   if (!is.null(regress.dir)) {
@@ -229,6 +241,7 @@ PancAdenoCA1000 <- function(seed = 191907, regress = FALSE) {
   )
 }
 
+
 RCCOvary1000 <- function(seed = 191905, regress = FALSE) {
   if (regress) {
     regress.dir <- "data-raw/long.test.regression.data/syn.3.5.40.rcc.and.ovary/"
@@ -245,39 +258,23 @@ RCCOvary1000 <- function(seed = 191905, regress = FALSE) {
   )
 }
 
-#####
-BladderSkin1000 <- function(seed = 191905, regress = FALSE) {
+BladderSkin1000 <- function(seed = 191906, regress = FALSE) {
   if (regress) {
     regress.dir <- "data-raw/long.test.regression.data/syn.2.7a.7b.bladder.and.melanoma/"
   } else regress.dir <- NULL
 
-  # Unusual code because we need non-hyper exposures from bladder and and all
-  # exposures from melanoma.
-  stop("need to fill in sa.exp1 with zeros for the hyper signatures")
-
-  sa.exp1 <- GetExpForOneCancerType("Bladder-TCC",
-                                    SynSigGen::sa.no.hyper.real.exposures)
-  sp.exp1 <- GetExpForOneCancerType("Bladder-TCC",
-                                    SynSigGen::sp.no.hyper.real.exposures)
-
-  sa.exp2 <- GetExpForOneCancerType("Skin-Melanoma",
-                                    SynSigGen::sa.all.real.exposures)
-  sp.exp2 <- GetExpForOneCancerType("Skin-Melanoma",
-                                    SynSigGen::sp.all.real.exposures)
-
-
   CreateFromReal(
-    seed           = seed,
-    enclosing.dir = "..",
-    num.syn.tumors = 500,
-    cancer.types   = c("Bladder-TCC", "Skin-Melanoma" ),
+    seed            = seed,
+    enclosing.dir   = "..",
+    num.syn.tumors  = 500,
+    cancer.types    = c("Bladder-TCC", "Skin-Melanoma" ),
     data.suite.name = "2.7a.7b.bladder.and.melanoma",
-    sa.exp      = cbind(sa.exp1, sa.exp2),
-    sp.exp      = cbind(sp.exp1, sp.exp2),
-    regress.dir = regress.dir
+    sa.exp          = SynSigGen::sa.all.real.exposures,
+    sp.exp          = SynSigGen::sp.all.real.exposures,
+    regress.dir = regress.dir,
+    bladder.regress.hack = TRUE
   )
 }
-
 
 
 ManyTypes2700 <- function(seed = 191906, regress = FALSE) {
@@ -324,3 +321,9 @@ three.5.40.for.ludmil.2019.08.17 <- function() {
   }
 }
 
+bladder.skin.for.ludmil.2019.08.18 <- function() {
+  seeds <- sample(10000, size = 9)
+  for (seed in seeds) {
+    BladderSkin1000(seed = seed)
+  }
+}

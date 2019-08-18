@@ -7,7 +7,7 @@
 CreateFromReal(seed, enclosing.dir, num.syn.tumors, cancer.types,
   data.suite.name, sa.exp = SynSigGen::sa.all.real.exposures,
   sp.exp = SynSigGen::sp.all.real.exposures, overwrite = TRUE,
-  regress.dir = NULL, unlink = FALSE)
+  regress.dir = NULL, unlink = FALSE, bladder.regress.hack = FALSE)
 }
 \description{
 Create a specific synthetic data set based on real exposures in one or more cancer types.

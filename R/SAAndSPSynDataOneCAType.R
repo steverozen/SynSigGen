@@ -63,6 +63,8 @@ SAAndSPSynDataOneCAType <-
            file.prefix,
            top.level.dir = NULL) {
 
+    stopifnot(nrow(sa.real.exp) > 0)
+    stopifnot(nrow(sp.real.exp) > 0)
 
     sp.real.exp <- sp.real.exp[ , colnames(sa.real.exp)]
 
@@ -70,16 +72,10 @@ SAAndSPSynDataOneCAType <-
 
 
     sa.real.exp <- GetExpForOneCancerType(ca.type, sa.real.exp)
+    stopifnot(nrow(sa.real.exp) > 0)
+
     sp.real.exp <- GetExpForOneCancerType(ca.type, sp.real.exp)
-    # ca.type <- paste0(ca.type, "::")
-    # samples.to.use <-
-    #  grep(ca.type, colnames(sa.real.exp), fixed = TRUE)
-    # sa.real.exp <- sa.real.exp[ , samples.to.use]
-    # sp.real.exp <- sp.real.exp[ , samples.to.use]
-
-
-    # stopifnot(sa.real.exp == sa2)
-    # stopifnot(sp.real.exp == sp2)
+    stopifnot(nrow(sp.real.exp) > 0)
 
     # Make sure the 2 exposure data sets have the same colummns
     # in the same order.
