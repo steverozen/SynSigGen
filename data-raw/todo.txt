@@ -1,7 +1,13 @@
 To do:
 
-continue: mv prev.tmp.syn.pancreas/sa.{PANC,Panc-AdenoCA}.real.input.exposure.csv
+Document Create.abstract.R
+9 new random sig data sets
 
+Add a couple of automatic regression tests.
+
+Additional small random data sets
+
+Additonal small data sets.
 
 Get rid of SetNewOutDir() and OutDir() Steve
 Make sure all regression on synthetic data sets are working Steve

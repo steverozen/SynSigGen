@@ -1,22 +1,4 @@
-#' Create a full SignatureAnalyzer / SigProfiler test data set for a
-#' set of various tumor types.
-#'
-#' @param top.level.dir Path to top level of directory structure to be created.
-#'
-#' @param cancer.type.strings Search the PCAWG data for tumors matching
-#' these strings. Each string should identify one tumor type, for
-#' some definition of tumor type. Probably the tumors in each type
-#' should be non-overlapping, but the code does not enforce this and
-#' does not care.
-#'
-#' @param num.syn.tumors Number of synthetic tumors to create
-#' for each cancer type.
-#'
-#' @param overwrite If TRUE, overwrite existing directories / files.
-#'
-#' @param verbose If > 0, cat various messages.
-#'
-#' @export
+
 
 CreateMixedTumorTypeSyntheticData <- function(top.level.dir,
                                               cancer.type.strings,
@@ -125,10 +107,10 @@ CreateMixedTumorTypeSyntheticData <- function(top.level.dir,
 
   }
 
-#' Create a specific synthetic data set of 2,700 tumors.
+#' No longer used, replaced by \code{\link{ManyTypes2700}}.
 #'
 #' @keywords internal
-
+#'
 Create.syn.many.types <-
   function(regress = FALSE, seed = NULL, unlink = FALSE) {
   stop("This function is no longer used")
@@ -181,7 +163,41 @@ for.ludmil.2019.08.16 <- function() {
 
 #' Create a specific synthetic data set based on real exposures in one or more cancer types.
 #'
-#' @keywords internal
+#' Create a full SignatureAnalyzer / SigProfiler test data set for a
+#' set of various tumor types.
+#'
+#' @param seed A random seed to use.
+#'
+#' @param enclosing.dir Create the output in a subdirectory of this directory.
+#'
+#' @param num.syn.tumors The number of tumors to create \strong{for each cancer
+#'    type} in \code{cancer.types}.
+#'
+#' @param top.level.dir Path to top level of directory structure to be created.
+#'
+#' @param cancer.types Search \code{sa.exp} and \code{sp.exp}
+#' for exposures from tumors matching
+#' these strings. Each string should identify one tumor type, for
+#' some definition of tumor type. Probably the tumors in each type
+#' should be non-overlapping, but the code does not enforce this and
+#' does not care.
+#'
+#' @param data.suite.name The directory created will be
+#'   \code{file.path(enclosing.dir, paste0(data.suite.name, ".", seed))}.
+#'
+#' @param overwrite If TRUE, overwrite existing directories and files.
+#'
+#' @param regress.dir If not \code{NULL}, compare the result to
+#'    the contents of this directory with a \code{diff}.
+#'
+#' @param unlink If \code{TRUE} and \code{!is.null(regress.dir)}, then
+#'       unlink the result dir if there are no differences.
+#'
+#' @param bladder.regress.hack Set this to \code{TRUE} to handle
+#'        mixed "all" and "no hyper" signature sets for the
+#'        regression test for \code{\link{BladderSkin1000}}.
+#'
+#' @export
 
 CreateFromReal <- function(seed,
                            enclosing.dir,
@@ -224,10 +240,14 @@ CreateFromReal <- function(seed,
   invisible(retval)
 }
 
+#' Replaces \code{data-raw/Create.pancrease.Rmd}.
+#'
+#' @keywords internal
 
 PancAdenoCA1000 <- function(seed = 191907, regress = FALSE) {
   if (regress) {
-    regress.dir <- "data-raw/long.test.regression.data/syn.pancreas/"
+    regress.dir <-
+      "data-raw/long.test.regression.data/syn.pancreas/"
   } else regress.dir <- NULL
   CreateFromReal(
     seed           = seed,
@@ -242,9 +262,18 @@ PancAdenoCA1000 <- function(seed = 191907, regress = FALSE) {
 }
 
 
+#' Replaces the first part of \code{data-raw/Create.3.5.40.Rmd}.
+#'
+#' The second half of \code{data-raw/Create.3.5.40.Rmd}
+#' is replaced by
+#' \code{\link{Create.3.4.40.Abstract}}.
+#'
+#' @keywords internal
+
 RCCOvary1000 <- function(seed = 191905, regress = FALSE) {
   if (regress) {
-    regress.dir <- "data-raw/long.test.regression.data/syn.3.5.40.rcc.and.ovary/"
+    regress.dir <-
+      "data-raw/long.test.regression.data/syn.3.5.40.rcc.and.ovary/"
   } else regress.dir <- NULL
   CreateFromReal(
     seed           = seed,
@@ -258,9 +287,20 @@ RCCOvary1000 <- function(seed = 191905, regress = FALSE) {
   )
 }
 
+
+#' Replaces the first part of \code{data-raw/Create.2.7a.7b.Rmd}.
+#'
+#' #' The second half of \code{data-raw/Create.2.7a.7b.Rmd}
+#' is replaced by
+#' \code{\link{Create.2.7a.7b.Abstract}}.
+
+#'
+#' @keywords internal
+
 BladderSkin1000 <- function(seed = 191906, regress = FALSE) {
   if (regress) {
-    regress.dir <- "data-raw/long.test.regression.data/syn.2.7a.7b.bladder.and.melanoma/"
+    regress.dir <-
+      "data-raw/long.test.regression.data/syn.2.7a.7b.bladder.and.melanoma/"
   } else regress.dir <- NULL
 
   CreateFromReal(
@@ -276,10 +316,16 @@ BladderSkin1000 <- function(seed = 191906, regress = FALSE) {
   )
 }
 
+#' Create a specific synthetic data set of 2,700 tumors.
+#'
+#' Replaces \code{\link{Create.syn.many.types}}.
+#'
+#' @keywords internal
 
 ManyTypes2700 <- function(seed = 191906, regress = FALSE) {
   if (regress) {
-    regress.dir <- "data-raw/long.test.regression.data/syn.many.types/"
+    regress.dir <-
+      "data-raw/long.test.regression.data/syn.many.types/"
   } else regress.dir <- NULL
   # suppressWarnings(RNGkind(sample.kind = "Rounding"))
   # For compatibility with R < 3.6.0

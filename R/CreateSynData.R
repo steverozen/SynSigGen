@@ -567,6 +567,8 @@ GenerateSynAbstract <-
 #' @param sample.id.prefix Prefix for sample identifiers for the
 #' synthetic samples.
 #'
+#' @param top.level.dir Create various files under this directory.
+#'
 #' @return A list with elements:
 #' \enumerate{
 #'  \item \code{parms} The parameters inferred from \code{real.exp}.

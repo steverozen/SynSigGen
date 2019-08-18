@@ -9,7 +9,39 @@ CreateFromReal(seed, enclosing.dir, num.syn.tumors, cancer.types,
   sp.exp = SynSigGen::sp.all.real.exposures, overwrite = TRUE,
   regress.dir = NULL, unlink = FALSE, bladder.regress.hack = FALSE)
 }
-\description{
-Create a specific synthetic data set based on real exposures in one or more cancer types.
+\arguments{
+\item{seed}{A random seed to use.}
+
+\item{enclosing.dir}{Create the output in a subdirectory of this directory.}
+
+\item{num.syn.tumors}{The number of tumors to create \strong{for each cancer
+type} in \code{cancer.types}.}
+
+\item{cancer.types}{Search \code{sa.exp} and \code{sp.exp}
+for exposures from tumors matching
+these strings. Each string should identify one tumor type, for
+some definition of tumor type. Probably the tumors in each type
+should be non-overlapping, but the code does not enforce this and
+does not care.}
+
+\item{data.suite.name}{The directory created will be
+\code{file.path(enclosing.dir, paste0(data.suite.name, ".", seed))}.}
+
+\item{overwrite}{If TRUE, overwrite existing directories and files.}
+
+\item{regress.dir}{If not \code{NULL}, compare the result to
+the contents of this directory with a \code{diff}.}
+
+\item{unlink}{If \code{TRUE} and \code{!is.null(regress.dir)}, then
+unlink the result dir if there are no differences.}
+
+\item{bladder.regress.hack}{Set this to \code{TRUE} to handle
+mixed "all" and "no hyper" signature sets for the
+regression test for \code{\link{BladderSkin1000}}.}
+
+\item{top.level.dir}{Path to top level of directory structure to be created.}
 }
-\keyword{internal}
+\description{
+Create a full SignatureAnalyzer / SigProfiler test data set for a
+set of various tumor types.
+}

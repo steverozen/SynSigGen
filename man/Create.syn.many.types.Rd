@@ -2,11 +2,11 @@
 % Please edit documentation in R/Create.syn.many.types.R
 \name{Create.syn.many.types}
 \alias{Create.syn.many.types}
-\title{Create a specific synthetic data set of 2,700 tumors.}
+\title{No longer used, replaced by \code{\link{ManyTypes2700}}.}
 \usage{
 Create.syn.many.types(regress = FALSE, seed = NULL, unlink = FALSE)
 }
 \description{
-Create a specific synthetic data set of 2,700 tumors.
+No longer used, replaced by \code{\link{ManyTypes2700}}.
 }
 \keyword{internal}
