@@ -250,7 +250,7 @@ RCCOvary1000 <- function(seed = 191905, regress = FALSE) {
     seed           = seed,
     enclosing.dir = "..",
     num.syn.tumors = 500,
-    cancer.types   = c("Kidney-RCC", "Ovary-AdenoCA" ),
+    cancer.types   = c("Kidney-RCC", "Ovary-AdenoCA"),
     data.suite.name = "3.5.40.RCC.and.ovary",
     sa.exp      = SynSigGen::sa.no.hyper.real.exposures,
     sp.exp      = SynSigGen::sp.no.hyper.real.exposures,

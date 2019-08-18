@@ -105,5 +105,10 @@ SAAndSPSynDataOneCAType <-
 GetExpForOneCancerType <- function(ca.type, exp) {
   ca.type <- paste0(ca.type, "::")
   samples.to.use <- grep(ca.type, colnames(exp), fixed = TRUE)
+  if (length(samples.to.use) == 0) {
+    stop("In GetExpForOneCancerType(", ca.type, ", ",
+         colnames("exp")[1:min(5,ncol(exp))], "...) ",
+         "there were no matching columns")
+  }
   return(exp[ , samples.to.use, drop = FALSE])
 }
