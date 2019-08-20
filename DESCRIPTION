@@ -18,5 +18,9 @@ Suggests:
     testthat,
     knitr,
     rmarkdown,
-    DelayedArray
+    DelayedArray,
+    BSgenome,
+    BSgenome.Hsapiens.1000genomes.hs37d5,
+    BSgenome.Hsapiens.UCSC.hg38,
+    BSgenome.Mmusculus.UCSC.mm10
 
