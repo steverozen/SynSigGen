@@ -1,5 +1,4 @@
-#' Create a full SignatureAnalyzer / SigProfiler test data set for a
-#' set of various tumor types.
+#' Create a test data set based on >= 1 tumor types.
 #'
 #' @param top.level.dir Path to top level of directory structure to be created.
 #'
@@ -14,7 +13,23 @@
 #'
 #' @param overwrite If TRUE, overwrite existing directories / files.
 #'
+#' @param sa.exp SignatureAnalyzer exposures from which to select cancer types
+#'        specified by \code{cancer.type.strings}. In the
+#'        column names of \code{sa.exp} the cancer type string
+#'        should be separated from the sample identifier by two colons
+#'        (::).
+#'
+#' @param sp.exp SigProfiler exposures from which to select cancer types
+#'        specified by \code{cancer.type.strings}. In the
+#'        column names of \code{sp.exp} the cancer type string
+#'        should be separated from the sample identifier by two colons
+#'        (::).
+#
 #' @param verbose If > 0, cat various messages.
+#'
+#' @param bladder.regress.hack For use by \code{\link{BladderSkin1000}}.
+#'     Forces use of non-hyper-mutated exposures for bladder-TCC even if
+#'     \code{sa.exp} and \code{sp.exp} include hyper-mutated exposures.
 #'
 #' @export
 
@@ -125,59 +140,6 @@ CreateMixedTumorTypeSyntheticData <- function(top.level.dir,
 
   }
 
-#' Create a specific synthetic data set of 2,700 tumors.
-#'
-#' @keywords internal
-
-Create.syn.many.types <-
-  function(regress = FALSE, seed = NULL, unlink = FALSE) {
-  stop("This function is no longer used")
-
-    if (is.null(seed)) {
-    suppressWarnings(RNGkind(sample.kind = "Rounding"))
-    # For compatibility with R < 3.6.0
-    set.seed(191906)
-    top.level.dir <- "tmp.syn.many.types"
-
-  } else {
-    set.seed(seed)
-    top.level.dir <- paste0("../2700.tumors.seed.", seed)
-  }
-  num.syn.tumors <- 300 # number of tumor of each type
-
-  cancer.types <- c("Bladder-TCC",    "Eso-AdenoCA",
-                    "Breast-AdenoCA", "Lung-SCC",
-                    "Kidney-RCC",     "Ovary-AdenoCA",
-                    "Bone-Osteosarc", "Cervix-AdenoCA",
-                    "Stomach-AdenoCA")
-  retval <-
-    CreateMixedTumorTypeSyntheticData(
-      top.level.dir = top.level.dir,
-      cancer.type.strings = cancer.types,
-      num.syn.tumors = num.syn.tumors,
-      overwrite = TRUE
-    )
-
-  if (regress) {
-    diff.result <- Diff4SynDataSets("syn.many.types", unlink = unlink)
-    if (diff.result[1] != "ok") {
-      message("\nThere was a difference, investigate\n",
-              paste0(diff.result, "\n"))
-    } else {
-      message("\nok\n")
-    }
-  }
-
-  invisible(retval)
-}
-
-for.ludmil.2019.08.16 <- function() {
-  seeds <- sample(10000, size = 9)
-  for (seed in seeds) {
-    Create.syn.many.types(seed = seed)
-  }
-}
-
 
 #' Create a specific synthetic data set based on real exposures in one or more cancer types.
 #'
@@ -199,6 +161,12 @@ CreateFromReal <- function(seed,
   top.level.dir <-
     file.path(enclosing.dir, paste0(data.suite.name, ".", seed))
 
+  if (dir.exists(top.level.dir)) {
+    if (!overwrite) stop(top.level.dir, " exists and overwrite is FALSE")
+  } else {
+    MustCreateDir(top.level.dir)
+  }
+
   retval <-
     CreateMixedTumorTypeSyntheticData(
       top.level.dir = top.level.dir,
@@ -216,12 +184,15 @@ CreateFromReal <- function(seed,
     if (diff.result[1] != "ok") {
       message("\nThere was a difference, investigate\n",
               paste0(diff.result, "\n"))
+      return(FALSE)
     } else {
       message("\nok\n")
+      return(TRUE)
     }
+  } else {
+    invisible(retval)
   }
-
-  invisible(retval)
+  stop("Progamming error; should not get here")
 }
 
 
@@ -242,10 +213,8 @@ PancAdenoCA1000 <- function(seed = 191907, regress = FALSE) {
 }
 
 
-RCCOvary1000 <- function(seed = 191905, regress = FALSE) {
-  if (regress) {
-    regress.dir <- "data-raw/long.test.regression.data/syn.3.5.40.rcc.and.ovary/"
-  } else regress.dir <- NULL
+RCCOvary1000 <- function(seed = 191905, unlink = FALSE,
+                         regress.dir= NULL) {
   CreateFromReal(
     seed           = seed,
     enclosing.dir = "..",
@@ -254,9 +223,14 @@ RCCOvary1000 <- function(seed = 191905, regress = FALSE) {
     data.suite.name = "3.5.40.RCC.and.ovary",
     sa.exp      = SynSigGen::sa.no.hyper.real.exposures,
     sp.exp      = SynSigGen::sp.no.hyper.real.exposures,
-    regress.dir = regress.dir
+    regress.dir = regress.dir,
+    unlink      = unlink
   )
 }
+
+#' Generate synthetic data sets modeled on bladder TCC and skin melanoma.
+#'
+#' @keywords internal
 
 BladderSkin1000 <- function(seed = 191906, regress = FALSE) {
   if (regress) {

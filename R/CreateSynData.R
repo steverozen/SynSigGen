@@ -458,6 +458,7 @@ OutDir <- function(file.name) {
 #' @param recursive Allow creating directories recursively.
 #'
 #' @export
+
 SetNewOutDir <- function(dir,
                          overwrite = FALSE,
                          recursive = TRUE) {
@@ -470,7 +471,7 @@ SetNewOutDir <- function(dir,
     dir.create(dir, recursive = recursive)
   }
 
-  OutDir.dir <<- dir
+  .data$OutDir.dir <- dir
 }
 
 #' Generate synthetic exposures from abstract parameters.
@@ -566,6 +567,9 @@ GenerateSynAbstract <-
 #'
 #' @param sample.id.prefix Prefix for sample identifiers for the
 #' synthetic samples.
+#'
+#' @param top.level.dir Directory in which to create several files.
+#'   This directory must already exist.
 #'
 #' @return A list with elements:
 #' \enumerate{

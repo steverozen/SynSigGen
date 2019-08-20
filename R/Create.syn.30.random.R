@@ -1,6 +1,155 @@
 # This file contains functions to create "completely random"
 # artificial signatures
 
+
+#' This is the top-level function to create a set of spectra from random signatures.
+#'
+#' @param top.level.dir Directory in which to put all results. It will be
+#' created if necessary.
+#'
+#' @param seed Use default for regression testing.
+#'
+#' @param regress.dir If not \code{NULL} compare the known results in
+#'   this directory with the created results in \code{top.level.dir}.
+#'
+#' @param num.syn.tumors Total number of synthetic tumors to create. Use the
+#' default for regression testing.
+#'
+#' @param overwrite If \code{TRUE} overwrite existing files and directories.
+#'
+#' @param unlink If \code{TRUE} unlink the created directory after the
+#'   regression test.
+#'
+#' @param verbose If \code{TRUE} print a few informative messages.
+#'
+#' @export
+#'
+Create.syn.30.random <-
+  function(
+    top.level.dir,
+    seed           = 1443196,
+    regress.dir    = "data-raw/long.test.regression.data/syn.30.random.sigs/",
+    num.syn.tumors = 1000,
+    overwrite      = FALSE,
+    unlink         = FALSE,
+    verbose        = FALSE) {
+
+    suppressWarnings(RNGkind(sample.kind = "Rounding"))
+    # For compatibility with R < 3.6.0
+    set.seed(seed)
+
+    CreateRandomSAAndSPSynCatalogs(top.level.dir  = top.level.dir,
+                                   num.syn.tumors = num.syn.tumors,
+                                   overwrite      = overwrite,
+                                   verbose        = verbose)
+    if (!is.null(regress.dir)) {
+      diff.result <- NewDiff4SynDataSets(top.level.dir, regress.dir, unlink = unlink)
+      if (diff.result[1] != "ok") {
+        message("\nThere was a difference, investigate\n",
+                paste0(diff.result, "\n"))
+      } else {
+        message("\nok\n")
+      }
+    }
+  }
+
+# Test data for Ludmil and Mishu
+create.1000.random.2019.08.30 <- function() {
+  seeds <- sample(1000, size = 9)
+  for (seed in seeds) {
+    Create.syn.30.random(
+      top.level.dir = paste0("../random.10000.", seed),
+      seed = seed, overwrite = FALSE, regress.dir = NULL)
+  }
+
+}
+
+
+#' Create a full SignatureAnalyzer / SigProfiler test data set for "random"
+#' artificial signatures.
+#'
+#' @param top.level.dir Path to top level of directory structure to be created.
+#'
+#' @param num.syn.tumors Number of synthetic tumors to create.
+#'
+#' @param overwrite If \code{TRUE}, overwrite existing directories / files.
+#'
+#' @keywords internal
+
+CreateRandomSAAndSPSynCatalogs <-
+  function(top.level.dir, num.syn.tumors, overwrite = FALSE, verbose = FALSE) {
+
+    COMPOSITE.features <- c(ICAMS::catalog.row.order[["SBS1536"]],
+                            ICAMS::catalog.row.order[["DBS78"]],
+                            ICAMS::catalog.row.order[["ID"]])
+    stopifnot(length(COMPOSITE.features) == 1697)
+
+    if (dir.exists(top.level.dir)) {
+      if (!overwrite) stop(top.level.dir, " exists and overwrite is FALSE")
+    } else {
+      MustCreateDir(top.level.dir)
+    }
+
+    # The following are for choosing the mean number of mutations due to each
+    # synthetic signature.
+    sa.mut.mean <- 2.349
+    # Based on mean(log10(sa.all.real.exposures[sa.all.real.exposures >= 1]))
+
+    sa.mut.sd   <- 0.6641
+    # Based on sd(log10(sa.all.real.exposures[sa.all.real.exposures >= 1]))
+
+    sp.mut.mean <- 2.97
+    # Based on mean(log10(sp.all.real.exposures[sp.all.real.exposures >= 1]))
+
+    sp.mut.sd   <- 0.7047
+    # Based on sd(log10(sp.all.real.exposures[sp.all.real.exposures >= 1]))
+
+    # An alternative would be:
+    # per.sig.mean <- apply(sa.all.real.exposures, 1, function(x) mean(log10(x[ x > 1])
+    # sa.mut.mean  <- mean(per.sig.mean, na.rm = TRUE)
+    # sa.mut.sd    <- sd(per.sig.mean, na.rm = TRUE)
+
+    sa.num.sigs.mean <- 15.525 # mean(colSums(sa.all.real.exposures > 0))
+    sa.num.sigs.sd   <-  6.172 # sd(colSums(sa.all.real.exposures > 0))
+    sp.num.sigs.mean <-  3.947 # mean(colSums(sp.all.real.exposures > 0))
+    sp.num.sigs.sd   <-  1.331 # sd(colSums(sp.all.real.exposures > 0))
+
+    num.sigs.to.create <- 30 # Also tired, 60 (ncol(SynSig::sa.96.sigs));
+    # this is too many.
+
+    CreateOneSetOfRandomCatalogs(
+      num.syn.tumors     = num.syn.tumors,
+      total.num.sigs     = num.sigs.to.create,
+      mut.mean           = sa.mut.mean,
+      mut.sd             = sa.mut.sd,
+      num.sigs.mean      = sa.num.sigs.mean,
+      num.sigs.sd        = sa.num.sigs.sd,
+      sig.name.prefix    = "SARandSig",
+      sample.name.prefix = "SARandSample",
+      composite.dir.name = file.path(top.level.dir, "sa.sa.COMPOSITE"),
+      x96.dir.name       = file.path(top.level.dir, "sa.sa.96"),
+      COMPOSITE.features = COMPOSITE.features,
+      overwrite          = overwrite,
+      verbose            = verbose)
+
+    CreateOneSetOfRandomCatalogs(
+      num.syn.tumors     = num.syn.tumors,
+      total.num.sigs     = num.sigs.to.create,
+      mut.mean           = sp.mut.mean,
+      mut.sd             = sp.mut.sd,
+      num.sigs.mean      = sp.num.sigs.mean,
+      num.sigs.sd        = sp.num.sigs.sd,
+      sig.name.prefix    = "SPRandSig",
+      sample.name.prefix = "SPRandSample",
+      composite.dir.name = file.path(top.level.dir, "sp.sa.COMPOSITE"),
+      x96.dir.name       = file.path(top.level.dir, "sp.sp"),
+      COMPOSITE.features = COMPOSITE.features,
+      overwrite          = overwrite,
+      verbose            = verbose)
+
+  }
+
+
 #' Create one "random" artificial signature profile.
 #'
 #' @param row.names One of the \code{\link{ICAMS}} package variable such as
@@ -45,7 +194,7 @@ CreateRandomMutSigProfiles <-
   stopifnot(!is.null(row.headers))
 
   retval <- lapply(1:num.signatures,
-                function (x) CreateOneRandomMutSigProfile(row.headers))
+                function(x) CreateOneRandomMutSigProfile(row.headers))
   retval <- as.matrix(data.frame(retval))
   colnames(retval) <- paste0(sig.name.prefix, 1:num.signatures)
   return(retval)
@@ -133,7 +282,7 @@ ExposureNums2Exposures <-
     stopifnot(names(target.sig.means) == names(target.sig.sds))
     stopifnot(all.sig.names == names(target.sig.means))
     all.len <- length(all.sig.names)
-    index.to.use <- sample.int(all.len, size=target.num.exp, replace = FALSE)
+    index.to.use <- sample.int(all.len, size = target.num.exp, replace = FALSE)
     retval <- numeric(all.len) # all zeros
     retval[index.to.use] <-
       10^rnorm(target.num.exp,
@@ -195,7 +344,8 @@ CreateOneSetOfRandomCatalogs <-
            composite.dir.name,
            x96.dir.name,
            COMPOSITE.features,
-           overwrite = FALSE) {
+           overwrite = FALSE,
+           verbose = TRUE) {
 
     syn.96.sigs <-
       CreateRandomMutSigProfiles(
@@ -217,11 +367,16 @@ CreateOneSetOfRandomCatalogs <-
         sd = num.sigs.sd,
         total.num.sigs = total.num.sigs)
 
-    if (TRUE) {
-      cat("\nCreateOneSetOfRandomCatalogs\n",
-          "number of exposures per tumor statisitcs:\n")
-      print(summary(exp.nums))
-      cat("sd", sd(exp.nums), "\n")
+    if (verbose) {
+      message("\nCreateOneSetOfRandomCatalogs\n",
+              "statistics on number of exposures per tumor")
+      message("for ", x96.dir.name, " and ", composite.dir.name, ":")
+      message("Number of tumors is ", num.syn.tumors)
+      ss <- summary(exp.nums)
+      for (nn in names(ss)) {
+        message(nn, " = ", ss[nn])
+      }
+      message("sd = ", sd(exp.nums), "\n")
     }
 
     exp <-
@@ -256,98 +411,4 @@ CreateOneSetOfRandomCatalogs <-
       exp       = exp,
       dir       = x96.dir.name,
       overwrite = overwrite)
-}
-
-#' Create a full SignatureAnalyzer / SigProfiler test data set for "random"
-#' artificial signatures.
-#'
-#' @param top.level.dir Path to top level of directory structure to be created.
-#'
-#' @param num.syn.tumors Number of synthetic tumors to create.
-#'
-#' @param overwrite If TRUE, overwrite existing directories / files.
-#'
-#' @export
-
-CreateRandomSAAndSPSynCatalogs <-
-  function(top.level.dir, num.syn.tumors, overwrite = FALSE) {
-
-  COMPOSITE.features <- c(ICAMS::catalog.row.order[["SBS1536"]],
-                          ICAMS::catalog.row.order[["DBS78"]],
-                          ICAMS::catalog.row.order[["ID"]])
-  stopifnot(length(COMPOSITE.features) == 1697)
-
-  if (dir.exists(top.level.dir)) {
-    if (!overwrite) stop(top.level.dir, " exists and overwrite is FALSE")
-  } else {
-    MustCreateDir(top.level.dir)
   }
-
-  # The following are for choosing the mean number of mutations due to each
-  # synthetic signature.
-  sa.mut.mean <- 2.349  # mean(log10(sa.all.real.exposures[sa.all.real.exposures >= 1]))
-  sa.mut.sd   <- 0.6641 # sd(log10(sa.all.real.exposures[sa.all.real.exposures >= 1]))
-  sp.mut.mean <- 2.97   # mean(log10(sp.all.real.exposures[sp.all.real.exposures >= 1]))
-  sp.mut.sd   <- 0.7047 # sd(log10(sp.all.real.exposures[sp.all.real.exposures >= 1]))
-
-  # An alternative would be:
-  # per.sig.mean <- apply(sa.all.real.exposures, 1, function(x) mean(log10(x[ x > 1])
-  # sa.mut.mean  <- mean(per.sig.mean, na.rm = TRUE)
-  # sa.mut.sd    <- sd(per.sig.mean, na.rm = TRUE)
-
-  sa.num.sigs.mean <- 15.525 # mean(colSums(sa.all.real.exposures > 0))
-  sa.num.sigs.sd   <-  6.172 # sd(colSums(sa.all.real.exposures > 0))
-  sp.num.sigs.mean <-  3.947 # mean(colSums(sp.all.real.exposures > 0))
-  sp.num.sigs.sd   <-  1.331 # sd(colSums(sp.all.real.exposures > 0))
-
-  num.sigs.to.create <- 30 # Also tired, 60 (ncol(SynSig::sa.96.sigs));
-                           # this is too many.
-
-  CreateOneSetOfRandomCatalogs(
-    num.syn.tumors     = num.syn.tumors,
-    total.num.sigs     = num.sigs.to.create,
-    mut.mean           = sa.mut.mean,
-    mut.sd             = sa.mut.sd,
-    num.sigs.mean      = sa.num.sigs.mean,
-    num.sigs.sd        = sa.num.sigs.sd,
-    sig.name.prefix    = "SARandSig",
-    sample.name.prefix = "SARandSample",
-    composite.dir.name = file.path(top.level.dir, "sa.sa.COMPOSITE"), # HERE
-    x96.dir.name       = file.path(top.level.dir, "sa.sa.96"),        # HERE
-    COMPOSITE.features = COMPOSITE.features,
-    overwrite = overwrite)
-
-  CreateOneSetOfRandomCatalogs(
-    num.syn.tumors     = num.syn.tumors,
-    total.num.sigs     = num.sigs.to.create,    # was 65 -- too many! ncol(sp.sigs), # Take from actual number of SP signatures.
-    mut.mean           = sp.mut.mean,
-    mut.sd             = sp.mut.sd,
-    num.sigs.mean      = sp.num.sigs.mean,
-    num.sigs.sd        = sp.num.sigs.sd,
-    sig.name.prefix    = "SPRandSig",
-    sample.name.prefix = "SPRandSample",
-    composite.dir.name = file.path(top.level.dir, "sp.sa.COMPOSITE"), # HERE
-    x96.dir.name       = file.path(top.level.dir, "sp.sp"),           # HERE
-    COMPOSITE.features = COMPOSITE.features,
-    overwrite = overwrite)
-
-  # AddAllScripts(maxK = 50)
-  }
-
-Create.syn.30.random <- function(regress = FALSE) {
-  suppressWarnings(RNGkind(sample.kind="Rounding"))
-  # For compatibility with R < 3.6.0
-  set.seed(1443196)
-
-  CreateRandomSAAndSPSynCatalogs("tmp.syn.30.random.sigs",
-                           1000, overwrite = TRUE)
-  if (regress) {
-    diff.result <- Diff4SynDataSets("syn.30.random.sigs", unlink = TRUE)
-    if (diff.result[1] != "ok") {
-      message("\nThere was a difference, investigate\n",
-              paste0(diff.result, "\n"))
-    } else {
-      message("\nok\n")
-    }
-  }
-}
