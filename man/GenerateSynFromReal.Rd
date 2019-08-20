@@ -18,6 +18,9 @@ to indicate the organization of the data.}
 
 \item{sample.id.prefix}{Prefix for sample identifiers for the
 synthetic samples.}
+
+\item{top.level.dir}{Directory in which to create several files.
+This directory must already exist.}
 }
 \value{
 A list with elements:

@@ -6,16 +6,17 @@
 artificial signatures.}
 \usage{
 CreateRandomSAAndSPSynCatalogs(top.level.dir, num.syn.tumors,
-  overwrite = FALSE)
+  overwrite = FALSE, verbose = FALSE)
 }
 \arguments{
 \item{top.level.dir}{Path to top level of directory structure to be created.}
 
 \item{num.syn.tumors}{Number of synthetic tumors to create.}
 
-\item{overwrite}{If TRUE, overwrite existing directories / files.}
+\item{overwrite}{If \code{TRUE}, overwrite existing directories / files.}
 }
 \description{
 Create a full SignatureAnalyzer / SigProfiler test data set for "random"
 artificial signatures.
 }
+\keyword{internal}

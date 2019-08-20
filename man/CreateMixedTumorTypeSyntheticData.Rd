@@ -2,8 +2,7 @@
 % Please edit documentation in R/Create.syn.many.types.R
 \name{CreateMixedTumorTypeSyntheticData}
 \alias{CreateMixedTumorTypeSyntheticData}
-\title{Create a full SignatureAnalyzer / SigProfiler test data set for a
-set of various tumor types.}
+\title{Create a test data set based on >= 1 tumor types.}
 \usage{
 CreateMixedTumorTypeSyntheticData(top.level.dir, cancer.type.strings,
   num.syn.tumors, overwrite = FALSE, sa.exp = sa.all.real.exposures,
@@ -24,9 +23,24 @@ for each cancer type.}
 
 \item{overwrite}{If TRUE, overwrite existing directories / files.}
 
+\item{sa.exp}{SignatureAnalyzer exposures from which to select cancer types
+specified by \code{cancer.type.strings}. In the
+column names of \code{sa.exp} the cancer type string
+should be separated from the sample identifier by two colons
+(::).}
+
+\item{sp.exp}{SigProfiler exposures from which to select cancer types
+specified by \code{cancer.type.strings}. In the
+column names of \code{sp.exp} the cancer type string
+should be separated from the sample identifier by two colons
+(::).}
+
 \item{verbose}{If > 0, cat various messages.}
+
+\item{bladder.regress.hack}{For use by \code{\link{BladderSkin1000}}.
+Forces use of non-hyper-mutated exposures for bladder-TCC even if
+\code{sa.exp} and \code{sp.exp} include hyper-mutated exposures.}
 }
 \description{
-Create a full SignatureAnalyzer / SigProfiler test data set for a
-set of various tumor types.
+Create a test data set based on >= 1 tumor types.
 }

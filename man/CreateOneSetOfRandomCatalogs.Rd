@@ -9,7 +9,7 @@ of signatures.}
 CreateOneSetOfRandomCatalogs(num.syn.tumors, total.num.sigs, mut.mean,
   mut.sd, num.sigs.mean, num.sigs.sd, sig.name.prefix, sample.name.prefix,
   composite.dir.name, x96.dir.name, COMPOSITE.features,
-  overwrite = FALSE)
+  overwrite = FALSE, verbose = TRUE)
 }
 \arguments{
 \item{num.syn.tumors}{Total number of synthetic tumors to create.}
