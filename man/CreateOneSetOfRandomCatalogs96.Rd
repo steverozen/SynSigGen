@@ -5,8 +5,8 @@
 \title{Create catalog of "random" synthetic spectra for 96-channel mutation types.}
 \usage{
 CreateOneSetOfRandomCatalogs96(num.syn.tumors, total.num.sigs, mut.mean,
-  mut.sd, num.sigs.mean, num.sigs.sd, sig.name.prefix, sample.name.prefix,
-  dir.name, overwrite = FALSE, verbose = TRUE)
+  mut.sd, mean.num.sigs.per.tumor, sd.num.sigs.per.tumor, sig.name.prefix,
+  sample.name.prefix, dir.name, overwrite = FALSE, verbose = TRUE)
 }
 \arguments{
 \item{num.syn.tumors}{Total number of synthetic tumors to create.}
@@ -19,9 +19,9 @@ number of mutations due to each signature.}
 \item{mut.sd}{Standard deviation of the log10 of
 the number of mutations due to each signature.}
 
-\item{num.sigs.mean}{Mean number of signatures contributing to each tumor.}
+\item{mean.num.sigs.per.tumor}{Mean number of signatures contributing to each tumor.}
 
-\item{num.sigs.sd}{Standard deviation the number of signatures
+\item{sd.num.sigs.per.tumor}{Standard deviation the number of signatures
 in each tumor.}
 
 \item{sig.name.prefix}{String to put in front of an integer (as
