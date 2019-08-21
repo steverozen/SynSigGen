@@ -65,8 +65,7 @@ create.1000.random.2019.08.30 <- function() {
 }
 
 
-#' Create a full SignatureAnalyzer / SigProfiler test data set for "random"
-#' artificial signatures.
+#' Create a full SignatureAnalyzer / SigProfiler test data set for "random" artificial signatures.
 #'
 #' @param top.level.dir Path to top level of directory structure to be created.
 #'
@@ -200,8 +199,7 @@ CreateRandomMutSigProfiles <-
   return(retval)
 }
 
-#' Create means and standard deviations of log10 mutation counts for synthetic
-#' signatures.
+#' Create means and standard deviations of log10 mutation counts for synthetic signatures.
 #'
 #' @param num.sigs Number of signatures for which means and standard deviations
 #' are needed.
@@ -228,9 +226,7 @@ CreateMeanAndStdevForSigs <-
   return(list(syn.mean = syn.mean, syn.sd = syn.sd))
 }
 
-#' Create \code{num.exposures} signature counts
-#' from a normal distribution with \code{mean} and
-#' \code{sd}.
+#' Create \code{num.exposures} signature counts rom a normal distribution with \code{mean} and \code{sd}.
 #'
 #' Discard tumors with signature count = 0 or
 #' signature count > \code{total.num.sigs}.
@@ -262,8 +258,7 @@ CreateExposuresNums <- function(num.exposures, mean,
   return(retval[1:num.exposures])
 }
 
-#' Select \code{num.exp} signatures from the members of \code{sig.names} and
-#' create one column of an exposure matrix (as a vector).
+#' Select \code{num.exp} signatures from the members of \code{sig.names} and create one column of an exposure matrix (as a vector).
 #'
 #' @param target.num.exp Number of signatures to which sample "was" exposed.
 #'
@@ -292,9 +287,7 @@ ExposureNums2Exposures <-
     return(retval)
   }
 
-#' Create a pair of "random" synthetic catalogs, one for 96-channel
-#' features and one for COMPOSITE features, for one set
-#' of signatures.
+#' Create a pair of "random" synthetic catalogs, one for 96-channel and one for COMPOSITE features.
 #'
 #' @param num.syn.tumors Total number of synthetic tumors to create.
 #'
@@ -308,7 +301,7 @@ ExposureNums2Exposures <-
 #'
 #' @param num.sigs.mean Mean number of signatures contributing to each tumor.
 #'
-#' @param num.sigs.sd Standard deviation the number number of signatures
+#' @param num.sigs.sd Standard deviation the number of signatures
 #' contribution to each tumor.
 #'
 #' @param sig.name.prefix String to put in front of an integer (as
