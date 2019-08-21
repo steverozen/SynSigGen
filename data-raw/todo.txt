@@ -5,6 +5,7 @@ Additional small random data sets
 Additonal small data sets.
 
 Get rid of SetNewOutDir() and OutDir() Steve discuss w/ Wu Yang
+
 Make sure all regression on synthetic data sets are working Steve
 Clean up arguments in SBS5/SBS1 code Wu Yang
 
