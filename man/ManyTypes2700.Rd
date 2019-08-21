@@ -7,6 +7,6 @@
 ManyTypes2700(seed = 191906, regress = FALSE)
 }
 \description{
-Replaces \code{\link{Create.syn.many.types}}.
+Create a specific synthetic data set of 2,700 tumors.
 }
 \keyword{internal}
