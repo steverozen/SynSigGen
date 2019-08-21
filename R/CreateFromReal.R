@@ -311,8 +311,6 @@ BladderSkin1000 <- function(seed = 191906, regress = FALSE) {
 
 #' Create a specific synthetic data set of 2,700 tumors.
 #'
-#' Replaces \code{\link{Create.syn.many.types}}.
-#'
 #' @keywords internal
 
 ManyTypes2700 <- function(seed = 191906, regress = FALSE) {
