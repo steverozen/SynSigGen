@@ -48,6 +48,6 @@ NewDiff4SynDataSets <-
   cmd.result <-
     c("diff", paste("diff -rq", newdir, regressdirname), cmd.result)
   message("\nThere was a difference, investigate\n",
-          paste0(diff.result, "\n"))
+          paste0(cmd.result, "\n"))
   return(cmd.result)
 }

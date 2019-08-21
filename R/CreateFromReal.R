@@ -156,8 +156,6 @@ CreateMixedTumorTypeSyntheticData <- function(top.level.dir,
 #' @param num.syn.tumors The number of tumors to create \strong{for each cancer
 #'    type} in \code{cancer.types}.
 #'
-#' @param top.level.dir Path to top level of directory structure to be created.
-#'
 #' @param cancer.types Search \code{sa.exp} and \code{sp.exp}
 #' for exposures from tumors matching
 #' these strings. Each string should identify one tumor type, for
@@ -167,6 +165,12 @@ CreateMixedTumorTypeSyntheticData <- function(top.level.dir,
 #'
 #' @param data.suite.name Deprecated; the directory created will be
 #'   \code{file.path(enclosing.dir, paste0(data.suite.name, ".", seed))}.
+#'
+#' @param sa.exp A matrix of exposures; this function will use the
+#'        columns with column names beginning \code{paste0(cancer.type, "::")}.
+#'
+#' @param sp.exp A matrix of exposures; this function will use the
+#'        columns with column names beginning \code{paste0(cancer.type, "::")}.
 #'
 #' @param overwrite If TRUE, overwrite existing directories and files.
 #'
@@ -236,18 +240,20 @@ CreateFromReal <- function(seed,
 #'
 #' @keywords internal
 
-PancAdenoCA1000 <- function(seed = 191907,
-                            regress.dir = "data-raw/long.test.regression.data/syn.pancreas/",
-                            num.syn.tumors = 1000) {
+PancAdenoCA1000 <- function(seed           = 191907,
+                            regress.dir    = "data-raw/long.test.regression.data/syn.pancreas/",
+                            num.syn.tumors = 1000,
+                            top.level.dir  = "../Pan-AdenoCA",
+                            unlink         = FALSE) {
   CreateFromReal(
     seed           = seed,
-    enclosing.dir = "..",
+    top.level.dir  = top.level.dir,
     num.syn.tumors = num.syn.tumors,
     cancer.types   = "Panc-AdenoCA",
-    data.suite.name = "Panc-AdenoCA",
-    sa.exp      = SynSigGen::sa.no.hyper.real.exposures,
-    sp.exp      = SynSigGen::sp.no.hyper.real.exposures,
-    regress.dir = regress.dir
+    sa.exp         = SynSigGen::sa.no.hyper.real.exposures,
+    sp.exp         = SynSigGen::sp.no.hyper.real.exposures,
+    regress.dir    = regress.dir,
+    unlink         = unlink
   )
 }
 
@@ -259,8 +265,7 @@ PancAdenoCA1000 <- function(seed = 191907,
 #' \code{\link{Create.3.4.40.Abstract}}.
 #'
 #' @keywords internal
-RCCOvary1000 <- function(seed = 191905, unlink = FALSE,
-                         regress.dir = NULL) {
+RCCOvary1000 <- function(seed = 191905, unlink = FALSE, regress.dir = NULL) {
   CreateFromReal(
     seed           = seed,
     enclosing.dir = "..",

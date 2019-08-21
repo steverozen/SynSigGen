@@ -1,13 +1,17 @@
 context("Test CreateFromReal")
 
 test_that("CreateFromReal PancAdeno-CA", {
+  skip_if_not_installed("ICAMS", minimum_version = "2.0.9")
   expect_true(
     PancAdenoCA1000(seed = 123,
                     num.syn.tumors = 5,
-                    regress.dir = "rdata/Panc-AdenoCA.123/"))
+                    top.level.dir  = tempfile(pattern = "regress.pancadeno"),
+                    regress.dir    = "rdata/Panc-AdenoCA.123/",
+                    unlink         = TRUE))
 })
 
 test_that("CreateFromReal Many", {
+  skip_if_not_installed("ICAMS", minimum_version = "2.0.9")
   CreateFromReal(
     seed           = 123,
     top.level.dir  = tempfile(pattern = "regress.create.many"),
@@ -24,6 +28,8 @@ test_that("CreateFromReal Many", {
 })
 
 test_that("CreateFromReal RCCOvary1000", {
+  skip_if_not_installed("ICAMS", minimum_version = "2.0.9")
+  skip("Takes too long")
   expect_identical(
     RCCOvary1000(regress.dir = "rdata/rcc.etc/", unlink = TRUE),
     TRUE)

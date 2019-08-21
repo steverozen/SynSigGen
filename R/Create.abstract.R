@@ -22,11 +22,9 @@ Create.3.4.40.Abstract <-
 
     top.level.dir <- paste0("../syn.3.5.40.abst.", seed)
     if (dir.exists(top.level.dir)) {
-      if (!overwrite) stop(top.level.dir," exists and overwrite == FALSE")
+      if (!overwrite) stop(top.level.dir, " exists and overwrite is FALSE")
     } else {
-      if (!dir.create(top.level.dir)) {
-        stop("Failed to create ", top.level.dir)
-      }
+      MustCreateDir(top.level.dir)
     }
 
     set.seed(seed)
@@ -151,19 +149,21 @@ Create.2.7a.7b.Abstract <-
   function(seed        = 55,
            overwrite   = TRUE,
            regress.dir =
-             "data-raw/long.test.regression.data/syn.2.7a.7b.abst/") {
+             "data-raw/long.test.regression.data/syn.2.7a.7b.abst/",
+           num.syn.tumors = 1000,
+           top.level.dir = NULL,
+           unlink        = FALSE) {
 
-    top.level.dir <- paste0("../syn.2.7a.7b.abst.", seed)
+    if (is.null(top.level.dir)) {
+      top.level.dir <- paste0("../syn.2.7a.7b.abst.", seed)
+    }
     if (dir.exists(top.level.dir)) {
-      if (!overwrite) stop(top.level.dir," exists and overwrite == FALSE")
+      if (!overwrite) stop(top.level.dir, " exists and overwrite is FALSE")
     } else {
-      if (!dir.create(top.level.dir)) {
-        stop("Failed to create ", top.level.dir)
-      }
+      MustCreateDir(top.level.dir)
     }
 
     set.seed(seed)
-    num.syn.tumors <- 1000
 
     sa.bladder.exp <-
       GetExpForOneCancerType("Bladder-TCC",
@@ -189,7 +189,6 @@ Create.2.7a.7b.Abstract <-
     x.sp.parms <-
       cbind(sp.bladder.parms[ , "SBS2", drop = FALSE],
             sp.skin.parms[ , c("SBS7a", "SBS7b"), drop = FALSE])
-
 
     x.sa.parms <-
       cbind(sa.bladder.parms[ , "BI_COMPOSITE_SBS2_P", drop = FALSE],
@@ -254,13 +253,11 @@ Create.2.7a.7b.Abstract <-
 
     if (!is.null(regress.dir)) {
       diff.result <-
-        NewDiff4SynDataSets(top.level.dir, regress.dir, unlink = FALSE)
-      if (diff.result[1] != "ok") {
-        message("\nThere was a difference, investigate\n",
-                paste0(diff.result, "\n"))
-      } else {
-        message("\nok\n")
-      }
+        NewDiff4SynDataSets(newdir         = top.level.dir,
+                            regressdirname = regress.dir,
+                            unlink         = unlink,
+                            verbose        = TRUE)
+      return(diff.result[1] == "ok")
     }
   }
 
