@@ -18,7 +18,9 @@ Diff4SynDataSets <- function(dirname, unlink) {
 }
 
 
-NewDiff4SynDataSets <- function(newdir, regressdirname, unlink) {
+NewDiff4SynDataSets <-
+  function(newdir, regressdirname, unlink, verbose = FALSE) {
+
   if (!dir.exists(regressdirname)) {
     stop("regressdirname ", regressdirname, " does not exist\n",
          "getwd() = ", getwd())
@@ -39,12 +41,13 @@ NewDiff4SynDataSets <- function(newdir, regressdirname, unlink) {
         return("failed to unlink")
       }
     }
+    if (verbose) message("\nok\n")
     return("ok")
   }
 
   cmd.result <-
     c("diff", paste("diff -rq", newdir, regressdirname), cmd.result)
-  # cat(cmd.result, sep = "\n")
-
+  message("\nThere was a difference, investigate\n",
+          paste0(diff.result, "\n"))
   return(cmd.result)
 }

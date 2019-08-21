@@ -7,6 +7,11 @@
 BladderSkin1000(seed = 191906, regress = FALSE)
 }
 \description{
-Generate synthetic data sets modeled on bladder TCC and skin melanoma.
+Replaces the first part of \code{data-raw/Create.2.7a.7b.Rmd}.
+}
+\details{
+#' The second half of \code{data-raw/Create.2.7a.7b.Rmd}
+is replaced by
+\code{\link{Create.2.7a.7b.Abstract}}.
 }
 \keyword{internal}

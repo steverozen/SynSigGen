@@ -4,7 +4,7 @@
 \alias{Create.2.7a.7b.Abstract}
 \title{This function supersedes the second part of \code{data-raw/Create.2.7a.7b.Rmd}.}
 \usage{
-Create.2.7a.7b.Abstract(seed = 44, overwrite = TRUE,
+Create.2.7a.7b.Abstract(seed = 55, overwrite = TRUE,
   regress.dir = "data-raw/long.test.regression.data/syn.2.7a.7b.abst/")
 }
 \description{
