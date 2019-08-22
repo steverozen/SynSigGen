@@ -18,11 +18,13 @@ test_that("CreateRandomSyn 5 spectra", {
                     regress.dir    = "rdata/random.5/"))
 })
 
-test_that("CreateRandomSyn 100 spectra", {
+test_that("CreateRandomSyn 1000 spectra", {
   skip_on_cran()
+  # debug(CreateOneSetOfRandomCatalogs)
   expect_true(
     CreateRandomSyn(top.level.dir  = tempfile("test.random.1000"),
                     seed           = 1443196,
                     num.syn.tumors = 1000,
-                    regress.dir    = "rdata/syn.30.random.sigs/"))
+                    regress.dir    = "rdata/syn.30.random.sigs/",
+                    verbose        = TRUE))
 })

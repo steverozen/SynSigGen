@@ -83,11 +83,7 @@ CreateRandomSAAndSPSynCatalogs <-
                             ICAMS::catalog.row.order[["ID"]])
     stopifnot(length(COMPOSITE.features) == 1697)
 
-    if (dir.exists(top.level.dir)) {
-      if (!overwrite) stop(top.level.dir, " exists and overwrite is FALSE")
-    } else {
-      MustCreateDir(top.level.dir)
-    }
+    MustCreateDir(top.level.dir, overwrite)
 
     # The following are for choosing the mean number of mutations due to each
     # synthetic signature.
@@ -116,7 +112,7 @@ CreateRandomSAAndSPSynCatalogs <-
     num.sigs.to.create <- 30 # Also tired, 60 (ncol(SynSig::sa.96.sigs));
     # this is too many.
 
-    CreateOneSetOfRandomCatalogs(
+    CreateOnePairOfRandomCatalogs(
       num.syn.tumors     = num.syn.tumors,
       total.num.sigs     = num.sigs.to.create,
       mut.mean           = sa.mut.mean,
@@ -131,7 +127,7 @@ CreateRandomSAAndSPSynCatalogs <-
       overwrite          = overwrite,
       verbose            = verbose)
 
-    CreateOneSetOfRandomCatalogs(
+    CreateOnePairOfRandomCatalogs(
       num.syn.tumors     = num.syn.tumors,
       total.num.sigs     = num.sigs.to.create,
       mut.mean           = sp.mut.mean,
@@ -325,7 +321,7 @@ ExposureNums2Exposures <-
 #'
 #' @keywords internal
 
-CreateOneSetOfRandomCatalogs <-
+CreateOnePairOfRandomCatalogs <-
   function(num.syn.tumors,
            total.num.sigs,
            mut.mean,
@@ -351,6 +347,26 @@ CreateOneSetOfRandomCatalogs <-
     sig.info <- CreateMeanAndStdevForSigs(
       total.num.sigs, mut.mean, mut.sd, colnames(syn.96.sigs))
 
+    use.new <- TRUE
+
+    if (use.new) {
+      exp <- CreateRandomExposures(
+        num.exposures = num.syn.tumors,
+        mean.num.sigs.per.tumor = num.sigs.mean,
+        sd.num.sigs.per.tumor = num.sigs.sd,
+        total.num.sigs = total.num.sigs,
+        per.sig.mean.and.sd = sig.info,
+        sample.name.prefix = sample.name.prefix,
+        sigs = syn.COMPOSITE.sigs,
+        # Todo(Steve): The reason for using COMPOSITE is subtle -- need to review and document.
+        verbose = verbose)
+
+      WriteExposure(exp, "NEW.exp.csv")
+
+    }
+
+    if (!use.new) {
+
     buffer <- 100
 
     exp.nums <-
@@ -361,7 +377,7 @@ CreateOneSetOfRandomCatalogs <-
         total.num.sigs = total.num.sigs)
 
     if (verbose) {
-      message("\nCreateOneSetOfRandomCatalogs\n",
+      message("\nCreateOnePairOfRandomCatalogs\n",
               "statistics on number of exposures per tumor")
       message("for ", x96.dir.name, " and ", composite.dir.name, ":")
       message("Number of tumors is ", num.syn.tumors)
@@ -393,6 +409,12 @@ CreateOneSetOfRandomCatalogs <-
     exp <- exp[ , 1:num.syn.tumors]
     colnames(exp) <- paste0(sample.name.prefix, 1:num.syn.tumors)
 
+    WriteExposure(exp, "OLD.exp.csv")
+
+    }
+
+
+
     NewCreateAndWriteCatalog(
       sigs      = syn.COMPOSITE.sigs,
       exp       = exp,
@@ -404,4 +426,6 @@ CreateOneSetOfRandomCatalogs <-
       exp       = exp,
       dir       = x96.dir.name,
       overwrite = overwrite)
+
+
   }

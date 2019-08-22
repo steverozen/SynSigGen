@@ -70,7 +70,7 @@ GenerateOneRowRandom <- function(row,
   MustCreateDir(dir, overwrite)
   total.num.sigs <- row["total.num.sigs"]
 
-  retval <- CreateOneSetOfRandomCatalogs96(
+  retval <- CreateOneRandomCatalog(
     num.syn.tumors = num.spectra,
     total.num.sigs         = total.num.sigs,
     mut.mean                = mut.mean,
@@ -86,12 +86,25 @@ GenerateOneRowRandom <- function(row,
   return(retval)
 }
 
+if (FALSE) {
+  CreateRandomSyn(top.level.dir  = tempfile("test.random.5"),
+                  seed           = 1443196,
+                  num.syn.tumors = 5,
+                  regress.dir    = "tests/testthat/rdata/random.5/")
+
+
+  CreateRandomSyn(top.level.dir  = "foo", seed = 1443196,
+                  num.syn.tumors = 1000,
+                  regress.dir    = NULL, #"tests/testthat/rdata/syn.30.random.sigs/",
+                  verbose        = TRUE,
+                  overwrite      = TRUE)
+}
 
 CreateRandomExposures <- function(num.exposures,
                                   mean.num.sigs.per.tumor,
                                   sd.num.sigs.per.tumor,
                                   total.num.sigs,
-                                  sig.info,
+                                  per.sig.mean.and.sd,
                                   sample.name.prefix,
                                   sigs,
                                   verbose) {
@@ -125,7 +138,11 @@ CreateRandomExposures <- function(num.exposures,
     sapply(exp.nums,
            function(x) {
              ExposureNums2Exposures(
-               x, colnames(sigs), sig.info$syn.mean, sig.info$syn.sd) })
+               x,
+               colnames(sigs),
+               per.sig.mean.and.sd$syn.mean,
+               per.sig.mean.and.sd$syn.sd)
+             })
 
   test.catalog <- sigs %*% exp
   test.catalog <- round(test.catalog, digits = 0)
@@ -182,7 +199,7 @@ CreateRandomExposures <- function(num.exposures,
 #'
 #' @keywords internal
 
-CreateOneSetOfRandomCatalogs96 <-
+CreateOneRandomCatalog <-
   function(num.syn.tumors,
            total.num.sigs,
            mut.mean,
@@ -208,7 +225,7 @@ CreateOneSetOfRandomCatalogs96 <-
         mean.num.sigs.per.tumor = mean.num.sigs.per.tumor,
         sd.num.sigs.per.tumor   = sd.num.sigs.per.tumor,
         total.num.sigs          = total.num.sigs,
-        sig.info                = sig.info,
+        per.sig.mean.and.sd     = sig.info,
         sample.name.prefix      = sample.name.prefix,
         sigs                    = sigs,
         verbose                 = verbose)
