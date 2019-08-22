@@ -29,75 +29,24 @@ ParametersSALike <- function() {
 }
 
 
-GenerateAllRandom200 <- function(parm,
-                                 top.level.dir,
-                                 mut.mean,
-                                 mut.sd,
-                                 overwrite = TRUE,
-                                 verbose = TRUE) {
-  MustCreateDir(top.level.dir, overwrite)
-  for (i in 1:nrow(parm)) {
-    num.sigs <- parm[i, "total.num.sigs"]
-    GenerateOneRowRandom(
-      row         = unlist(parm[i, ]),
-      dir         = file.path(top.level.dir, paste0(".", num.sigs, ".sigs")),
-      num.spectra = 200,
-      mut.mean    = mut.mean,
-      mut.sd      = mut.sd,
-      overwrite   = overwrite,
-      verbose     = verbose)
-  }
-}
-
-GenerateAllRandomSP <-
-  function(top.level.dir = "foo", overwite = TRUE, verbose = TRUE) {
-  GenerateAllRandom200(
-    parm = ParametersSPLike(),
-    top.level.dir = top.level.dir,
-    mut.mean      = 2.97,
-    mut.sd        = 1.331
-  )
+MeanAndSD1Sig <- function(exposure.row) {
+  exp <- exposure.row[exposure.row > 0.5]
+  exp <- log10(exp)
+  return(c(mean = mean(exp), sd = sd(exp)))
 }
 
 
-GenerateOneRowRandom <- function(row,
-                                 dir,
-                                 num.spectra,
-                                 mut.mean,
-                                 mut.sd,
-                                 overwrite,
-                                 verbose) {
-  MustCreateDir(dir, overwrite)
-  total.num.sigs <- row["total.num.sigs"]
-
-  retval <- CreateOneRandomCatalog(
-    num.syn.tumors = num.spectra,
-    total.num.sigs         = total.num.sigs,
-    mut.mean                = mut.mean,
-    mut.sd                  = mut.sd,
-    mean.num.sigs.per.tumor = row["mean.num.sigs.per.tumor"],
-    sd.num.sigs.per.tumor   = row["sd.num.sigs.per.tumor"],
-    sig.name.prefix         = "RandSig",
-    sample.name.prefix      = "S",
-    dir.name                = dir,
-    overwrite               = overwrite,
-    verbose                 = verbose)
-
-  return(retval)
+PerSigMeanAndSDSA <- function()  {
+  res1 <- apply(SynSigGen::sa.all.real.exposures, MARGIN = 1, FUN = MeanAndSD1Sig)
+  res1 <- res1[ , !is.na(res1[2, ])]
+  return(res1)
 }
 
-if (FALSE) {
-  CreateRandomSyn(top.level.dir  = tempfile("test.random.5"),
-                  seed           = 1443196,
-                  num.syn.tumors = 5,
-                  regress.dir    = "tests/testthat/rdata/random.5/")
 
-
-  CreateRandomSyn(top.level.dir  = "foo", seed = 1443196,
-                  num.syn.tumors = 1000,
-                  regress.dir    = NULL, #"tests/testthat/rdata/syn.30.random.sigs/",
-                  verbose        = TRUE,
-                  overwrite      = TRUE)
+PerSigMeanAndSDSP <- function() {
+  res1 <- apply(SynSigGen::sp.all.real.exposures, MARGIN = 1, FUN = MeanAndSD1Sig)
+  res1 <- res1[ , !is.na(res1[2, ])]
+  return(res1)
 }
 
 CreateRandomExposures <- function(num.exposures,
@@ -142,7 +91,7 @@ CreateRandomExposures <- function(num.exposures,
                colnames(sigs),
                per.sig.mean.and.sd$syn.mean,
                per.sig.mean.and.sd$syn.sd)
-             })
+           })
 
   test.catalog <- sigs %*% exp
   test.catalog <- round(test.catalog, digits = 0)
@@ -163,6 +112,120 @@ CreateRandomExposures <- function(num.exposures,
 
   return(exp)
 }
+
+
+
+GenerateAllRandom200 <- function(parm,
+                                 top.level.dir,
+                                 mut.mean,
+                                 mut.sd,
+                                 overwrite = TRUE,
+                                 verbose = TRUE) {
+  MustCreateDir(top.level.dir, overwrite)
+  for (i in 1:nrow(parm)) {
+    num.sigs <- parm[i, "total.num.sigs"]
+    Generate1RowRandom(
+      row         = unlist(parm[i, ]),
+      dir         = file.path(top.level.dir, paste0(".", num.sigs, ".sigs")),
+      num.spectra = 200,
+      mut.mean    = mut.mean,
+      mut.sd      = mut.sd,
+      overwrite   = overwrite,
+      verbose     = verbose)
+  }
+}
+
+GenerateAllRandomSP <-
+  function(top.level.dir = "foo", overwite = TRUE, verbose = TRUE) {
+    GenerateAllRandom200(
+      parm = ParametersSPLike(),
+      top.level.dir = top.level.dir,
+      mut.mean      = 2.97,
+      mut.sd        = 1.331
+    )
+  }
+
+Generate1RowRandom <- function(row,
+                               num.spectra,
+                               mut.mean,
+                               mut.sd,
+                               overwrite,
+                               verbose) {
+
+  retval <- CreateOneRandomCatalog(
+    num.syn.tumors = num.spectra,
+    total.num.sigs         = row["total.num.sigs"],
+    mut.mean                = mut.mean,
+    mut.sd                  = mut.sd,
+    mean.num.sigs.per.tumor = row["mean.num.sigs.per.tumor"],
+    sd.num.sigs.per.tumor   = row["sd.num.sigs.per.tumor"],
+    sig.name.prefix         = "RandSig",
+    sample.name.prefix      = "S",
+    dir.name                = dir,
+    overwrite               = overwrite,
+    verbose                 = verbose)
+
+  return(retval)
+}
+
+
+GenerateAllRandomExpKnownSigs200 <- function(parm,
+                                             top.level.dir,
+                                             overwrite = TRUE,
+                                             verbose = TRUE,
+                                             sigs,
+                                             sig.info) {
+  MustCreateDir(top.level.dir, overwrite)
+  for (i in 1:nrow(parm)) {
+    Create1CatRandomExpKnownSigs(
+      top.level.dkr = top.level.dir,
+      num.syn.tumors = 200,
+      parm.row       = parm[i, ],
+      sigs           = sigs,
+      sig.info       = sig.info,
+      overwrite   = overwrite,
+      verbose     = verbose)
+  }
+}
+
+
+Create1CatRandomExpKnownSigs <-
+  function(top.level.dir,
+           num.syn.tumors,
+           parm.row,
+           sigs,
+           sig.info,
+           overwrite = FALSE,
+           verbose = TRUE) {
+
+    parm.row <- unlist(parm.row)
+    total.num.sigs <- parm.row["total.num.sigs"]
+
+    dir <-  file.path(top.level.dir, paste0(".", total.num.sigs, ".sigs"))
+
+    MustCreateDir(dir, overwrite)
+
+    per.sig.mean.and.sd <- list(mean = sig.info[1, ],
+                                sd   = sig.info[2, ])
+
+    exp <-
+      CreateRandomExposures(
+        num.exposures           = num.syn.tumors,
+        mean.num.sigs.per.tumor = parm.row["mean.num.sigs.per.tumor"],
+        sd.num.sigs.per.tumor   = parm.row["sd.num.sigs.per.tumor"],
+        total.num.sigs          = total.num.sigs,
+        per.sig.mean.and.sd     = per.sig.mean.and.sd,
+        sample.name.prefix      = "S",
+        sigs                    = sigs,
+        verbose                 = verbose)
+
+    NewCreateAndWriteCatalog(
+      sigs      = sigs,
+      exp       = exp,
+      dir       = dir,
+      overwrite = overwrite)
+
+  }
 
 
 #' Create catalog of "random" synthetic spectra for 96-channel mutation types.
@@ -237,3 +300,6 @@ CreateOneRandomCatalog <-
       overwrite = overwrite)
 
   }
+
+
+

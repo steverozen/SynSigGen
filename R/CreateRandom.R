@@ -347,10 +347,7 @@ CreateOnePairOfRandomCatalogs <-
     sig.info <- CreateMeanAndStdevForSigs(
       total.num.sigs, mut.mean, mut.sd, colnames(syn.96.sigs))
 
-    use.new <- TRUE
-
-    if (use.new) {
-      exp <- CreateRandomExposures(
+    exp <- CreateRandomExposures(
         num.exposures = num.syn.tumors,
         mean.num.sigs.per.tumor = num.sigs.mean,
         sd.num.sigs.per.tumor = num.sigs.sd,
@@ -362,58 +359,6 @@ CreateOnePairOfRandomCatalogs <-
         verbose = verbose)
 
       WriteExposure(exp, "NEW.exp.csv")
-
-    }
-
-    if (!use.new) {
-
-    buffer <- 100
-
-    exp.nums <-
-      CreateExposuresNums(
-        num.exposures = num.syn.tumors + buffer,
-        mean = num.sigs.mean,
-        sd = num.sigs.sd,
-        total.num.sigs = total.num.sigs)
-
-    if (verbose) {
-      message("\nCreateOnePairOfRandomCatalogs\n",
-              "statistics on number of exposures per tumor")
-      message("for ", x96.dir.name, " and ", composite.dir.name, ":")
-      message("Number of tumors is ", num.syn.tumors)
-      ss <- summary(exp.nums)
-      for (nn in names(ss)) {
-        message(nn, " = ", ss[nn])
-      }
-      message("sd = ", sd(exp.nums), "\n")
-    }
-
-    exp <-
-      sapply(exp.nums,
-             function(x) {
-               ExposureNums2Exposures(
-                 x, colnames(syn.96.sigs), sig.info$syn.mean, sig.info$syn.sd) })
-
-    test.catalog <- syn.COMPOSITE.sigs %*% exp
-    stopifnot(!any(colSums(test.catalog) < 1))
-    test.catalog <- round(test.catalog, digits = 0)
-    zero.mutations <- colSums(test.catalog) == 0
-    # colSums(test.catalog) == 0 can occur after rounding even if
-    # any(colSUms(test.catalog) < 1) before rounding is FALSE, if
-    # before rounding mutiple mutational classes had < 0.5 mutations.
-
-    exp <- exp[ , !zero.mutations]
-    if (ncol(exp) < num.syn.tumors)
-      stop("Too many tumors with no mutations; check the code, ",
-            "possibly increase the value of variable buffer")
-    exp <- exp[ , 1:num.syn.tumors]
-    colnames(exp) <- paste0(sample.name.prefix, 1:num.syn.tumors)
-
-    WriteExposure(exp, "OLD.exp.csv")
-
-    }
-
-
 
     NewCreateAndWriteCatalog(
       sigs      = syn.COMPOSITE.sigs,
