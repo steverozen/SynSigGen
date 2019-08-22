@@ -29,26 +29,6 @@ ParametersSALike <- function() {
 }
 
 
-MeanAndSD1Sig <- function(exposure.row) {
-  exp <- exposure.row[exposure.row > 0.5]
-  exp <- log10(exp)
-  return(c(mean = mean(exp), sd = sd(exp)))
-}
-
-
-PerSigMeanAndSDSA <- function()  {
-  res1 <- apply(SynSigGen::sa.all.real.exposures, MARGIN = 1, FUN = MeanAndSD1Sig)
-  res1 <- res1[ , !is.na(res1[2, ])]
-  return(res1)
-}
-
-
-PerSigMeanAndSDSP <- function() {
-  res1 <- apply(SynSigGen::sp.all.real.exposures, MARGIN = 1, FUN = MeanAndSD1Sig)
-  res1 <- res1[ , !is.na(res1[2, ])]
-  return(res1)
-}
-
 CreateRandomExposures <- function(num.exposures,
                                   mean.num.sigs.per.tumor,
                                   sd.num.sigs.per.tumor,
@@ -68,14 +48,11 @@ CreateRandomExposures <- function(num.exposures,
       total.num.sigs = total.num.sigs)
 
   if (verbose) {
-    message("\nCreateOneSetOfRandomCatalogs\n",
-            "statistics on number of exposures per tumor")
-    message("for targets\nmean(num sigs per tumor) = ",
-            mean.num.sigs.per.tumor , "\n",
-            "\nsd(num sigs per tumor) = ",
-            sd.num.sigs.per.tumor,
-            "\ntotal.num.sigs = ", total.num.sigs)
-    message("\nNumber of tumors is ", num.exposures)
+      message("\n", paste(rep("=", 40), collapse=""),
+              "\nCreate1CatRandomExpKnownSigs",
+              "\ntotal.num.sigs          = ", total.num.sigs,
+              "\nmean.num.sigs.per.tumor = ", mean.num.sigs.per.tumor,
+              "\nsd.num.sigs.per.tumor   = ", sd.num.sigs.per.tumor)
     ss <- summary(exp.nums)
     for (nn in names(ss)) {
       message(nn, " = ", ss[nn])
@@ -124,6 +101,7 @@ GenerateAllRandom200 <- function(parm,
   MustCreateDir(top.level.dir, overwrite)
   for (i in 1:nrow(parm)) {
     num.sigs <- parm[i, "total.num.sigs"]
+    # Replace with Create1CatRandomExpRandomSigs Todo
     Generate1RowRandom(
       row         = unlist(parm[i, ]),
       dir         = file.path(top.level.dir, paste0(".", num.sigs, ".sigs")),
@@ -145,6 +123,7 @@ GenerateAllRandomSP <-
     )
   }
 
+
 Generate1RowRandom <- function(row,
                                num.spectra,
                                mut.mean,
@@ -152,7 +131,7 @@ Generate1RowRandom <- function(row,
                                overwrite,
                                verbose) {
 
-  retval <- CreateOneRandomCatalog(
+  retval <- Create1CatRandomExpRandomSigs(
     num.syn.tumors = num.spectra,
     total.num.sigs         = row["total.num.sigs"],
     mut.mean                = mut.mean,
@@ -169,65 +148,6 @@ Generate1RowRandom <- function(row,
 }
 
 
-GenerateAllRandomExpKnownSigs200 <- function(parm,
-                                             top.level.dir,
-                                             overwrite = TRUE,
-                                             verbose = TRUE,
-                                             sigs,
-                                             sig.info) {
-  MustCreateDir(top.level.dir, overwrite)
-  for (i in 1:nrow(parm)) {
-    Create1CatRandomExpKnownSigs(
-      top.level.dkr = top.level.dir,
-      num.syn.tumors = 200,
-      parm.row       = parm[i, ],
-      sigs           = sigs,
-      sig.info       = sig.info,
-      overwrite   = overwrite,
-      verbose     = verbose)
-  }
-}
-
-
-Create1CatRandomExpKnownSigs <-
-  function(top.level.dir,
-           num.syn.tumors,
-           parm.row,
-           sigs,
-           sig.info,
-           overwrite = FALSE,
-           verbose = TRUE) {
-
-    parm.row <- unlist(parm.row)
-    total.num.sigs <- parm.row["total.num.sigs"]
-
-    dir <-  file.path(top.level.dir, paste0(".", total.num.sigs, ".sigs"))
-
-    MustCreateDir(dir, overwrite)
-
-    per.sig.mean.and.sd <- list(mean = sig.info[1, ],
-                                sd   = sig.info[2, ])
-
-    exp <-
-      CreateRandomExposures(
-        num.exposures           = num.syn.tumors,
-        mean.num.sigs.per.tumor = parm.row["mean.num.sigs.per.tumor"],
-        sd.num.sigs.per.tumor   = parm.row["sd.num.sigs.per.tumor"],
-        total.num.sigs          = total.num.sigs,
-        per.sig.mean.and.sd     = per.sig.mean.and.sd,
-        sample.name.prefix      = "S",
-        sigs                    = sigs,
-        verbose                 = verbose)
-
-    NewCreateAndWriteCatalog(
-      sigs      = sigs,
-      exp       = exp,
-      dir       = dir,
-      overwrite = overwrite)
-
-  }
-
-
 #' Create catalog of "random" synthetic spectra for 96-channel mutation types.
 #'
 #' @param num.syn.tumors Total number of synthetic tumors to create.
@@ -240,7 +160,8 @@ Create1CatRandomExpKnownSigs <-
 #' @param mut.sd Standard deviation of the log10 of
 #'  the number of mutations due to each signature.
 #'
-#' @param mean.num.sigs.per.tumor Mean number of signatures contributing to each tumor.
+#' @param mean.num.sigs.per.tumor Mean number of signatures
+#'        contributing to each tumor.
 #'
 #' @param sd.num.sigs.per.tumor Standard deviation the number of signatures
 #' in each tumor.
@@ -262,7 +183,7 @@ Create1CatRandomExpKnownSigs <-
 #'
 #' @keywords internal
 
-CreateOneRandomCatalog <-
+Create1CatRandomExpRandomSigs <-
   function(num.syn.tumors,
            total.num.sigs,
            mut.mean,
@@ -301,5 +222,134 @@ CreateOneRandomCatalog <-
 
   }
 
+# ============================================================
+# Generate spectra from randomly selected sets of
+# real mutational signatures.
 
+MeanAndSD1Sig <- function(exposure.row) {
+  exp <- exposure.row[exposure.row > 0.5]
+  exp <- log10(exp)
+  return(c(mean = mean(exp), sd = sd(exp)))
+}
+
+
+PerSigMeanAndSDSA <- function()  {
+  res1 <- apply(SynSigGen::sa.all.real.exposures, MARGIN = 1, FUN = MeanAndSD1Sig)
+  res1 <- res1[ , !is.na(res1[2, ])]
+  return(res1)
+}
+
+
+PerSigMeanAndSDSP <- function() {
+  res1 <- apply(SynSigGen::sp.all.real.exposures, MARGIN = 1, FUN = MeanAndSD1Sig)
+  res1 <- res1[ , !is.na(res1[2, ])]
+  return(res1)
+}
+
+
+Generate.SA.signatures.random.subsets <-
+  function(top.level.dir = "data-raw/SA.signatures.random.subsets",
+           overwrite     = TRUE,
+           verbose       = TRUE,
+           seed          = 3100) {
+    MustCreateDir(top.level.dir, overwrite = TRUE)
+    log <- testthat::capture_messages(
+      GenerateMatrixRandomExpKnownSigs200(
+        parm          = ParametersSALike(),
+        top.level.dir = top.level.dir,
+        sigs          = SynSigGen::sa.96.sigs,
+        sig.info      = PerSigMeanAndSDSA(),
+        overwrite     = overwrite,
+        verbose       = verbose,
+        seed          = seed
+      ))
+    write(x = log, file = file.path(top.level.dir, "log.txt"))
+  }
+
+Generate.SP.signatures.random.subsets <-
+  function(top.level.dir = "data-raw/SP.signatures.random.subsets",
+           overwrite     = TRUE,
+           verbose       = TRUE,
+           seed          = 3120) {
+    MustCreateDir(top.level.dir, overwrite = TRUE)
+    log <- testthat::capture_messages(
+      GenerateMatrixRandomExpKnownSigs200(
+        parm          = ParametersSPLike(),
+        top.level.dir = top.level.dir,
+        sigs          = SynSigGen::sp.sigs,
+        sig.info      = PerSigMeanAndSDSP(),
+        overwrite     = overwrite,
+        verbose       = verbose,
+        seed          = seed))
+    write(x = log, file = file.path(top.level.dir, "log.txt"))
+
+  }
+
+
+GenerateMatrixRandomExpKnownSigs200 <- function(parm,
+                                                top.level.dir,
+                                                overwrite = TRUE,
+                                                verbose = TRUE,
+                                                sigs,
+                                                sig.info,
+                                                seed = seed) {
+  MustCreateDir(top.level.dir, overwrite)
+  set.seed(seed)
+  for (i in 1:nrow(parm)) {
+    Create1CatRandomExpKnownSigs(
+      top.level.dir = top.level.dir,
+      num.syn.tumors = 200,
+      parm.row       = parm[i, ],
+      sigs           = sigs,
+      sig.info       = sig.info,
+      overwrite      = overwrite,
+      verbose        = verbose)
+  }
+}
+
+
+Create1CatRandomExpKnownSigs <-
+  function(top.level.dir,
+           num.syn.tumors,
+           parm.row,
+           sigs,
+           sig.info,
+           overwrite = FALSE,
+           verbose = TRUE) {
+
+    parm.row <- unlist(parm.row)
+    total.num.sigs <- parm.row["total.num.sigs"]
+
+    dir <-  file.path(top.level.dir, paste0(total.num.sigs, ".sigs"))
+
+    MustCreateDir(dir, overwrite)
+
+    # Select total.num.sigs columns from sig.info
+    cols.to.use <- sample(ncol(sig.info), total.num.sigs)
+    sig.info    <- sig.info[ , cols.to.use, drop = FALSE]
+
+    per.sig.mean.and.sd <- list(syn.mean = sig.info[1, ],
+                                syn.sd   = sig.info[2, ])
+
+    sigs <- sigs[ , colnames(sig.info)] # We do not have sig info
+                                        # for some rare signatures.
+
+    exp <-
+      CreateRandomExposures(
+        num.exposures           = num.syn.tumors,
+        mean.num.sigs.per.tumor = parm.row["mean.num.sigs.per.tumor"],
+        sd.num.sigs.per.tumor   = parm.row["sd.num.sigs.per.tumor"],
+        total.num.sigs          = total.num.sigs,
+        per.sig.mean.and.sd     = per.sig.mean.and.sd,
+        sample.name.prefix      = "S",
+        sigs                    = sigs,
+        verbose                 = verbose)
+
+    NewCreateAndWriteCatalog(
+      sigs      = sigs,
+      exp       = exp,
+      dir       = dir,
+      overwrite = overwrite)
+
+  }
 

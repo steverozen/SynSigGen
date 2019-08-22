@@ -1,0 +1,110 @@
+
+========================================
+Create1CatRandomExpKnownSigs
+total.num.sigs          = 3
+mean.num.sigs.per.tumor = 2.9
+sd.num.sigs.per.tumor   = 1
+
+Min. = 1
+
+1st Qu. = 2
+
+Median = 2
+
+Mean = 2.39333333333333
+
+3rd Qu. = 3
+
+Max. = 3
+
+sd = 0.663392181274503
+
+
+
+========================================
+Create1CatRandomExpKnownSigs
+total.num.sigs          = 5
+mean.num.sigs.per.tumor = 4.9
+sd.num.sigs.per.tumor   = 2
+
+Min. = 1
+
+1st Qu. = 3
+
+Median = 4
+
+Mean = 3.84
+
+3rd Qu. = 5
+
+Max. = 5
+
+sd = 1.19127261144652
+
+
+
+========================================
+Create1CatRandomExpKnownSigs
+total.num.sigs          = 10
+mean.num.sigs.per.tumor = 8
+sd.num.sigs.per.tumor   = 4
+
+Min. = 1
+
+1st Qu. = 4
+
+Median = 7
+
+Mean = 6.27666666666667
+
+3rd Qu. = 8
+
+Max. = 10
+
+sd = 2.54066371826733
+
+
+
+========================================
+Create1CatRandomExpKnownSigs
+total.num.sigs          = 15
+mean.num.sigs.per.tumor = 11
+sd.num.sigs.per.tumor   = 5
+
+Min. = 1
+
+1st Qu. = 7
+
+Median = 10
+
+Mean = 9.66333333333333
+
+3rd Qu. = 13
+
+Max. = 15
+
+sd = 3.63511150784545
+
+
+
+========================================
+Create1CatRandomExpKnownSigs
+total.num.sigs          = 25
+mean.num.sigs.per.tumor = 16
+sd.num.sigs.per.tumor   = 6
+
+Min. = 2
+
+1st Qu. = 12
+
+Median = 15
+
+Mean = 15.0233333333333
+
+3rd Qu. = 18
+
+Max. = 25
+
+sd = 4.88969863399848
+
+

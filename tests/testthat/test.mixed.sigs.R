@@ -29,7 +29,7 @@ test_that("CreateFromReal Many", {
 
 test_that("CreateFromReal RCCOvary1000", {
   skip_if_not_installed("ICAMS", minimum_version = "2.0.9")
-  skip("Takes too long")
+  # skip("Takes too long")
   expect_identical(
     RCCOvary1000(regress.dir = "rdata/rcc.etc/", unlink = TRUE),
     TRUE)

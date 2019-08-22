@@ -1,0 +1,12 @@
+context("Test generation of random exposures with real and synthetic signature profiles")
+
+test_that("Generate.SP.signatures.random.subsets()", {
+  newdir <- tempfile("SP.signatures.random.subsets/")
+  Generate.SP.signatures.random.subsets(top.level.dir = newdir)
+  expect_equal(
+    NewDiff4SynDataSets(
+      newdir = newdir,
+      regressdirname = "rdata/SP.signatures.random.subsets/",
+      unlink = FALSE)
+    ,"ok")
+})
