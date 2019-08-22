@@ -11,6 +11,7 @@ test_that("CreateRandomMutSigProfiles", {
 
 
 test_that("CreateRandomSyn 5 spectra", {
+  skip_if_not_installed("ICAMS", minimum_version = "2.0.9")
   expect_true(
     CreateRandomSyn(top.level.dir  = tempfile("test.random.5"),
                     seed           = 1443196,
@@ -19,6 +20,7 @@ test_that("CreateRandomSyn 5 spectra", {
 })
 
 test_that("CreateRandomSyn 1000 spectra", {
+  skip_if_not_installed("ICAMS", minimum_version = "2.0.9")
   skip_on_cran()
   # debug(CreateOneSetOfRandomCatalogs)
   expect_true(
