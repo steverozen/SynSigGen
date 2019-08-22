@@ -72,16 +72,16 @@ GenerateOneRowRandom <- function(row,
 
   retval <- CreateOneSetOfRandomCatalogs96(
     num.syn.tumors = num.spectra,
-             total.num.sigs         = total.num.sigs,
-             mut.mean                = mut.mean,
-             mut.sd                  = mut.sd,
-             mean.num.sigs.per.tumor = row["mean.num.sigs.per.tumor"],
-             sd.num.sigs.per.tumor   = row["sd.num.sigs.per.tumor"],
-             sig.name.prefix         = "RandSig",
-             sample.name.prefix      = "S",
-             dir.name                = dir,
-             overwrite               = overwrite,
-             verbose                 = verbose)
+    total.num.sigs         = total.num.sigs,
+    mut.mean                = mut.mean,
+    mut.sd                  = mut.sd,
+    mean.num.sigs.per.tumor = row["mean.num.sigs.per.tumor"],
+    sd.num.sigs.per.tumor   = row["sd.num.sigs.per.tumor"],
+    sig.name.prefix         = "RandSig",
+    sample.name.prefix      = "S",
+    dir.name                = dir,
+    overwrite               = overwrite,
+    verbose                 = verbose)
 
   return(retval)
 }

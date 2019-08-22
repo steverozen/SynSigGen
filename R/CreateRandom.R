@@ -24,7 +24,7 @@
 #'
 #' @export
 #'
-Create.syn.30.random <-
+CreateRandomSyn <-
   function(
     top.level.dir,
     seed           = 1443196,
@@ -33,6 +33,9 @@ Create.syn.30.random <-
     overwrite      = FALSE,
     unlink         = FALSE,
     verbose        = FALSE) {
+
+
+    stopifnot(!missing(top.level.dir))
 
     suppressWarnings(RNGkind(sample.kind = "Rounding"))
     # For compatibility with R < 3.6.0
@@ -43,21 +46,18 @@ Create.syn.30.random <-
                                    overwrite      = overwrite,
                                    verbose        = verbose)
     if (!is.null(regress.dir)) {
-      diff.result <- NewDiff4SynDataSets(top.level.dir, regress.dir, unlink = unlink)
-      if (diff.result[1] != "ok") {
-        message("\nThere was a difference, investigate\n",
-                paste0(diff.result, "\n"))
-      } else {
-        message("\nok\n")
-      }
-    }
+      return("ok" == NewDiff4SynDataSets(top.level.dir,
+                                         regress.dir,
+                                         unlink = unlink,
+                                         verbose = TRUE))
+     }
   }
 
 # Test data for Ludmil and Mishu
 create.1000.random.2019.08.30 <- function() {
   seeds <- sample(1000, size = 9)
   for (seed in seeds) {
-    Create.syn.30.random(
+    CreateRandomSyn(
       top.level.dir = paste0("../random.10000.", seed),
       seed = seed, overwrite = FALSE, regress.dir = NULL)
   }
