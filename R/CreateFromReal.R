@@ -204,6 +204,12 @@ CreateFromReal <- function(seed,
     if (!is.null(enclosing.dir))   stop("Do not specify top.level.dir and enclosing.dir")
     if (!is.null(data.suite.name)) stop("Do not specify data.suite.name and enclosing.dir")
   } else {
+    if (is.null(enclosing.dir)) {
+      stop("If top.level.dir is NULL enclosing.dir must be non-NULL")
+    }
+    if (is.null(data.suite.name)) {
+      stop("If top.level.dir is NULL data.suite.name must be non-NULL")
+    }
     top.level.dir <-
       file.path(enclosing.dir, paste0(data.suite.name, ".", seed))
   }
@@ -230,7 +236,8 @@ CreateFromReal <- function(seed,
       NewDiff4SynDataSets(newdir         = top.level.dir,
                           regressdirname = regress.dir,
                           unlink         = unlink,
-                          verbose        = TRUE)
+                          verbose        = TRUE,
+                          long.diff      = FALSE)
     return(diff.result[1] == "ok")
   }
   return(retval)
@@ -267,18 +274,17 @@ PancAdenoCA1000 <- function(seed           = 191907,
 #' @keywords internal
 RCCOvary1000 <- function(seed = 191905,
                          unlink = FALSE,
-                         regress.dir = NULL) {
+                         regress.dir = NULL,
+                         top.level.dir = "3.5.40.RCC.and.ovary") {
   CreateFromReal(
     seed           = seed,
-    enclosing.dir = "..",
     num.syn.tumors = 500,
     cancer.types   = c("Kidney-RCC", "Ovary-AdenoCA" ),
-    data.suite.name = "3.5.40.RCC.and.ovary",
-    sa.exp      = SynSigGen::sa.no.hyper.real.exposures,
-    sp.exp      = SynSigGen::sp.no.hyper.real.exposures,
-    regress.dir = regress.dir,
-    unlink      = unlink
-  )
+    top.level.dir  = top.level.dir,
+    sa.exp         = SynSigGen::sa.no.hyper.real.exposures,
+    sp.exp         = SynSigGen::sp.no.hyper.real.exposures,
+    regress.dir    = regress.dir,
+    unlink         = unlink)
 }
 
 

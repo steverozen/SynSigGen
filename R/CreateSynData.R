@@ -358,14 +358,22 @@ CreateSynCatalogs <-
 
   ## Convert ground.truth.catalog and ground.truth.signatures
   ## into ICAMS acceptable catalogs before outputting the list
-  i.cat <- ICAMS::as.catalog(object = i.cat,
-                             ref.genome = "hg19",
-                             region = "genome",
-                             catalog.type = "counts")
-  signatures <- ICAMS::as.catalog(object = signatures,
-                                  ref.genome = "hg19",
-                                  region = "genome",
-                                  catalog.type = "counts.signature")
+  i.cat <- ICAMS::as.catalog(
+    object = i.cat,
+    # ref.genome = "hg19",
+    # WARNING, there
+    abundance = NULL,
+      # ICAMS::all.abundance$BSgenome.Hsapiens.1000genomes.hs37d5$genome$`96`,
+    region = "genome",
+    catalog.type = "counts")
+
+  signatures <- ICAMS::as.catalog(
+    object = signatures,
+    # ref.genome = "hg19",
+    abundance = NULL,
+    #  ICAMS::all.abundance$BSgenome.Hsapiens.1000genomes.hs37d5$genome$`96`,
+    region = "genome",
+    catalog.type = "counts.signature")
 
   ## Return a list with:
   ## $ground.truth.catalog: Spectra catalog for the software input
@@ -376,7 +384,8 @@ CreateSynCatalogs <-
               ground.truth.signatures=signatures,
               ground.truth.exposures=exposures))
   # TODO(Steve) In future, add noise
-}
+  }
+
 
 #' Merge 2 exposure matrices
 #'

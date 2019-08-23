@@ -113,13 +113,31 @@ GenerateAllRandom200 <- function(parm,
   }
 }
 
+GenerateAllRandomSA <-
+  function(top.level.dir = "foo", overwite = TRUE, verbose = TRUE) {
+    GenerateAllRandom200(
+      parm = ParametersSALike(),
+      top.level.dir = top.level.dir,
+      mut.mean      = 2.349, # Change mean.log10.mut.per.sig
+      # Based on mean(log10(sa.all.real.exposures[sa.all.real.exposures >= 1]))
+
+      mut.sd        =  0.6641
+      # Based on sd(log10(sa.all.real.exposures[sa.all.real.exposures >= 1]))
+      )
+  }
+
+
+
 GenerateAllRandomSP <-
   function(top.level.dir = "foo", overwite = TRUE, verbose = TRUE) {
     GenerateAllRandom200(
       parm = ParametersSPLike(),
       top.level.dir = top.level.dir,
       mut.mean      = 2.97,
-      mut.sd        = 1.331
+      # Based on mean(log10(sp.all.real.exposures[sp.all.real.exposures >= 1]))
+
+      mut.sd        = 0.7047
+      # Based on sd(log10(sp.all.real.exposures[sp.all.real.exposures >= 1]))
     )
   }
 

@@ -104,12 +104,15 @@ CreateRandomSAAndSPSynCatalogs <-
     # sa.mut.mean  <- mean(per.sig.mean, na.rm = TRUE)
     # sa.mut.sd    <- sd(per.sig.mean, na.rm = TRUE)
 
+    # These are the mean and SD of the number of signatures per tumor.
+    # E.g. sa.all.real.exposures > 0 return TRUE or FALSE, which
+    # are coerced to 1 and 0 by mean and sd.
     sa.num.sigs.mean <- 15.525 # mean(colSums(sa.all.real.exposures > 0))
     sa.num.sigs.sd   <-  6.172 # sd(colSums(sa.all.real.exposures > 0))
     sp.num.sigs.mean <-  3.947 # mean(colSums(sp.all.real.exposures > 0))
     sp.num.sigs.sd   <-  1.331 # sd(colSums(sp.all.real.exposures > 0))
 
-    num.sigs.to.create <- 30 # Also tired, 60 (ncol(SynSig::sa.96.sigs));
+    num.sigs.to.create <- 30 # Also tried, 60 (ncol(SynSig::sa.96.sigs));
     # this is too many.
 
     CreateOnePairOfRandomCatalogs(

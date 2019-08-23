@@ -20,7 +20,5 @@ Suggests:
     rmarkdown,
     DelayedArray,
     BSgenome,
-    BSgenome.Hsapiens.1000genomes.hs37d5,
-    BSgenome.Hsapiens.UCSC.hg38,
-    BSgenome.Mmusculus.UCSC.mm10
+    BSgenome.Hsapiens.1000genomes.hs37d5
 
