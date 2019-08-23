@@ -6,7 +6,8 @@ test_that("Generate.SP.signatures.random.subsets()", {
   expect_equal(
     NewDiff4SynDataSets(
       newdir = newdir,
-      regressdirname = "rdata/SP.signatures.random.subsets/",
-      unlink = FALSE)
+      regressdirname = "rdata/SP.sig.ran/",
+      unlink = FALSE,
+      verbose = TRUE)[1]
     ,"ok")
 })
