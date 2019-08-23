@@ -1,8 +1,8 @@
 To do:
 
-Additional small random data sets
+debug test error in RCCOvary1000 (CreateFromReal.R)
 
-Additonal small data sets.
+get dir of "enclosing.dir" in the CreateFromReal.R
 
 Get rid of SetNewOutDir() and OutDir() Steve discuss w/ Wu Yang
 

@@ -265,7 +265,9 @@ PancAdenoCA1000 <- function(seed           = 191907,
 #' \code{\link{Create.3.4.40.Abstract}}.
 #'
 #' @keywords internal
-RCCOvary1000 <- function(seed = 191905, unlink = FALSE, regress.dir = NULL) {
+RCCOvary1000 <- function(seed = 191905,
+                         unlink = FALSE,
+                         regress.dir = NULL) {
   CreateFromReal(
     seed           = seed,
     enclosing.dir = "..",

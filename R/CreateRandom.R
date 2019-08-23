@@ -358,8 +358,6 @@ CreateOnePairOfRandomCatalogs <-
         # Todo(Steve): The reason for using COMPOSITE is subtle -- need to review and document.
         verbose = verbose)
 
-      WriteExposure(exp, "NEW.exp.csv")
-
     NewCreateAndWriteCatalog(
       sigs      = syn.COMPOSITE.sigs,
       exp       = exp,
