@@ -5,8 +5,8 @@
 \title{Create catalog of "random" synthetic spectra for 96-channel mutation types.}
 \usage{
 Create1CatRandomExpRandomSigs(num.syn.tumors, total.num.sigs, mut.mean,
-  mut.sd, mean.num.sigs.per.tumor, sd.num.sigs.per.tumor, sig.name.prefix,
-  sample.name.prefix, dir.name, overwrite = FALSE, verbose = TRUE)
+  mut.sd, mean.num.sigs.per.tumor, sd.num.sigs.per.tumor, dir.name,
+  overwrite = FALSE, verbose = TRUE)
 }
 \arguments{
 \item{num.syn.tumors}{Total number of synthetic tumors to create.}
@@ -25,17 +25,17 @@ contributing to each tumor.}
 \item{sd.num.sigs.per.tumor}{Standard deviation the number of signatures
 in each tumor.}
 
-\item{sig.name.prefix}{String to put in front of an integer (as
-string) to form an identifier for a synthetic signature.}
-
-\item{sample.name.prefix}{String to put in front of an integer (as
-string) to form an identifier for a synthetic sample (tumor).}
-
 \item{dir.name}{A string indicating the name of the 96-channel
 subdirectory; probably one of \code{"sa.sa.COMPOSITE"} or
 \code{"sp.sa.COMPOSITE"}.}
 
 \item{overwrite}{If \code{TRUE} overwrite existing directories / files.}
+
+\item{sig.name.prefix}{String to put in front of an integer (as
+string) to form an identifier for a synthetic signature.}
+
+\item{sample.name.prefix}{String to put in front of an integer (as
+string) to form an identifier for a synthetic sample (tumor).}
 
 \item{COMPOSITE.features}{Character vector containing
 rownames for a COMPOSITE signature or catalog.}

@@ -104,7 +104,7 @@ GenerateAllRandom200 <- function(parm,
     # Replace with Create1CatRandomExpRandomSigs Todo
     Generate1RowRandom(
       row         = unlist(parm[i, ]),
-      dir         = file.path(top.level.dir, paste0(".", num.sigs, ".sigs")),
+      dir.name    = file.path(top.level.dir, paste0(".", num.sigs, ".sigs")),
       num.spectra = 200,
       mut.mean    = mut.mean,
       mut.sd      = mut.sd,
@@ -129,7 +129,8 @@ Generate1RowRandom <- function(row,
                                mut.mean,
                                mut.sd,
                                overwrite,
-                               verbose) {
+                               verbose,
+                               dir.name) {
 
   retval <- Create1CatRandomExpRandomSigs(
     num.syn.tumors = num.spectra,
@@ -138,12 +139,9 @@ Generate1RowRandom <- function(row,
     mut.sd                  = mut.sd,
     mean.num.sigs.per.tumor = row["mean.num.sigs.per.tumor"],
     sd.num.sigs.per.tumor   = row["sd.num.sigs.per.tumor"],
-    sig.name.prefix         = "RandSig",
-    sample.name.prefix      = "S",
-    dir.name                = dir,
+    dir.name                = dir.name,
     overwrite               = overwrite,
     verbose                 = verbose)
-
   return(retval)
 }
 
@@ -190,15 +188,14 @@ Create1CatRandomExpRandomSigs <-
            mut.sd,
            mean.num.sigs.per.tumor,
            sd.num.sigs.per.tumor,
-           sig.name.prefix,
-           sample.name.prefix,
            dir.name,
            overwrite = FALSE,
            verbose = TRUE) {
 
     sigs <-
       CreateRandomMutSigProfiles(
-        ICAMS::catalog.row.order[["SBS96"]], total.num.sigs, sig.name.prefix)
+        ICAMS::catalog.row.order[["SBS96"]], total.num.sigs,
+        sig.name.prefix = "RandSig")
 
     sig.info <- CreateMeanAndStdevForSigs(
       total.num.sigs, mut.mean, mut.sd, colnames(sigs))
@@ -210,7 +207,7 @@ Create1CatRandomExpRandomSigs <-
         sd.num.sigs.per.tumor   = sd.num.sigs.per.tumor,
         total.num.sigs          = total.num.sigs,
         per.sig.mean.and.sd     = sig.info,
-        sample.name.prefix      = sample.name.prefix,
+        sample.name.prefix      = "S",
         sigs                    = sigs,
         verbose                 = verbose)
 
