@@ -8,7 +8,8 @@ CreateFromReal(seed, top.level.dir = NULL, enclosing.dir = NULL,
   num.syn.tumors, cancer.types, data.suite.name = NULL,
   sa.exp = SynSigGen::sa.all.real.exposures,
   sp.exp = SynSigGen::sp.all.real.exposures, overwrite = TRUE,
-  regress.dir = NULL, unlink = FALSE, bladder.regress.hack = FALSE)
+  regress.dir = NULL, unlink = FALSE, verbose = FALSE,
+  bladder.regress.hack = FALSE)
 }
 \arguments{
 \item{seed}{A random seed to use.}
@@ -44,6 +45,8 @@ the contents of this directory with a \code{diff}.}
 
 \item{unlink}{If \code{TRUE} and \code{!is.null(regress.dir)}, then
 unlink the result dir if there are no differences.}
+
+\item{verbose}{If \code{TRUE} print various informative messages.}
 
 \item{bladder.regress.hack}{Set this to \code{TRUE} to handle
 mixed "all" and "no hyper" signature sets for the

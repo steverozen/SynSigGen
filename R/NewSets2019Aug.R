@@ -310,23 +310,10 @@ GenerateMatrixRandomExpKnownSigs200 <- function(parm,
                                                 seed = seed) {
   MustCreateDir(top.level.dir, overwrite)
   logfile <- file.path(top.level.dir, "log.txt")
-  set.seed(seed)
 
-  if (FALSE) {
-  cat(RNGkind(), collapse = " ")
-  cat("\n")
-  cat(.Random.seed[1:4], colapse = " ")
-  cat("\n=============================\n")
-  rkind <- RNGkind()
-  RNGkind(kind = rkind[1], normal.kind = rkind[2], sample.kind = "default")
-  cat("\n\n=============================\n")
-  cat("#2 GenerateMatrixRandomExpKnownSigs200: set.seed(", seed, ")\n",
-      file = logfile)
-  cat(RNGkind(), collapse = " ", file = logfile, append = TRUE)
-  cat("\n", file = logfile, append = TRUE)
-  cat(.Random.seed[1:4], colapse = " ", file = logfile, append = TRUE)
-  cat("\n=============================\n", file = logfile, append = TRUE)
-  }
+  # RNGMessages("GenerateMatrixRandomExpKnownSigs200 before")
+  set.seed(seed, sample.kind = "Rejection")
+  RNGMessages("GenerateMatrixRandomExpKnownSigs200 after", cat)
 
   for (i in 1:nrow(parm)) {
     Create1CatRandomExpKnownSigs(

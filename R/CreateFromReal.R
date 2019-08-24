@@ -142,11 +142,13 @@ CreateMixedTumorTypeSyntheticData <- function(top.level.dir,
 
 
 RNGMessages <- function(prefix = NULL, message.fn = message) {
-    if (!is.null(prefix)) message(prefix)
-    message("RNGkind = ", paste(RNGkind(), collapse = " "))
-    message(".Random.seed[1:4] = ", paste(.Random.seed[1:4], colapse = " "))
+  message.fn("\n")
+  if (!is.null(prefix)) message.fn(prefix, "\n")
+  message.fn("RNGkind = ", paste(RNGkind(), collapse = " "), "\n")
+  message.fn(".Random.seed[1:4] = ",
+             paste(.Random.seed[1:4], colapse = " "),
+             "\n")
 }
-
 
 
 #' Create a specific synthetic data set based on real exposures in one or more cancer types.
@@ -212,11 +214,11 @@ CreateFromReal <- function(seed,
 
 
 
-  if (verbose) RNGMessages("In CreateFromReal before set.seed")
+  if (verbose) RNGMessages("In CreateFromReal before set.seed", cat)
     # rkind <- RNGkind()
   # RNGkind(kind = rkind[1], normal.kind = rkind[2], sample.kind = "default")
   suppressWarnings(set.seed(seed, sample.kind = "Rounding"))
-  if (verbose) RNGMessages("In CreateFromReal after set.seed")
+  if (verbose) RNGMessages("In CreateFromReal after set.seed", cat)
 
   if (!is.null(top.level.dir)) {
     if (!is.null(enclosing.dir))   stop("Do not specify top.level.dir and enclosing.dir")

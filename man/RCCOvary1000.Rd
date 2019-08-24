@@ -5,7 +5,7 @@
 \title{Replaces the first part of \code{data-raw/Create.3.5.40.Rmd}.}
 \usage{
 RCCOvary1000(seed = 191905, unlink = FALSE, regress.dir = NULL,
-  top.level.dir = "3.5.40.RCC.and.ovary")
+  top.level.dir = "tmp.3.5.40.RCC.and.ovary")
 }
 \description{
 The second half of \code{data-raw/Create.3.5.40.Rmd}
