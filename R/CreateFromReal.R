@@ -39,7 +39,7 @@ CreateMixedTumorTypeSyntheticData <- function(top.level.dir,
                                               overwrite = FALSE,
                                               sa.exp = sa.all.real.exposures,
                                               sp.exp = sp.all.real.exposures,
-                                              verbose = 0,
+                                              verbose = FALSE,
                                               bladder.regress.hack = FALSE) {
 
     odigits <- getOption("digits")
@@ -141,6 +141,14 @@ CreateMixedTumorTypeSyntheticData <- function(top.level.dir,
   }
 
 
+RNGMessages <- function(prefix = NULL, message.fn = message) {
+    if (!is.null(prefix)) message(prefix)
+    message("RNGkind = ", paste(RNGkind(), collapse = " "))
+    message(".Random.seed[1:4] = ", paste(.Random.seed[1:4], colapse = " "))
+}
+
+
+
 #' Create a specific synthetic data set based on real exposures in one or more cancer types.
 #'
 #' Create a full SignatureAnalyzer / SigProfiler test data set for a
@@ -180,6 +188,8 @@ CreateMixedTumorTypeSyntheticData <- function(top.level.dir,
 #' @param unlink If \code{TRUE} and \code{!is.null(regress.dir)}, then
 #'       unlink the result dir if there are no differences.
 #'
+#' @param verbose If \code{TRUE} print various informative messages.
+#'
 #' @param bladder.regress.hack Set this to \code{TRUE} to handle
 #'        mixed "all" and "no hyper" signature sets for the
 #'        regression test for \code{\link{BladderSkin1000}}.
@@ -197,8 +207,16 @@ CreateFromReal <- function(seed,
                            overwrite       = TRUE,
                            regress.dir     = NULL,
                            unlink          = FALSE,
+                           verbose         = FALSE,
                            bladder.regress.hack = FALSE) {
-  set.seed(seed)
+
+
+
+  if (verbose) RNGMessages("In CreateFromReal before set.seed")
+    # rkind <- RNGkind()
+  # RNGkind(kind = rkind[1], normal.kind = rkind[2], sample.kind = "default")
+  suppressWarnings(set.seed(seed, sample.kind = "Rounding"))
+  if (verbose) RNGMessages("In CreateFromReal after set.seed")
 
   if (!is.null(top.level.dir)) {
     if (!is.null(enclosing.dir))   stop("Do not specify top.level.dir and enclosing.dir")
@@ -214,11 +232,7 @@ CreateFromReal <- function(seed,
       file.path(enclosing.dir, paste0(data.suite.name, ".", seed))
   }
 
-  if (dir.exists(top.level.dir)) {
-    if (!overwrite) stop(top.level.dir, " exists and overwrite is FALSE")
-  } else {
-    MustCreateDir(top.level.dir)
-  }
+  MustCreateDir(top.level.dir, overwrite)
 
   retval <-
     CreateMixedTumorTypeSyntheticData(
@@ -228,6 +242,7 @@ CreateFromReal <- function(seed,
       sa.exp = sa.exp,
       sp.exp = sp.exp,
       overwrite = overwrite,
+      verbose   = verbose,
       bladder.regress.hack = bladder.regress.hack
     )
 
@@ -236,7 +251,7 @@ CreateFromReal <- function(seed,
       NewDiff4SynDataSets(newdir         = top.level.dir,
                           regressdirname = regress.dir,
                           unlink         = unlink,
-                          verbose        = TRUE,
+                          verbose        = verbose,
                           long.diff      = FALSE)
     return(diff.result[1] == "ok")
   }
@@ -275,7 +290,7 @@ PancAdenoCA1000 <- function(seed           = 191907,
 RCCOvary1000 <- function(seed = 191905,
                          unlink = FALSE,
                          regress.dir = NULL,
-                         top.level.dir = "3.5.40.RCC.and.ovary") {
+                         top.level.dir = "tmp.3.5.40.RCC.and.ovary") {
   CreateFromReal(
     seed           = seed,
     num.syn.tumors = 500,

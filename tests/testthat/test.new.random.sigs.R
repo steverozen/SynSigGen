@@ -8,10 +8,10 @@ test_that("Generate.SP.signatures.random.subsets()", {
   expect_equal(
     NewDiff4SynDataSets(
       newdir = newdir,
-      regressdirname = "rdata/SP.sig.ran/",
+      regressdirname = "rdata/SP.sig.ran.Rej/",
       unlink = FALSE,
       verbose = TRUE,
-      long.diff = TRUE)[1]
+      long.diff = FALSE)[1]
     ,"ok"))
   cat(log)
   # print(Sys.getenv())
