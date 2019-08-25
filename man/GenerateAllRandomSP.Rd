@@ -4,8 +4,9 @@
 \alias{GenerateAllRandomSP}
 \title{Generate a suite of data with random signatures and exposures.}
 \usage{
-GenerateAllRandomSP(top.level.dir = "../fooSP", overwite = TRUE,
-  verbose = TRUE)
+
+  GenerateAllRandomSP(top.level.dir = "../SP.like.rand.exp.rand.sigs.2019.08.25",
+  overwite = TRUE, verbose = TRUE)
 }
 \description{
 Generate a suite of data with random signatures and exposures.

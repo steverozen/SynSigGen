@@ -20,16 +20,15 @@ CreateRandomExposures <- function(num.exposures,
       total.num.sigs          = total.num.sigs)
 
   ss <- summary(sig.nums)
+  actual.sd <- sd(sig.nums)
+  actual.mean <- mean(sig.nums)
   if (verbose) {
       message("\n", paste(rep(".", 40), collapse = ""),
               "\nCreateRandomExposures, actual distribution:\n")
-              # "\ntotal.num.sigs          = ", total.num.sigs,
-              # "\nmean.num.sigs.per.tumor = ", mean.num.sigs.per.tumor,
-              #"\nsd.num.sigs.per.tumor   = ", sd.num.sigs.per.tumor)
     for (nn in names(ss)) {
       message(nn, " = ", ss[nn])
     }
-    message("sd = ", sd(sig.nums), "\n")
+    message("sd = ", actual.sd, "\n")
   }
 
   exp <-
@@ -58,8 +57,8 @@ CreateRandomExposures <- function(num.exposures,
 
   # stopifnot(!any(colSums(test.catalog) < 1))
 
-  # attr(exp, "summary.parms") <- ss
-  # attr(exp, "sig.nums")      <- sig.nums
+  attr(exp, "actual.sig.num.mean") <- actual.mean
+  attr(exp, "actual.sig.num.sd")   <- actual.sd
 
   return(exp)
 }
