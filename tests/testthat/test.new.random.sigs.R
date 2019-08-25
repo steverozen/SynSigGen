@@ -1,9 +1,10 @@
 context("Test generation of random exposures with real and synthetic signature profiles")
 
 test_that("Generate.SP.signatures.random.subsets()", {
-  skip(
+  if (TRUE) { skip(
     paste("Run manully with devtools::test(filter = \"new.rand\"): ",
           "excessively fragile test because of reliance on diff"))
+  }
   newdir <- tempfile("SP.signatures.random.subsets")
   # newdir <- "tmp.SP.signatures.random.subsets"
   # debug(GenerateMatrixRandomExpKnownSigs200)
