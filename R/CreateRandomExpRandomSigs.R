@@ -11,8 +11,6 @@ GenerateAllRandomSA <-
       parm                   = ParametersSALike(),
       top.level.dir          = top.level.dir,
 
-      num.replicates         = 10,
-
       mean.log10.exp.per.sig = 2.349, # Change mean.log10.mut.per.sig
       # Based on mean(log10(sa.all.real.exposures[sa.all.real.exposures >= 1]))
 
@@ -35,8 +33,6 @@ GenerateAllRandomSP <-
       GenerateRandomExpRandomSigs200(
         parm                   = ParametersSPLike(),
         top.level.dir          = top.level.dir,
-
-        num.replicates         = 10,
 
         mean.log10.exp.per.sig = 2.97,
         # Based on mean(log10(sp.all.real.exposures[sp.all.real.exposures >= 1]))
