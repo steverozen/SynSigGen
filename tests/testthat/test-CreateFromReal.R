@@ -11,15 +11,17 @@ test_that("CreateFromReal PancAdeno-CA", {
 })
 
 test_that("CreateFromReal Many", {
+  skip(
+    paste("Run manully with devtools::test(filter = \"CreateFromReal\"): ",
+          "excessively fragile test because of reliance on diff"))
   skip_if_not_installed("ICAMS", minimum_version = "2.0.9")
-  if (FALSE) {
+
   cat("\n\n=============================\n")
   cat("test_that(\"CreateFromReal Many\"\n")
-  cat(RNGkind(), collapse = " ")
-  cat("\n")
-  cat(.Random.seed[1:4], colapse = " ")
+  cat(RNGkind(), "\n")
+  cat(.Random.seed[1:4])
   cat("\n=============================\n")
-  }
+
   expect_true(
   CreateFromReal(
     seed           = 123,
@@ -38,28 +40,38 @@ test_that("CreateFromReal Many", {
 
 test_that("CreateFromReal RCCOvary1000", {
   skip_if_not_installed("ICAMS", minimum_version = "2.0.9")
-  # skip("Takes too long")
-  if (FALSE) {
+  skip(
+    paste("Run manully with devtools::test(filter = \"CreateFromReal\"): ",
+       "excessively fragile test because of reliance on diff"))
+  # Last tested on Windows, 2019 08 25
+
   cat("\n\n=============================\n")
   cat("#1 test_that(\"CreateFromReal RCCOvary1000\"\n")
-  cat(RNGkind(), collapse = " ")
-  cat("\n")
-  cat(.Random.seed[1:4], colapse = " ")
+  cat(RNGkind(), "\n")
+  cat(.Random.seed[1:4])
   cat("\n=============================\n")
   rkind <- RNGkind()
   RNGkind(kind = rkind[1], normal.kind = rkind[2], sample.kind = "default")
   cat("\n\n=============================\n")
   cat("#2 test_that(\"CreateFromReal RCCOvary1000\"\n")
-  cat(RNGkind(), collapse = " ")
-  cat("\n")
-  cat(.Random.seed[1:4], colapse = " ")
+  cat(RNGkind(), "\n")
+  cat(.Random.seed[1:4])
   cat("\n=============================\n")
+
+  tmp.top.level.dir <- "TMP.3.5.40.RCC.and.ovary"
+  if (dir.exists(tmp.top.level.dir)) {
+    stop("\n\n!!! Must manually delete ",
+         file.path(getwd()), tmp.top.level.dir)
   }
 
+  cat("\nAfter test, must manually delete file created by this test:\n")
+  cat(file.path(getwd(), tmp.top.level.dir))
+  cat("\n=============================\n")
   log <- capture_messages(
-
     expect_true(
-      RCCOvary1000(regress.dir = "rdata/rcc.etc/", unlink = FALSE)))
+      RCCOvary1000(regress.dir = "rdata/rcc.etc/",
+                   top.level.dir = tmp.top.level.dir,
+                   unlink = FALSE)))
   cat(log)
   # print(Sys.getenv())
 })

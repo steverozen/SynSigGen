@@ -264,11 +264,12 @@ CreateFromReal <- function(seed,
 #'
 #' @keywords internal
 
-PancAdenoCA1000 <- function(seed           = 191907,
-                            regress.dir    = "data-raw/long.test.regression.data/syn.pancreas/",
-                            num.syn.tumors = 1000,
-                            top.level.dir  = "../Pan-AdenoCA",
-                            unlink         = FALSE) {
+PancAdenoCA1000 <- function(
+  seed           = 191907,
+  regress.dir    = "data-raw/long.test.regression.data/syn.pancreas/",
+  num.syn.tumors = 1000,
+  top.level.dir  = "../Pan-AdenoCA",
+  unlink         = FALSE) {
   CreateFromReal(
     seed           = seed,
     top.level.dir  = top.level.dir,

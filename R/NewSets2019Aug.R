@@ -48,7 +48,7 @@ CreateRandomExposures <- function(num.exposures,
       total.num.sigs = total.num.sigs)
 
   if (verbose) {
-      message("\n", paste(rep("=", 40), collapse=""),
+      message("\n", paste(rep("=", 40), collapse = ""),
               "\nCreate1CatRandomExpKnownSigs",
               "\ntotal.num.sigs          = ", total.num.sigs,
               "\nmean.num.sigs.per.tumor = ", mean.num.sigs.per.tumor,
@@ -104,7 +104,8 @@ GenerateAllRandom200 <- function(parm,
     # Replace with Create1CatRandomExpRandomSigs Todo
     Generate1RowRandom(
       row         = unlist(parm[i, ]),
-      dir.name    = file.path(top.level.dir, paste0(".", num.sigs, ".sigs")),
+      dir.name    = file.path(top.level.dir,
+                              paste0(".", num.sigs, ".sigs")),
       num.spectra = 200,
       mut.mean    = mut.mean,
       mut.sd      = mut.sd,
