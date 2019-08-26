@@ -5,18 +5,19 @@
 #' Base parameters on SignatureAnalyzer attributions (exposures).
 
 GenerateAllRandomSA <-
-  function(top.level.dir = "../SA.like.rand.exp.rand.sigs.2019.08.25", overwite = TRUE, verbose = TRUE) {
+  function(top.level.dir = "../SA.like.rand.exp.rand.sigs.2019.08.26", overwite = TRUE, verbose = TRUE) {
     log <- testthat::capture_messages(
-    GenerateRandomExpRandomSigs200(
-      parm                   = ParametersSALike(),
-      top.level.dir          = top.level.dir,
+      GenerateRandomExpRandomSigs200(
+        parm                   = ParametersSALike(),
+        top.level.dir          = top.level.dir,
 
-      mean.log10.exp.per.sig = 2.349, # Change mean.log10.mut.per.sig
-      # Based on mean(log10(sa.all.real.exposures[sa.all.real.exposures >= 1]))
+        mean.log10.exp.per.sig = 2.349, # Change mean.log10.mut.per.sig
+        # Based on mean(log10(sa.all.real.exposures[sa.all.real.exposures >= 1]))
 
-      sd.log10.exp.per.sig  =  0.6641
-      # Based on sd(log10(sa.all.real.exposures[sa.all.real.exposures >= 1]))
-    ))
+        sd.log10.exp.per.sig  =  0.6641,
+        # Based on sd(log10(sa.all.real.exposures[sa.all.real.exposures >= 1]))
+
+        seed = 811211))
     cat(log, file = file.path(top.level.dir, "log.txt"))
   }
 
@@ -28,7 +29,11 @@ GenerateAllRandomSA <-
 #' Base parameters on SigProfiler attributions (exposures).
 
 GenerateAllRandomSP <-
-  function(top.level.dir = "../SP.like.rand.exp.rand.sigs.2019.08.25", overwite = TRUE, verbose = TRUE) {
+  function(top.level.dir  = "../SP.like.rand.exp.rand.sigs.2019.08.26",
+           overwrite      = TRUE,
+           verbose        = TRUE,
+           num.replicates = 10,
+           unlink         = FALSE) {
     log <- testthat::capture_messages(
       GenerateRandomExpRandomSigs200(
         parm                   = ParametersSPLike(),
@@ -37,10 +42,13 @@ GenerateAllRandomSP <-
         mean.log10.exp.per.sig = 2.97,
         # Based on mean(log10(sp.all.real.exposures[sp.all.real.exposures >= 1]))
 
-        sd.log10.exp.per.sig   = 0.7047
+        sd.log10.exp.per.sig   = 0.7047,
         # Based on sd(log10(sp.all.real.exposures[sp.all.real.exposures >= 1]))
-      ))
-    cat(log, file = file.path(top.level.dir, "log.txt"))
+
+        seed = 1211))
+    if (!unlink) {
+      cat(log, file = file.path(top.level.dir, "log.txt"))
+    }
   }
 
 
@@ -85,14 +93,20 @@ GenerateRandomExpRandomSigs200 <- function(parm,
                                            sd.log10.exp.per.sig,
                                            overwrite      = TRUE,
                                            verbose        = TRUE,
-                                           num.replicates = 1) {
+                                           num.replicates = 1,
+                                           seed) {
   MustCreateDir(top.level.dir, overwrite)
+  set.seed(seed, sample.kind = "Rejection")
   if (verbose) RNGMessages("GenerateRandomExpRandomSigs200")
 
   summary.file <- file.path(top.level.dir, "summary.csv")
-  cat("total.num.sigs, target.mean.num.sigs.per.tumor, target.sd.num.sigs.per.tumor,",
-      "replicate.number, actual.mean, actual.sd\n",
-      file = summary.file)
+  cat("total.num.sigs",
+      "target.mean.num.sigs.per.tumor",
+      "target.sd.num.sigs.per.tumor",
+      "replicate.number",
+      "actual.mean",
+      "actual.sd\n",
+      sep = ",", file = summary.file)
 
   for (i in 1:nrow(parm)) {
     total.num.sigs          <- parm[i, "total.num.sigs"]
@@ -100,7 +114,8 @@ GenerateRandomExpRandomSigs200 <- function(parm,
     sd.num.sigs.per.tumor   <- parm[i, "sd.num.sigs.per.tumor"]
     if (verbose) {
       message("\n", paste(rep("=", 40), collapse = ""))
-      message("\nGenerateRandomExpRandomSigs200\ntarget distribution parameters:",
+      message("\nGenerateRandomExpRandomSigs200\n",
+              "target distribution parameters:",
               "\ntotal.num.sigs          = ", total.num.sigs,
               "\nmean.num.sigs.per.tumor = ", mean.num.sigs.per.tumor,
               "\nsd.num.sigs.per.tumor   = ", sd.num.sigs.per.tumor)

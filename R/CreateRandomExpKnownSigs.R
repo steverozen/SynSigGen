@@ -47,7 +47,9 @@ Generate.SP.signatures.random.subsets <-
   function(top.level.dir = "data-raw/SP.signatures.random.subsets",
            overwrite     = TRUE,
            verbose       = TRUE,
-           seed          = 3120) {
+           num.replicates = 10,
+           seed          = 3120,
+           unlink        = TRUE) {
     MustCreateDir(top.level.dir, overwrite = TRUE)
     log <- testthat::capture_messages(
       GenerateMatrixRandomExpKnownSigs200(
@@ -58,8 +60,12 @@ Generate.SP.signatures.random.subsets <-
         overwrite      = overwrite,
         verbose        = verbose,
         seed           = seed,
-        num.replicates = 10))
-    write(x = log, file = file.path(top.level.dir, "log.txt"), append = TRUE)
+        num.replicates = num.replicates))
+    if (!unlink) {
+       write(x = log, file = file.path(top.level.dir, "log.txt"), append = TRUE)
+    } else {
+      unlink(top.level.dir, recursive = TRUE, force = TRUE)
+    }
 
   }
 
@@ -79,6 +85,13 @@ GenerateMatrixRandomExpKnownSigs200 <- function(parm,
   RNGMessages("GenerateMatrixRandomExpKnownSigs200 after", cat)
 
   summary.file <- file.path(top.level.dir, "summary.csv")
+  cat("total.num.sigs",
+      "target.mean.num.sigs.per.tumor",
+      "target.sd.num.sigs.per.tumor",
+      "replicate.number",
+      "actual.mean",
+      "actual.sd\n",
+      sep = ",", file = summary.file)
 
   for (i in 1:nrow(parm)) {
 
@@ -87,7 +100,8 @@ GenerateMatrixRandomExpKnownSigs200 <- function(parm,
     sd.num.sigs.per.tumor   <- parm[i, "sd.num.sigs.per.tumor"]
     if (verbose) {
       message("\n", paste(rep("=", 40), collapse = ""))
-      message("\nGenerateRandomExpRandomSigs200\ntarget distribution parameters:",
+      message("\nGenerateRandomExpRandomSigs200\n",
+              "target distribution parameters:",
               "\ntotal.num.sigs          = ", total.num.sigs,
               "\nmean.num.sigs.per.tumor = ", mean.num.sigs.per.tumor,
               "\nsd.num.sigs.per.tumor   = ", sd.num.sigs.per.tumor)
@@ -122,7 +136,7 @@ GenerateMatrixRandomExpKnownSigs200 <- function(parm,
           verbose                 = verbose)
 
       cat(total.num.sigs, mean.num.sigs.per.tumor, sd.num.sigs.per.tumor,
-          replicate.number, "mumble mean", "mumble sd",
+          replicate.number, actual.sig.num.mean.and.sd,
           "\n", sep = ",", file = summary.file, append = TRUE)
     }
   }
@@ -139,8 +153,6 @@ Create1CatRandomExpKnownSigs <-
            sig.info,
            overwrite = FALSE,
            verbose = TRUE) {
-
-    parm.row <- unlist(parm.row)
 
     MustCreateDir(dir.name, overwrite)
 

@@ -6,7 +6,7 @@
 \usage{
 CreateRandomExposures(num.exposures, mean.num.sigs.per.tumor,
   sd.num.sigs.per.tumor, total.num.sigs, per.sig.mean.and.sd,
-  sample.name.prefix, sigs, verbose)
+  sample.name.prefix = "S", sigs, verbose)
 }
 \description{
 Create synthetic exposure data.

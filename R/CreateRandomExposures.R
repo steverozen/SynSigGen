@@ -6,7 +6,7 @@ CreateRandomExposures <- function(num.exposures,
                                   sd.num.sigs.per.tumor,
                                   total.num.sigs,
                                   per.sig.mean.and.sd,
-                                  sample.name.prefix,
+                                  sample.name.prefix = "S",
                                   sigs,
                                   verbose) {
 

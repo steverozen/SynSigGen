@@ -11,9 +11,11 @@ test_that("CreateFromReal PancAdeno-CA", {
 })
 
 test_that("CreateFromReal Many", {
-  if (TRUE) { skip(
-    paste("Run manully with devtools::test(filter = \"CreateFromReal\"): ",
-          "excessively fragile test because of reliance on diff"))
+  run.manually <- FALSE
+  if (!run.manually) {
+    skip(
+      paste("Run manully with devtools::test(filter = \"CreateFromReal\"): ",
+            "excessively fragile test because of reliance on diff"))
   }
   skip_if_not_installed("ICAMS", minimum_version = "2.0.9")
 
@@ -41,7 +43,8 @@ test_that("CreateFromReal Many", {
 
 test_that("CreateFromReal RCCOvary1000", {
   skip_if_not_installed("ICAMS", minimum_version = "2.0.9")
-  if (TRUE) {
+  run.manually <- FALSE
+  if (!run.manually) {
     skip(
       paste("Run manully with devtools::test(filter = \"CreateFromReal\"): ",
             "excessively fragile test because of reliance on diff"))

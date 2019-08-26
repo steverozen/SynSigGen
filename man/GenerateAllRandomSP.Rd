@@ -5,8 +5,9 @@
 \title{Generate a suite of data with random signatures and exposures.}
 \usage{
 
-  GenerateAllRandomSP(top.level.dir = "../SP.like.rand.exp.rand.sigs.2019.08.25",
-  overwite = TRUE, verbose = TRUE)
+  GenerateAllRandomSP(top.level.dir = "../SP.like.rand.exp.rand.sigs.2019.08.26",
+  overwrite = TRUE, verbose = TRUE, num.replicates = 10,
+  unlink = FALSE)
 }
 \description{
 Generate a suite of data with random signatures and exposures.
