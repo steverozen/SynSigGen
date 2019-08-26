@@ -23,8 +23,8 @@ PerSigMeanAndSDSP <- function() {
 }
 
 
-Generate.SA.signatures.random.subsets <-
-  function(top.level.dir = "data-raw/SA.signatures.random.subsets",
+Generate.random.exp.SA.sigs <-
+  function(top.level.dir = "../random.exposures.SA.sigs.2019.08.26",
            overwrite     = TRUE,
            verbose       = TRUE,
            seed          = 3100) {
@@ -43,13 +43,12 @@ Generate.SA.signatures.random.subsets <-
     write(x = log, file = file.path(top.level.dir, "log.txt"), append = TRUE)
   }
 
-Generate.SP.signatures.random.subsets <-
-  function(top.level.dir = "data-raw/SP.signatures.random.subsets",
+Generate.random.exp.SP.sigs <-
+  function(top.level.dir = "../random.exposures.SP.sigs.2019.08.26",
            overwrite     = TRUE,
            verbose       = TRUE,
            num.replicates = 10,
-           seed          = 3120,
-           unlink        = TRUE) {
+           seed          = 3120) {
     MustCreateDir(top.level.dir, overwrite = TRUE)
     log <- testthat::capture_messages(
       GenerateMatrixRandomExpKnownSigs200(
@@ -61,12 +60,7 @@ Generate.SP.signatures.random.subsets <-
         verbose        = verbose,
         seed           = seed,
         num.replicates = num.replicates))
-    if (!unlink) {
-       write(x = log, file = file.path(top.level.dir, "log.txt"), append = TRUE)
-    } else {
-      unlink(top.level.dir, recursive = TRUE, force = TRUE)
-    }
-
+    write(x = log, file = file.path(top.level.dir, "log.txt"), append = TRUE)
   }
 
 

@@ -5,7 +5,10 @@
 #' Base parameters on SignatureAnalyzer attributions (exposures).
 
 GenerateAllRandomSA <-
-  function(top.level.dir = "../SA.like.rand.exp.rand.sigs.2019.08.26", overwite = TRUE, verbose = TRUE) {
+  function(top.level.dir = "../SA.like.rand.exp.rand.sigs.2019.08.26",
+           overwite = TRUE,
+           verbose = TRUE,
+           num.replicates = 10) {
     log <- testthat::capture_messages(
       GenerateRandomExpRandomSigs200(
         parm                   = ParametersSALike(),
@@ -17,7 +20,8 @@ GenerateAllRandomSA <-
         sd.log10.exp.per.sig  =  0.6641,
         # Based on sd(log10(sa.all.real.exposures[sa.all.real.exposures >= 1]))
 
-        seed = 811211))
+        seed                  = 811211,
+        num.replicates        = num.replicates))
     cat(log, file = file.path(top.level.dir, "log.txt"))
   }
 
@@ -45,7 +49,8 @@ GenerateAllRandomSP <-
         sd.log10.exp.per.sig   = 0.7047,
         # Based on sd(log10(sp.all.real.exposures[sp.all.real.exposures >= 1]))
 
-        seed = 1211))
+        seed                   = 1211,
+        num.replicates         = num.replicates))
     if (!unlink) {
       cat(log, file = file.path(top.level.dir, "log.txt"))
     }
