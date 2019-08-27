@@ -480,7 +480,7 @@ SetNewOutDir <- function(dir,
     dir.create(dir, recursive = recursive)
   }
 
-  .data$OutDir.dir <- dir
+  OutDir.dir <<- dir
 }
 
 #' Generate synthetic exposures from abstract parameters.
