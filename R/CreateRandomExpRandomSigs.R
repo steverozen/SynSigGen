@@ -61,7 +61,7 @@ GenerateAllRandomSP <-
 # several suites of random data requested by Ludmil, 2019 08 25
 
 
-#' Parameters for generating data with exposures resembling SigProfile exposures.
+#' Parameters for generating data with exposures resembling SigProfiler exposures.
 #' @keywords internal
 
 ParametersSPLike <- function() {

@@ -17,8 +17,8 @@ The name of each column should be the name of a signature.}
 \item{sig.interest}{Names of mutational signatures you want to use to
 generate exposures. It can be all, or part of signatures in colnames(tumor).}
 
-\item{burden.per.sig}{Mean mutation burden in log10(muts/mb).
-(counts of mutations per megabase of a tumor sequence)
+\item{burden.per.sig}{Mean mutation burden a log10 of the
+counts of mutations per megabase.
 It has one row, and K columns. Each column name refers to a mutational signature.}
 
 \item{sd.per.sig}{standard deviation of mutation burden.

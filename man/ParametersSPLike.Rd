@@ -2,11 +2,11 @@
 % Please edit documentation in R/CreateRandomExpRandomSigs.R
 \name{ParametersSPLike}
 \alias{ParametersSPLike}
-\title{Parameters for generating data with exposures resembling SigProfile exposures.}
+\title{Parameters for generating data with exposures resembling SigProfiler exposures.}
 \usage{
 ParametersSPLike()
 }
 \description{
-Parameters for generating data with exposures resembling SigProfile exposures.
+Parameters for generating data with exposures resembling SigProfiler exposures.
 }
 \keyword{internal}

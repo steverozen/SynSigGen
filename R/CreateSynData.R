@@ -1,4 +1,4 @@
-#' @title Extract SynSig parameters for one mutational signature profile
+#' @title Extract  parameters for one mutational signature profile
 #'
 #' @param counts  A vector of mutation counts attributed to one signature across
 #'                length(counts) samples. TODO(Steve): rename to exposures
@@ -23,11 +23,11 @@ SynSigParamsOneSignature <- function(counts, target.size = 1 ) {
   mean.per.mb <- mean(log10(counts.per.mb))
   sd.per.mb <- sd(log10(counts.per.mb))
 
-  c(prob=prevalence, mean=mean.per.mb, stdev=sd.per.mb)
+  c(prob = prevalence, mean = mean.per.mb, stdev = sd.per.mb)
 }
 
 
-#' @title Determine 3 parameters for synthetic tumors from an exposure matrix.
+#' @title Empirical estimates of key parameters describing exposures due to signatures.
 #'
 #' @param exposures A matrix in which each column is a sample and each row is a mutation
 #'         signature, with each element being the "exposure",
@@ -38,15 +38,15 @@ SynSigParamsOneSignature <- function(counts, target.size = 1 ) {
 #'
 #' @return A data frame with one row for
 #' each of a subset of the input signatures
-#'  and the following columns. Signatures not present in
-#'  \code{exposures} or present only in a single tumor in
-#'  \code{exposures} are removed.
-#'
+#' and the following columns:
 #' \enumerate{
 #' \item the proportion of tumors with the signature
 #' \item mean(log_10(mutations.per.Mb))
 #' \item stdev(log_10(mutations.per.Mb))
 #' }
+#' Signatures not present in
+#'  \code{exposures} or present only in a single tumor in
+#'  \code{exposures} are removed.
 #'
 #' @export
 
@@ -75,8 +75,9 @@ GetSynSigParamsFromExposures <- function(exposures, verbose = 0) {
   return(retval)
 }
 
-#' @title Write SynSig parameters --prevalence, mean(log(exposure))
-#'  and sd(log(exposure)) to a file.
+#' @title Write key parameters describing exposures due to a signature to a file.
+#'
+#' The parameters written are prevalence, mean(log(exposure)), and sd(log(exposure)).
 #'
 #' @param params The parameters to write.
 #'
@@ -213,8 +214,8 @@ present.sigs <-
     # If the column for one tumor has only 0s,
     # re-sample until there is at least on non-0
     # signature.
-    for (tumor in 1:ncol(present)){
-      if (all(present[,tumor] == rep(0,length(nrow(present))))){
+    for (tumor in 1:ncol(present)) {
+      if (all(present[,tumor] == rep(0, length(nrow(present))))) {
         # present['SBS1',tumor] = 1
         present[ , tumor] <-
           AssignPresentAbsentOneSample(prev.present)
@@ -235,8 +236,8 @@ present.sigs <-
 #' @param sig.interest Names of mutational signatures you want to use to
 #' generate exposures. It can be all, or part of signatures in colnames(tumor).
 #'
-#' @param burden.per.sig Mean mutation burden in log10(muts/mb).
-#' (counts of mutations per megabase of a tumor sequence)
+#' @param burden.per.sig Mean mutation burden a log10 of the
+#' counts of mutations per megabase.
 #' It has one row, and K columns. Each column name refers to a mutational signature.
 #'
 #' @param sd.per.sig standard deviation of mutation burden.
@@ -637,7 +638,7 @@ GenerateSynFromReal <- function(real.exp,
 #' debugging / testing.
 #'
 #' @param my.dir The directory in which to write the catalog
-#'  and several additonal files.
+#'  and several additional files.
 #'
 #' @return Invisibly, the generated catalog.
 #'

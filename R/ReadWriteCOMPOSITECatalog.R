@@ -44,17 +44,19 @@ WriteCatCOMPOSITE <- function(ct, path) {
             quote = FALSE)
 }
 
-#' Split COMPOSITE (SNS1536+DBS78+ID83) catalogues
-#' in ICAMS format into 3 individual catalogs.
+#' Split COMPOSITE (SNS1536+DBS78+ID83) catalogs
+#' in \code{\link[ICAMS]{ICAMS}} format into 3 individual catalogs.
 #' @param catalog Input catalog, can be a .csv file or matrix
 #' in ICAMS COMPOSITE format.
+#'
 #' @return a list, containing 3 catalog matrices in MultiModalMuSig format.
 #' Each matrix contains SNS1536, DBS78 and ID83 information, respectively.
+
 SplitCatCOMPOSITE <- function(catalog) {
 
   # Read COMPOSITE catalog. Either from file or matrix-like
   stopifnot(is.character(catalog) | is.data.frame(catalog) | is.matrix(catalog))
-  if(class(catalog) == "character")
+  if (class(catalog) == "character")
     catMatrix <- ReadCatCOMPOSITE(catalog)
   else
     catMatrix <- catalog

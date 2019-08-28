@@ -24,7 +24,7 @@ spectra to files.}
 debugging / testing.}
 
 \item{my.dir}{The directory in which to write the catalog
-and several additonal files.}
+and several additional files.}
 }
 \value{
 Invisibly, the generated catalog.

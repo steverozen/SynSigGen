@@ -7,20 +7,21 @@
 xFixSASigNames(sig.names)
 }
 \arguments{
-\item{sig.names}{Vector of signature names}
+\item{sig.names}{Vector of signature names.}
 }
 \value{
 Vector of signatures names with "_SNV" removed.
 }
 \description{
 For example, change \code{BI_COMPOSITE_SNV_SBS83_P}
-to \code{BI_COMPOSITE_SBS83_P}
+to \code{BI_COMPOSITE_SBS83_P}.
 }
 \details{
 This is necessary because
 for COMPOSITE signatures we rbind coordinated
 "SNV", "DNP", and "INDEL" signatures.
 
-This is a copy of FixSASigNames in SynSigEval ...
+This is a copy of \code{FixSASigNames} in
+package \code{SynSigEval}.
 }
 \keyword{internal}

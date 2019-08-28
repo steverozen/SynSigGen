@@ -266,15 +266,16 @@ Create.2.7a.7b.Abstract <-
 #' Standardize SignatureAnalyzer signature names.
 #'
 #' For example, change \code{BI_COMPOSITE_SNV_SBS83_P}
-#' to \code{BI_COMPOSITE_SBS83_P}
+#' to \code{BI_COMPOSITE_SBS83_P}.
 #'
 #' This is necessary because
 #' for COMPOSITE signatures we rbind coordinated
 #' "SNV", "DNP", and "INDEL" signatures.
 #'
-#' This is a copy of FixSASigNames in SynSigEval ...
+#' This is a copy of \code{FixSASigNames} in
+#' package \code{SynSigEval}.
 #'
-#' @param sig.names Vector of signature names
+#' @param sig.names Vector of signature names.
 #'
 #' @return Vector of signatures names with "_SNV" removed.
 #'

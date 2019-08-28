@@ -2,7 +2,7 @@
 % Please edit documentation in R/CreateSynData.R
 \name{GetSynSigParamsFromExposures}
 \alias{GetSynSigParamsFromExposures}
-\title{Determine 3 parameters for synthetic tumors from an exposure matrix.}
+\title{Empirical estimates of key parameters describing exposures due to signatures.}
 \usage{
 GetSynSigParamsFromExposures(exposures, verbose = 0)
 }
@@ -17,16 +17,16 @@ i.e. mutation count attributed to a
 \value{
 A data frame with one row for
 each of a subset of the input signatures
- and the following columns. Signatures not present in
- \code{exposures} or present only in a single tumor in
- \code{exposures} are removed.
-
+and the following columns:
 \enumerate{
 \item the proportion of tumors with the signature
 \item mean(log_10(mutations.per.Mb))
 \item stdev(log_10(mutations.per.Mb))
 }
+Signatures not present in
+ \code{exposures} or present only in a single tumor in
+ \code{exposures} are removed.
 }
 \description{
-Determine 3 parameters for synthetic tumors from an exposure matrix.
+Empirical estimates of key parameters describing exposures due to signatures.
 }

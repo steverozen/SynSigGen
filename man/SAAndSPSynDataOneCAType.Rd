@@ -36,7 +36,7 @@ A list with the following elements:
          \code{sa.real.exp}).
 
    \item The mean of the log10 of the number of mutations for a
-         given siganture.
+         given signature.
 
    \item The standard deviation of log10 of the number of mutations
          for a given signature.

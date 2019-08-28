@@ -44,7 +44,7 @@ columns with column names beginning \code{paste0(cancer.type, "::")}.}
 the contents of this directory with a \code{diff}.}
 
 \item{unlink}{If \code{TRUE} and \code{!is.null(regress.dir)}, then
-unlink the result dir if there are no differences.}
+unlink the result directory if there are no differences.}
 
 \item{verbose}{If \code{TRUE} print various informative messages.}
 

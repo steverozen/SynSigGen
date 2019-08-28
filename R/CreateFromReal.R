@@ -188,7 +188,7 @@ RNGMessages <- function(prefix = NULL, message.fn = message) {
 #'    the contents of this directory with a \code{diff}.
 #'
 #' @param unlink If \code{TRUE} and \code{!is.null(regress.dir)}, then
-#'       unlink the result dir if there are no differences.
+#'       unlink the result directory if there are no differences.
 #'
 #' @param verbose If \code{TRUE} print various informative messages.
 #'

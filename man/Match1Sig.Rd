@@ -2,7 +2,7 @@
 % Please edit documentation in R/SigSimilarity.R
 \name{Match1Sig}
 \alias{Match1Sig}
-\title{Find the signature in \code{other.sigs} with the highest cosine similarity to \code{query.sig}.}
+\title{Find signatures in \code{other.sigs} with the highest cosine similarity to \code{query.sig}.}
 \usage{
 Match1Sig(query.sig, other.sigs)
 }
@@ -13,10 +13,11 @@ Match1Sig(query.sig, other.sigs)
 }
 \value{
 The maximum similarity between \code{query.sig} and any signature in
-\code{other.sigs}.
+\code{other.sigs}; the name of the single element in the vector is the name
+of a signature with the maximum similarity.
 }
 \description{
-Find the signature in \code{other.sigs} with the highest cosine similarity to \code{query.sig}.
+Find signatures in \code{other.sigs} with the highest cosine similarity to \code{query.sig}.
 }
 \seealso{
 Other signature matching functions: \code{\link{MatchSigs1Direction}},

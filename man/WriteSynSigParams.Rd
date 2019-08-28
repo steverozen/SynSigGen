@@ -2,8 +2,9 @@
 % Please edit documentation in R/CreateSynData.R
 \name{WriteSynSigParams}
 \alias{WriteSynSigParams}
-\title{Write SynSig parameters --prevalence, mean(log(exposure))
- and sd(log(exposure)) to a file.}
+\title{Write key parameters describing exposures due to a signature to a file.
+
+The parameters written are prevalence, mean(log(exposure)), and sd(log(exposure)).}
 \usage{
 WriteSynSigParams(params, file, append = FALSE,
   col.names = ifelse(append, FALSE, NA))
@@ -19,6 +20,7 @@ exists.}
 \item{col.names}{If NA, add column names.}
 }
 \description{
-Write SynSig parameters --prevalence, mean(log(exposure))
- and sd(log(exposure)) to a file.
+Write key parameters describing exposures due to a signature to a file.
+
+The parameters written are prevalence, mean(log(exposure)), and sd(log(exposure)).
 }

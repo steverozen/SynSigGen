@@ -8,13 +8,15 @@
 #
 # Will require functions from ICAMS to be passed in as arguments.
 
-#' Find the signature in \code{other.sigs} with the highest cosine similarity to \code{query.sig}.
+#' Find signatures in \code{other.sigs} with the highest cosine similarity to \code{query.sig}.
+#'
 #' @param query.sig A single signature.
 #'
 #' @param other.sigs Matrix with each column being one signature.
 #'
 #' @return The maximum similarity between \code{query.sig} and any signature in
-#' \code{other.sigs}.
+#' \code{other.sigs}; the name of the single element in the vector is the name
+#' of a signature with the maximum similarity.
 #'
 #' @export
 #' @family signature matching functions
@@ -29,7 +31,8 @@ Match1Sig <- function(query.sig, other.sigs) {
             })
   max.sim <- max(sims)
   max.name <- names(sims)[sims == max.sim]
-  names(max.sim) <- max.name
+  names(max.sim) <- max.name[1] # There might be mulitple signatures
+                                # with the maximum similarity.
   return(max.sim)
 }
 

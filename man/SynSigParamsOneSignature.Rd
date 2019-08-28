@@ -2,7 +2,7 @@
 % Please edit documentation in R/CreateSynData.R
 \name{SynSigParamsOneSignature}
 \alias{SynSigParamsOneSignature}
-\title{Extract SynSig parameters for one mutational signature profile}
+\title{Extract  parameters for one mutational signature profile}
 \usage{
 SynSigParamsOneSignature(counts, target.size = 1)
 }
@@ -17,6 +17,6 @@ were derived, in megabases. Deprecated, set this to 1.}
 A 3-element vector with names "prevalence", "mean", and "stdev"
 }
 \description{
-Extract SynSig parameters for one mutational signature profile
+Extract  parameters for one mutational signature profile
 }
 \keyword{internal}
