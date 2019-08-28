@@ -8,15 +8,13 @@
 #
 # Will require functions from ICAMS to be passed in as arguments.
 
-#' Find the signature in other.sigs that is nearest (by cosine similarity)
-#' to query.sig.
+#' Find the signature in \code{other.sigs} with the highest cosine similarity to \code{query.sig}.
+#' @param query.sig A single signature.
 #'
-#' @param query.sig A single signature
-#'
-#' @param other.sigs Matrix with each column being one signature
+#' @param other.sigs Matrix with each column being one signature.
 #'
 #' @return The maximum similarity between \code{query.sig} and any signature in
-#' \code{other.sigs}
+#' \code{other.sigs}.
 #'
 #' @export
 #' @family signature matching functions
@@ -26,7 +24,7 @@ Match1Sig <- function(query.sig, other.sigs) {
   sims <-
     apply(other.sigs,
           MARGIN = 2,
-          FUN = function (other.sig) {
+          FUN = function(other.sig) {
             return(lsa::cosine(query.sig, other.sig))
             })
   max.sim <- max(sims)

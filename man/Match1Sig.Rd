@@ -2,23 +2,21 @@
 % Please edit documentation in R/SigSimilarity.R
 \name{Match1Sig}
 \alias{Match1Sig}
-\title{Find the signature in other.sigs that is nearest (by cosine similarity)
-to query.sig.}
+\title{Find the signature in \code{other.sigs} with the highest cosine similarity to \code{query.sig}.}
 \usage{
 Match1Sig(query.sig, other.sigs)
 }
 \arguments{
-\item{query.sig}{A single signature}
+\item{query.sig}{A single signature.}
 
-\item{other.sigs}{Matrix with each column being one signature}
+\item{other.sigs}{Matrix with each column being one signature.}
 }
 \value{
 The maximum similarity between \code{query.sig} and any signature in
-\code{other.sigs}
+\code{other.sigs}.
 }
 \description{
-Find the signature in other.sigs that is nearest (by cosine similarity)
-to query.sig.
+Find the signature in \code{other.sigs} with the highest cosine similarity to \code{query.sig}.
 }
 \seealso{
 Other signature matching functions: \code{\link{MatchSigs1Direction}},
