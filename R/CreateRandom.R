@@ -36,9 +36,9 @@ CreateRandomSyn <-
 
 
     stopifnot(!missing(top.level.dir))
-
-    suppressWarnings(RNGkind(sample.kind = "Rounding"))
     # For compatibility with R < 3.6.0
+    suppressWarnings(RNGkind(sample.kind = "Rounding"))
+
     set.seed(seed)
 
     CreateRandomSAAndSPSynCatalogs(top.level.dir  = top.level.dir,

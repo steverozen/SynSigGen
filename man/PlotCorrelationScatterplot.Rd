@@ -5,7 +5,6 @@
 \title{Plot scatter plot for correlation between two vectors.
 
 
-
 \code{PlotCorrelationScatterplot} is a wrapper around \code{graphics::plot()},
 and a function to plot the correlation between two vectors,
 \code{x} and \code{y}. These vectors are expected to be
@@ -40,7 +39,6 @@ Default: NULL}
 }
 \description{
 Plot scatter plot for correlation between two vectors.
-
 
 
 \code{PlotCorrelationScatterplot} is a wrapper around \code{graphics::plot()},

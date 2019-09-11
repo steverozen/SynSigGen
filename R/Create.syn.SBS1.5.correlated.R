@@ -56,17 +56,18 @@
 #'
 #' @keywords internal
 #'
-GenSBS1SBS5ExposureOneTumor <- function(tumor.name = "TwoCorreSigsGen::1",
-                                        main.signature = "SBS5",
-                                        correlated.signature = "SBS1",
-                                        main.mean.log = 2.5,
-                                        main.stdev.log = 0.25,
-                                        correlated.stdev.log = 0.25,
-                                        slope.linear = 1,
-                                        main.signature.lower.thres = 50,
-                                        correlated.signature.lower.thres = 30,
-                                        min.main.to.correlated.ratio.linear = 1/3,  ## The lower ratio for count(SBS5) / count(SBS1) in LINEAR SPACE!
-                                        max.main.to.correlated.ratio.linear = Inf)  ## The higher ratio for count(SBS5) / count(SBS1) in LINEAR SPACE!
+GenSBS1SBS5ExposureOneTumor <- function(
+  tumor.name = "TwoCorreSigsGen::1",
+  main.signature = "SBS5",
+  correlated.signature = "SBS1",
+  main.mean.log = 2.5,
+  main.stdev.log = 0.25,
+  correlated.stdev.log = 0.25,
+  slope.linear = 1,
+  main.signature.lower.thres = 50,
+  correlated.signature.lower.thres = 30,
+  min.main.to.correlated.ratio.linear = 1/3,  ## The lower ratio for count(SBS5) / count(SBS1) in LINEAR SPACE!
+  max.main.to.correlated.ratio.linear = Inf)  ## The higher ratio for count(SBS5) / count(SBS1) in LINEAR SPACE!
 {
   #### Matrices storing exposures for two signatures
   exposure.counts <- matrix(data = NA,              ## Referring to test.exposure.counts,
@@ -231,20 +232,21 @@ GenSBS1SBS5ExposureOneTumor <- function(tumor.name = "TwoCorreSigsGen::1",
 #'
 #' @export
 #'
-GenSBS1SBS5Exposure <- function(main.signature = "SBS5",
-                                correlated.signature = "SBS1",
-                                sample.number = 500,
-                                name.prefix = "TwoCorreSigsGen",
-                                main.mean.log = 2.5,
-                                main.stdev.log = 0.25,
-                                correlated.stdev.log = 0.25,
-                                slope.linear = 1,
-                                main.signature.lower.thres = 50,
-                                correlated.signature.lower.thres = 30,
-                                pearson.r.2.lower.thres = 0.1,
-                                pearson.r.2.higher.thres = 1.0,
-                                min.main.to.correlated.ratio.linear = 1/3,    ## The lower ratio for count(SBS5) / count(SBS1) in LINEAR SPACE!, minimum value is 0
-                                max.main.to.correlated.ratio.linear = Inf) ## The higher ratio for count(SBS5) / count(SBS1) in LINEAR SPACE! maximum value is Inf
+GenSBS1SBS5Exposure <- function(
+  main.signature = "SBS5",
+  correlated.signature = "SBS1",
+  sample.number = 500,
+  name.prefix = "TwoCorreSigsGen",
+  main.mean.log = 2.5,
+  main.stdev.log = 0.25,
+  correlated.stdev.log = 0.25,
+  slope.linear = 1,
+  main.signature.lower.thres = 50,
+  correlated.signature.lower.thres = 30,
+  pearson.r.2.lower.thres = 0.1,
+  pearson.r.2.higher.thres = 1.0,
+  min.main.to.correlated.ratio.linear = 1/3,    ## The lower ratio for count(SBS5) / count(SBS1) in LINEAR SPACE!, minimum value is 0
+  max.main.to.correlated.ratio.linear = Inf) ## The higher ratio for count(SBS5) / count(SBS1) in LINEAR SPACE! maximum value is Inf
 {
   #### Matrices storing exposures for two signatures
   #### For a specific tumor sample, exposure.mb records exposure number of a signature per unit megabase
@@ -294,7 +296,6 @@ GenSBS1SBS5Exposure <- function(main.signature = "SBS5",
 #' @title Plot scatter plot for correlation between two vectors.
 #'
 #'
-#'
 #' \code{PlotCorrelationScatterplot} is a wrapper around \code{graphics::plot()},
 #' and a function to plot the correlation between two vectors,
 #' \code{x} and \code{y}. These vectors are expected to be
@@ -331,39 +332,38 @@ GenSBS1SBS5Exposure <- function(main.signature = "SBS5",
 #' @export
 #'
 
-PlotCorrelationScatterplot <-
-  function (x,y,
-            xlab = NULL,
-            ylab = NULL,
-            main = NULL,
-            optional.remarks = "",
-            ...)
-  {
-    ## Check whether x and y are vectors of same length
-    stopifnot(is.vector(x) & is.vector(y))
-    stopifnot(length(x) == length(y))
+PlotCorrelationScatterplot <- function(
+  x,y,
+  xlab = NULL,
+  ylab = NULL,
+  main = NULL,
+  optional.remarks = "",
+  ...) {
+  ## Check whether x and y are vectors of same length
+  stopifnot(is.vector(x) & is.vector(y))
+  stopifnot(length(x) == length(y))
 
-    plot(x = x, y = y,
-         xlab = xlab,
-         ylab = ylab,
-         main = main,
-         ... = ...)
+  plot(x = x, y = y,
+       xlab = xlab,
+       ylab = ylab,
+       main = main,
+       ... = ...)
 
-    mtext(paste("Pearson R^2 = ", round(cor(x,y)^2,3), "; ",
-                "x.stdev = ", round(sqrt(var(x)),3), "; ",
-                "y.stdev = ", round(sqrt(var(y)),3), "; ",
-                sep = ""),
-          cex = 0.8) ## By default, the mtext() function adds text at the top margin
-    mtext(paste("x.mean = ", round(mean(x),3), "; ",
-                "y.mean = ", round(mean(y),3), "; ",
-                "Number of data points: ", length(x),
-                sep = ""),
-          line = 1,
-          cex = 0.8) ## By default, the mtext() function adds text at the top margin
-    mtext(optional.remarks, ## Adds a line of optional.remarks above the previous text line.
-          line = 2,
-          cex = 0.8) ## By default, the mtext() function adds text at the top margin
-  }
+  mtext(paste("Pearson R^2 = ", round(cor(x,y)^2,3), "; ",
+              "x.stdev = ", round(sqrt(var(x)),3), "; ",
+              "y.stdev = ", round(sqrt(var(y)),3), "; ",
+              sep = ""),
+        cex = 0.8) ## By default, the mtext() function adds text at the top margin
+  mtext(paste("x.mean = ", round(mean(x),3), "; ",
+              "y.mean = ", round(mean(y),3), "; ",
+              "Number of data points: ", length(x),
+              sep = ""),
+        line = 1,
+        cex = 0.8) ## By default, the mtext() function adds text at the top margin
+  mtext(optional.remarks, ## Adds a line of optional.remarks above the previous text line.
+        line = 2,
+        cex = 0.8) ## By default, the mtext() function adds text at the top margin
+}
 
 
 #' @title Plot scatter plot for correlation between exposures of two signatures
@@ -403,8 +403,7 @@ PlotCorrelationScatterplot <-
 #' @importFrom grDevices dev.off pdf
 #'
 #' @export
-
-
+#'
 PlotCorrelationScatterplotForExposures <-
   function(pdf.filename,
            main.signature = "SBS5",
@@ -413,23 +412,24 @@ PlotCorrelationScatterplotForExposures <-
            exposure.counts,
            xlim=c(0,4),
            ylim=c(0,4),
-           ...)
-  {
-
+           ...) {
     pdf(pdf.filename)
 
-    PlotCorrelationScatterplot(x = log(exposure.counts[main.signature,], base = 10),
-                               y = log(exposure.counts[correlated.signature,], base = 10),
-                               xlab = paste("log10( ",main.signature," )",sep = ""),
-                               ylab = paste("log10( ",correlated.signature," )",sep = ""),
-                               main = "",
-                               optional.remarks = paste("slope.linear = ", slope.linear,"; ",
-                                                        sep = ""),
-                               xlim = xlim,
-                               ylim = ylim,
-                               ... = ...)
+    PlotCorrelationScatterplot(
+      x = log(exposure.counts[main.signature,], base = 10),
+      y = log(exposure.counts[correlated.signature,], base = 10),
+      xlab = paste("log10( ",main.signature," )",sep = ""),
+      ylab = paste("log10( ",correlated.signature," )",sep = ""),
+      main = "",
+      optional.remarks = paste("slope.linear = ", slope.linear,"; ",
+                               sep = ""),
+      xlim = xlim,
+      ylim = ylim,
+      ... = ...)
+
     dev.off()
   }
+
 ##########################################################################################
 ######## Generate Dataset in which the exposure of two signatures are correlated.
 ######## Generate the exposure for SBS5 (main.signature) first,
@@ -471,7 +471,6 @@ PlotCorrelationScatterplotForExposures <-
 #'
 #' sessionInfo.txt: information related to R versions, platforms,
 #' loaded or imported packages, etc. (For better reproducibility)
-#'
 #'
 #'
 #' @param dir.name Folder to place the generated tumor spectra
@@ -576,6 +575,10 @@ CreateSBS1SBS5CorrelatedSyntheticData <-
     function.parameters <- as.list(environment(), all=TRUE)
     dataset <- list() # This will contain the data set and the parameters used to generate it
     dataset$parameter <- function.parameters
+
+    ## Set Random Number Generator(RNG) explicitly,
+    ## to be compatible with R versions < 3.6.0
+    suppressWarnings(RNGkind(sample.kind = "Rounding"))
 
     ## Set seed
     set.seed(seed)
