@@ -459,31 +459,6 @@ OutDir <- function(file.name) {
   return(paste0(tmp, file.name))
 }
 
-#' Globally set the location used by \code{OutDir}.
-#'
-#' @param dir The location of the top level directory
-#'
-#' @param overwrite If TRUE allow overwriting of existing directory.
-#'
-#' @param recursive Allow creating directories recursively.
-#'
-#' @export
-
-SetNewOutDir <- function(dir,
-                         overwrite = FALSE,
-                         recursive = TRUE) {
-  warning("Use of SetNewOutDir is deprecated")
-  if (dir.exists(dir)) {
-    if (overwrite) {
-      warning("\nOverwriting ", dir)
-    } else stop(dir, " already exists")
-  } else {
-    dir.create(dir, recursive = recursive)
-  }
-
-  OutDir.dir <<- dir
-}
-
 #' Generate synthetic exposures from abstract parameters.
 #'
 #' Checkpoints the parameters and the synthetic

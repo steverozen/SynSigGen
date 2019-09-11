@@ -589,7 +589,7 @@ CreateSBS1SBS5CorrelatedSyntheticData <-
     ## make a directory to store the dataset,
     ## and set the working directory to it.
     cat(paste("Specifying dataset.name as: ",dataset.name,"...\n",sep = ""))
-    SetNewOutDir(dir.name,overwrite)
+    MustCreateDir(dir.name,overwrite)
     cat(paste("Output folder for this dataset is: ",dir.name,"\n",sep = ""))
 
 

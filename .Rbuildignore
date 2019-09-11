@@ -1,4 +1,5 @@
 ^data-raw$
+^README\.Rmd$
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^packrat/
