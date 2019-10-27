@@ -2,14 +2,14 @@
 % Please edit documentation in R/CreateRandomExpRandomSigs.R
 \name{GenerateAllRandomSA}
 \alias{GenerateAllRandomSA}
-\title{Generate a suite of data with random signatures and exposures.}
+\title{Generate a full set of random data with characteristics somewhat like SignatureAnalyzer signatures and attribution.}
 \usage{
 
-  GenerateAllRandomSA(top.level.dir = "../SA.like.rand.exp.rand.sigs.2019.08.26",
+  GenerateAllRandomSA(top.level.dir = "../SA.like.rand.exp.rand.sigs.2019.10.27v3",
   overwite = TRUE, verbose = TRUE, num.replicates = 10)
 }
 \description{
-Generate a suite of data with random signatures and exposures.
+Generate a full set of random data with characteristics somewhat like SignatureAnalyzer signatures and attribution.
 }
 \keyword{(exposures).}
 \keyword{Base}

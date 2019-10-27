@@ -1,11 +1,37 @@
-#' Generate a suite of data with random signatures and exposures.
-#'
+# CreateRanomExpRandomSigs.R
+#
+# Generate a suite of data with random signatures and exposures.
+
+
+#' Parameters for generating data with exposures resembling SignatureAnalyzer exposures.
+#' @keywords internal
+
+ParametersSALike <- function() {
+  retval <- data.frame(
+    total.num.sigs          = c(3,   5,   10,  15,  25),
+
+    # These are chosen to ramp up to the mean standard deviation in
+    # PCAWG tumors (15.525 and 6.172).
+    mean.num.sigs.per.tumor = c(2.9, 4.9, 8,   11,  16),
+    sd.num.sigs.per.tumor   = c(1,   2,   4,    5,   6),
+    mean.log10.exp.per.sig  = c(2.6, 2.4, 2.1,  2.1, 2),
+    sd.log10.exp.per.sig    = c(0.6, 0.6, 0.5,  0.4, 0.4)
+  )
+
+
+  return(retval)
+}
+
+
+
+#' Generate a full set of random data with characteristics somewhat like SignatureAnalyzer signatures and attribution.
 #' @keywords internal
 #'
 #' Base parameters on SignatureAnalyzer attributions (exposures).
 
 GenerateAllRandomSA <-
-  function(top.level.dir = "../SA.like.rand.exp.rand.sigs.2019.08.26",
+  function(top.level.dir = "../SA.like.rand.exp.rand.sigs.2019.10.27v3",
+             # "../SA.like.rand.exp.rand.sigs.2019.08.26",
            overwite = TRUE,
            verbose = TRUE,
            num.replicates = 10) {
@@ -14,16 +40,35 @@ GenerateAllRandomSA <-
         parm                   = ParametersSALike(),
         top.level.dir          = top.level.dir,
 
-        mean.log10.exp.per.sig = 2.349, # Change mean.log10.mut.per.sig
+        # mean.log10.exp.per.sig = 2.349, # Change mean.log10.mut.per.sig
         # Based on mean(log10(sa.all.real.exposures[sa.all.real.exposures >= 1]))
 
-        sd.log10.exp.per.sig  =  0.6641,
+        # sd.log10.exp.per.sig  =  0.6641,
         # Based on sd(log10(sa.all.real.exposures[sa.all.real.exposures >= 1]))
 
         seed                  = 811211,
         num.replicates        = num.replicates))
     cat(log, file = file.path(top.level.dir, "log.txt"))
+    return(Resummarize(top.level.dir))
   }
+
+
+#' Parameters for generating data with exposures resembling SigProfiler exposures.
+#' @keywords internal
+
+ParametersSPLike <- function() {
+  retval <- data.frame(
+    total.num.sigs          = c(3, 5, 10, 15, 25),
+
+    # Except for the first element, these are based on the observed mean and
+    # standard deviation in PCAWG tumors.
+    mean.num.sigs.per.tumor = c(1.5, rep(3.9, 4)),
+    sd.num.sigs.per.tumor   = c(0.5, rep(1.3, 4)),
+    mean.log10.exp.per.sig  = c(3,   2.4, 2.1,  2.1, 2),
+    sd.log10.exp.per.sig    = c(0.7, 0.6, 0.5,  0.4, 0.4)
+  )
+  return(retval)
+}
 
 
 #' Generate a suite of data with random signatures and exposures.
@@ -33,7 +78,7 @@ GenerateAllRandomSA <-
 #' Base parameters on SigProfiler attributions (exposures).
 
 GenerateAllRandomSP <-
-  function(top.level.dir  = "../SP.like.rand.exp.rand.sigs.2019.08.26",
+  function(top.level.dir  = "../SP.like.rand.exp.rand.sigs.2019.10.27v3",
            overwrite      = TRUE,
            verbose        = TRUE,
            num.replicates = 10,
@@ -43,10 +88,10 @@ GenerateAllRandomSP <-
         parm                   = ParametersSPLike(),
         top.level.dir          = top.level.dir,
 
-        mean.log10.exp.per.sig = 2.97,
+        # mean.log10.exp.per.sig = 2.97,
         # Based on mean(log10(sp.all.real.exposures[sp.all.real.exposures >= 1]))
 
-        sd.log10.exp.per.sig   = 0.7047,
+        # sd.log10.exp.per.sig   = 0.7047,
         # Based on sd(log10(sp.all.real.exposures[sp.all.real.exposures >= 1]))
 
         seed                   = 1211,
@@ -60,36 +105,24 @@ GenerateAllRandomSP <-
 # The next 2 functions provide the specifications for generating
 # several suites of random data requested by Ludmil, 2019 08 25
 
+Resummarize <- function(top.level.dir) {
+  summary <- data.table::fread(file.path(top.level.dir, "summary.csv"))
+  s1 <- as.data.frame(summary)
+  rownames(s1) <-
+    paste("nsig", s1$total.num.sigs, "rep.num", s1$replicate.number, sep = ".")
+  s1 <- s1[ , -ncol(summary)]
+  s2 <- split(s1, s1$total.num.sigs)
+  add.means <- function(x) {
+    xx <- colMeans(x)
+    rbind(x, as.list(xx))
+  }
 
-#' Parameters for generating data with exposures resembling SigProfiler exposures.
-#' @keywords internal
-
-ParametersSPLike <- function() {
-  retval <- data.frame(
-    total.num.sigs          = c(3, 5, 10, 15, 25),
-
-    # Except for the first element, these are based on the observed mean and
-    # standard deviation in PCAWG tumors.
-    mean.num.sigs.per.tumor = c(1.5, rep(3.9, 4)),
-    sd.num.sigs.per.tumor   = c(0.5, rep(1.3, 4))
-  )
-  return(retval)
+  s3 <- lapply(s2, add.means)
+  s4 <- data.table::rbindlist(s3, idcol = TRUE)
+  write.csv(s4, file.path(top.level.dir, "summary2.csv"))
+  return(s4)
 }
 
-
-#' Parameters for generating data with exposures resembling SignatureAnalyzer exposures.
-#' @keywords internal
-
-ParametersSALike <- function() {
-  retval <- data.frame(
-    total.num.sigs          = c(3, 5, 10, 15, 25),
-
-    # These are chosen to ramp up to the mean standard deviation in
-    # PCAWG tumors (15.525 and 6.172).
-    mean.num.sigs.per.tumor = c(2.9, 4.9, 8, 11, 16),
-    sd.num.sigs.per.tumor   = c(1,   2,   4,  5,  6))
-  return(retval)
-}
 
 
 GenerateRandomExpRandomSigs200 <- function(parm,
@@ -109,14 +142,23 @@ GenerateRandomExpRandomSigs200 <- function(parm,
       "target.mean.num.sigs.per.tumor",
       "target.sd.num.sigs.per.tumor",
       "replicate.number",
-      "actual.mean",
-      "actual.sd\n",
+      "actual.mean.num.sigs.per.tumor",
+      "actual.sd.num.sigs.per.tumor",
+      "mean.num.muts.per.tumor",
+      "mean.log10.muts",
+      "sd.num.muts.per.tumor",
+      "sd.log10.muts",
+      "median.num.muts.per.tumor",
+      "mad.num.muts.per.tumor",
+      "trail\n",
       sep = ",", file = summary.file)
 
   for (i in 1:nrow(parm)) {
     total.num.sigs          <- parm[i, "total.num.sigs"]
     mean.num.sigs.per.tumor <- parm[i, "mean.num.sigs.per.tumor"]
     sd.num.sigs.per.tumor   <- parm[i, "sd.num.sigs.per.tumor"]
+    mean.log10.exp.per.sig  <- parm[i, "mean.log10.exp.per.sig"]
+    sd.log10.exp.per.sig    <- parm[i, "sd.log10.exp.per.sig"]
     if (verbose) {
       message("\n", paste(rep("=", 40), collapse = ""))
       message("\nGenerateRandomExpRandomSigs200\n",
@@ -144,7 +186,7 @@ GenerateRandomExpRandomSigs200 <- function(parm,
 
       }
 
-      actual.sig.num.mean.and.sd <-
+      stats.on.sim.data <-
         Create1CatRandomExpRandomSigs(
           num.syn.tumors          = 200,
           total.num.sigs          = total.num.sigs,
@@ -157,7 +199,7 @@ GenerateRandomExpRandomSigs200 <- function(parm,
           verbose                 = verbose)
 
       cat(total.num.sigs, mean.num.sigs.per.tumor, sd.num.sigs.per.tumor,
-          replicate.number, actual.sig.num.mean.and.sd,
+          replicate.number, stats.on.sim.data,
           "\n", sep = ",", file = summary.file, append = TRUE)
 
     }
@@ -236,8 +278,19 @@ Create1CatRandomExpRandomSigs <-
       dir       = dir.name,
       overwrite = overwrite)
 
+    muts.per.tumor = colSums(exp)
+
     return(c(
       actual.sig.num.mean = attr(exp, "actual.sig.num.mean"),
-      actual.sig.num.sd = attr(exp, "actual.sig.num.sd")))
+      actual.sig.num.sd = attr(exp, "actual.sig.num.sd"),
+
+      mean.num.muts.per.tumor = mean(muts.per.tumor),
+      mean.log10.num = mean(log10(muts.per.tumor)),
+      sd.num.muts.per.tumor = sd(muts.per.tumor),
+      sd.log10.num = sd(log10(muts.per.tumor)),
+      median.num.muts.per.tumor = stats::median(muts.per.tumor),
+      mad.num.muts.per.tumor    = stats::mad(muts.per.tumor)
+
+      ))
   }
 
