@@ -23,14 +23,13 @@ ParametersSALike <- function() {
 }
 
 
-
 #' Generate a full set of random data with characteristics somewhat like SignatureAnalyzer signatures and attribution.
 #' @keywords internal
 #'
 #' Base parameters on SignatureAnalyzer attributions (exposures).
 
 GenerateAllRandomSA <-
-  function(top.level.dir = "../SA.like.rand.exp.rand.sigs.2019.10.27v3",
+  function(top.level.dir = "../SA.like.rand.exp.rand.sigs.2019.10.28",
              # "../SA.like.rand.exp.rand.sigs.2019.08.26",
            overwite = TRUE,
            verbose = TRUE,
@@ -78,7 +77,7 @@ ParametersSPLike <- function() {
 #' Base parameters on SigProfiler attributions (exposures).
 
 GenerateAllRandomSP <-
-  function(top.level.dir  = "../SP.like.rand.exp.rand.sigs.2019.10.27v3",
+  function(top.level.dir  = "../SP.like.rand.exp.rand.sigs.2019.10.28",
            overwrite      = TRUE,
            verbose        = TRUE,
            num.replicates = 10,
@@ -108,21 +107,27 @@ GenerateAllRandomSP <-
 Resummarize <- function(top.level.dir) {
   summary <- data.table::fread(file.path(top.level.dir, "summary.csv"))
   s1 <- as.data.frame(summary)
-  rownames(s1) <-
-    paste("nsig", s1$total.num.sigs, "rep.num", s1$replicate.number, sep = ".")
-  s1 <- s1[ , -ncol(summary)]
+  fut.rownames <-
+    paste("nsig", s1$total.num.sigs,
+          "rep.num", s1$replicate.number, sep = ".")
+  s1 <- s1[ , -ncol(s1)]
+  rownames(s1) <- fut.rownames
   s2 <- split(s1, s1$total.num.sigs)
   add.means <- function(x) {
     xx <- colMeans(x)
-    rbind(x, as.list(xx))
+    xxx <- rbind(x, as.list(xx))
+    # xxxx <- as.character(signif(xxx, digits = 4))
+    xxxx <-
+      apply(xxx, MARGIN = 2, function(x) as.character(signif(x, digits = 3)))
+    retv <- rbind(xxxx, "")
+    return(retv)
   }
 
   s3 <- lapply(s2, add.means)
-  s4 <- data.table::rbindlist(s3, idcol = TRUE)
+  s4 <- do.call("rbind", s3)
   write.csv(s4, file.path(top.level.dir, "summary2.csv"))
   return(s4)
 }
-
 
 
 GenerateRandomExpRandomSigs200 <- function(parm,
