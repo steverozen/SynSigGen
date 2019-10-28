@@ -11,9 +11,10 @@ test_that("CreateRandomMutSigProfiles", {
 
 
 test_that("CreateRandomSyn 5 spectra", {
-  skip("temporarily disconnected")
   skip_if_not_installed("ICAMS", minimum_version = "2.0.9")
+  stopifnot(grepl("testthat", getwd(), fixed = TRUE))
   expect_true(
+    # Defined in CreateRandom.R
     CreateRandomSyn(top.level.dir  = tempfile("test.random.5"),
                     seed           = 1443196,
                     num.syn.tumors = 5,
