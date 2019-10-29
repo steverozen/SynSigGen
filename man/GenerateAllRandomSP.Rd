@@ -5,7 +5,7 @@
 \title{Generate a suite of data with random signatures and exposures.}
 \usage{
 
-  GenerateAllRandomSP(top.level.dir = "../SP.like.rand.exp.rand.sigs.2019.10.28",
+  GenerateAllRandomSP(top.level.dir = "../SP.like.rand.exp.rand.sigs.2019.10.29",
   overwrite = TRUE, verbose = TRUE, num.replicates = 10,
   unlink = FALSE)
 }
