@@ -11,6 +11,7 @@ test_that("CreateRandomMutSigProfiles", {
 
 
 test_that("CreateRandomSyn 5 spectra", {
+  skip("fragile, diff-based test")
   skip_if_not_installed("ICAMS", minimum_version = "2.0.9")
   stopifnot(grepl("testthat", getwd(), fixed = TRUE))
   expect_true(
@@ -20,6 +21,7 @@ test_that("CreateRandomSyn 5 spectra", {
                     num.syn.tumors = 5,
                     regress.dir    = "rdata/random.5/"))
 })
+
 
 test_that("CreateRandomSyn 1000 spectra", {
   skip_if_not_installed("ICAMS", minimum_version = "2.0.9")
