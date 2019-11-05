@@ -6,15 +6,8 @@
 \usage{
 CreateSBS1SBS5CorrelatedSyntheticData(dir.name = "./S.0.5.Rsq.0.3",
   dataset.name = NULL, overwrite = FALSE, seed = 1,
-  main.signature = "SBS5", correlated.signature = "SBS1",
-  name.prefix = "TwoCorreSigsGen", sample.number = 500,
-  main.mean.log = 2.5, main.stdev.log = 0.3,
-  correlated.stdev.log = 0.4, slope.linear = 0.5,
-  main.signature.lower.thres = 100,
-  correlated.signature.lower.thres = 1, pearson.r.2.lower.thres = 0.29,
-  pearson.r.2.higher.thres = 0.31,
-  min.main.to.correlated.ratio.linear = 1/3,
-  max.main.to.correlated.ratio.linear = Inf)
+  parameter.df = SynSigGen::SBS1SBS5parameter["S.0.5.Rsq.0.3", ],
+  add.info = TRUE)
 }
 \arguments{
 \item{dir.name}{Folder to place the generated tumor spectra
@@ -33,50 +26,66 @@ If NULL, it will be changed to the last part of the \code{dir.name}
 generator (RNG). This makes the generation of the correlated
 datasets repeatable. (Default: 1)}
 
-\item{main.signature}{The name of the main signature whose exposure
-can vary freely. (Default: SBS5)}
+\item{parameter.df}{a named 1*14 data.frame containing the following items:
 
-\item{correlated.signature}{The name of the correlated signature
+\enumerate{
+
+\item \code{main.signature} The name of the main signature whose exposure
+can vary freely. (Default: SBS5)
+
+\item \code{correlated.signature} The name of the correlated signature
 whose exposure is influenced by and co-varies with the exposure
-of main.signature. In this study, it defaults as "SBS1".}
+of main.signature. In this study, it defaults as "SBS1".
 
-\item{name.prefix}{Default: "TwoCorreSigsGen"}
+\item \code{name.prefix} Default: "TwoCorreSigsGen"
 
-\item{sample.number}{The number of synthetic tumors you want to generate.
-Default: 500}
+\item \code{sample.number} The number of synthetic tumors you want to generate.
+Default: 500
 
-\item{main.mean.log}{The mean of log(count(SBS5),base = 10)
-Default: 2.5}
+\item \code{main.mean.log} The mean of log(count(SBS5),base = 10)
+Default: 2.5
 
-\item{main.stdev.log}{The standard deviation of log(count(SBS5),base = 10)
-Default: 0.3}
+\item \code{main.stdev.log} The standard deviation of log(count(SBS5),base = 10)
+Default: 0.3
 
-\item{correlated.stdev.log}{The ADDED standard deviation of log(count(SBS1),base = 10).
+\item \code{correlated.stdev.log} The ADDED standard deviation of log(count(SBS1),base = 10).
 This parameter is ADDED stdev because based on the mechanism to generate the count,
 log10(count(SBS1)) inherently has a stdev = slope * main.stdev.log
-Default: 0.4}
+Default: 0.4
 
-\item{slope.linear}{The ratio for: (Correlated exposure) / (Main exposure) IN LINEAR SPACE!
-Default: 0.5}
+\item \code{slope.linear} The ratio for: (Correlated exposure) / (Main exposure) IN LINEAR SPACE!
+Default: 0.5
 
-\item{main.signature.lower.thres}{This program will force the exposure count of
+\item \code{main.signature.lower.thres} This program will force the exposure count of
 main.signature to be greater than this threhold.
-Default: 100}
+Default: 100
 
-\item{correlated.signature.lower.thres}{This program will force the exposure count of
+\item \code{correlated.signature.lower.thres} This program will force the exposure count of
 correlated.signature to be greater than this threhold.
-Default: 1}
+Default: 1
 
-\item{pearson.r.2.lower.thres}{Lower boundary of Pearson's R^2
-(Default: 0.29)}
+\item \code{pearson.r.2.lower.thres} Lower boundary of Pearson's R^2
+(Default: 0.29)
 
-\item{pearson.r.2.higher.thres}{Upper boundary of Pearson's R^2
-(Default: 0.31)}
+\item \code{pearson.r.2.higher.thres} Upper boundary of Pearson's R^2
+(Default: 0.31)
 
-\item{min.main.to.correlated.ratio.linear}{The lower ratio for count(SBS5) / count(SBS1)
-in LINEAR SPACE! (Default: 1/3)}
+\item \code{min.main.to.correlated.ratio.linear} The lower ratio for count(SBS5) / count(SBS1)
+in LINEAR SPACE! (Default: 1/3)
 
-\item{max.main.to.correlated.ratio.linear}{(Default: Inf)
+\item \code{max.main.to.correlated.ratio.linear} The upper ratio for count(SBS5) / count(SBS1)
+in LINEAR SPACE! (Default: Inf)
+
+}
+
+#' @param add.info Whether to generate additional information.
+
+You should set it to \code{FALSE} when you want to make a \code{diff}
+using \code{CreateSBS1SBS5CorrelatedSyntheticDataDemo()}
+(i.e. parameter \code{regressdir} is not \code{NULL}). This is because
+Additional information may differ on different OS or R sessions,
+thus may prevent the dataset from passing the NewDiff4SynDatasets check.
+(Default: TRUE)
 
 \strong{Warning} \cr
 Exposure generation function will repeat generating exposure counts

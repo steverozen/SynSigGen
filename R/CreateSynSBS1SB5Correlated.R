@@ -489,50 +489,66 @@ PlotCorrelationScatterplotForExposures <-
 #' generator (RNG). This makes the generation of the correlated
 #' datasets repeatable. (Default: 1)
 #'
-#' @param main.signature The name of the main signature whose exposure
+#' @param parameter.df a named 1*14 data.frame containing the following items:
+#'
+#' \enumerate{
+#'
+#' \item \code{main.signature} The name of the main signature whose exposure
 #' can vary freely. (Default: SBS5)
 #'
-#' @param correlated.signature The name of the correlated signature
+#' \item \code{correlated.signature} The name of the correlated signature
 #' whose exposure is influenced by and co-varies with the exposure
 #' of main.signature. In this study, it defaults as "SBS1".
 #'
-#' @param name.prefix Default: "TwoCorreSigsGen"
+#' \item \code{name.prefix} Default: "TwoCorreSigsGen"
 #'
-#' @param sample.number The number of synthetic tumors you want to generate.
+#' \item \code{sample.number} The number of synthetic tumors you want to generate.
 #' Default: 500
 #'
-#' @param main.mean.log  The mean of log(count(SBS5),base = 10)
+#' \item \code{main.mean.log} The mean of log(count(SBS5),base = 10)
 #' Default: 2.5
 #'
-#' @param main.stdev.log The standard deviation of log(count(SBS5),base = 10)
+#' \item \code{main.stdev.log} The standard deviation of log(count(SBS5),base = 10)
 #' Default: 0.3
 #'
-#' @param correlated.stdev.log The ADDED standard deviation of log(count(SBS1),base = 10).
+#' \item \code{correlated.stdev.log} The ADDED standard deviation of log(count(SBS1),base = 10).
 #' This parameter is ADDED stdev because based on the mechanism to generate the count,
 #' log10(count(SBS1)) inherently has a stdev = slope * main.stdev.log
 #' Default: 0.4
 #'
-#' @param slope.linear The ratio for: (Correlated exposure) / (Main exposure) IN LINEAR SPACE!
+#' \item \code{slope.linear} The ratio for: (Correlated exposure) / (Main exposure) IN LINEAR SPACE!
 #' Default: 0.5
 #'
-#' @param main.signature.lower.thres This program will force the exposure count of
+#' \item \code{main.signature.lower.thres} This program will force the exposure count of
 #' main.signature to be greater than this threhold.
 #' Default: 100
 #'
-#' @param correlated.signature.lower.thres This program will force the exposure count of
+#' \item \code{correlated.signature.lower.thres} This program will force the exposure count of
 #' correlated.signature to be greater than this threhold.
 #' Default: 1
 #'
-#' @param pearson.r.2.lower.thres Lower boundary of Pearson's R^2
+#' \item \code{pearson.r.2.lower.thres} Lower boundary of Pearson's R^2
 #' (Default: 0.29)
 #'
-#' @param pearson.r.2.higher.thres Upper boundary of Pearson's R^2
+#' \item \code{pearson.r.2.higher.thres} Upper boundary of Pearson's R^2
 #' (Default: 0.31)
 #'
-#' @param min.main.to.correlated.ratio.linear The lower ratio for count(SBS5) / count(SBS1)
+#' \item \code{min.main.to.correlated.ratio.linear} The lower ratio for count(SBS5) / count(SBS1)
 #' in LINEAR SPACE! (Default: 1/3)
 #'
-#' @param max.main.to.correlated.ratio.linear (Default: Inf)
+#' \item \code{max.main.to.correlated.ratio.linear} The upper ratio for count(SBS5) / count(SBS1)
+#' in LINEAR SPACE! (Default: Inf)
+#'
+#' }
+#'
+#' #' @param add.info Whether to generate additional information.
+#'
+#' You should set it to \code{FALSE} when you want to make a \code{diff}
+#' using \code{CreateSBS1SBS5CorrelatedSyntheticDataDemo()}
+#' (i.e. parameter \code{regressdir} is not \code{NULL}). This is because
+#' Additional information may differ on different OS or R sessions,
+#' thus may prevent the dataset from passing the NewDiff4SynDatasets check.
+#' (Default: TRUE)
 #'
 #' \strong{Warning} \cr
 #' Exposure generation function will repeat generating exposure counts
@@ -553,28 +569,32 @@ CreateSBS1SBS5CorrelatedSyntheticData <-
            dataset.name = NULL,
            overwrite = FALSE,
            seed = 1,
-           main.signature = "SBS5",
-           correlated.signature = "SBS1",
-           name.prefix = "TwoCorreSigsGen",
-           sample.number = 500,
-           main.mean.log = 2.5,
-           main.stdev.log = 0.3,
-           correlated.stdev.log = 0.4,
-           slope.linear = 0.5,
-           main.signature.lower.thres = 100,
-           correlated.signature.lower.thres = 1,
-           pearson.r.2.lower.thres = 0.29,
-           pearson.r.2.higher.thres = 0.31,
-           min.main.to.correlated.ratio.linear = 1/3,
-           max.main.to.correlated.ratio.linear = Inf)
+           parameter.df = SynSigGen::SBS1SBS5parameter["S.0.5.Rsq.0.3",],
+           add.info = TRUE)
   {
+    ## Read in parameters
     if(is.null(dataset.name))
       dataset.name = basename(dir.name)
+    {
+      main.signature <- parameter.df[1,"main.signature"]
+      correlated.signature <- parameter.df[1,"correlated.signature"]
+      sample.number <- parameter.df[1,"sample.number"]
+      name.prefix <- parameter.df[1,"name.prefix"]
+      main.mean.log <- parameter.df[1,"main.mean.log"]
+      main.stdev.log <- parameter.df[1,"main.stdev.log"]
+      correlated.stdev.log <- parameter.df[1,"correlated.stdev.log"]
+      slope.linear <- parameter.df[1,"slope.linear"]
+      main.signature.lower.thres <- parameter.df[1,"main.signature.lower.thres"]
+      correlated.signature.lower.thres <- parameter.df[1,"correlated.signature.lower.thres"]
+      pearson.r.2.lower.thres <- parameter.df[1,"pearson.r.2.lower.thres"]
+      pearson.r.2.higher.thres <- parameter.df[1,"pearson.r.2.higher.thres"]
+      min.main.to.correlated.ratio.linear <- parameter.df[1,"min.main.to.correlated.ratio.linear"]
+      max.main.to.correlated.ratio.linear <- parameter.df[1,"max.main.to.correlated.ratio.linear"]
+      }
 
     ## Record all the parameters into dataset$parameter
-    function.parameters <- as.list(environment(), all=TRUE)
     dataset <- list() # This will contain the data set and the parameters used to generate it
-    dataset$parameter <- function.parameters
+    dataset$parameter <- parameter.df
 
     ## Set Random Number Generator(RNG) explicitly,
     ## to be compatible with R versions < 3.6.0
@@ -612,6 +632,7 @@ CreateSBS1SBS5CorrelatedSyntheticData <-
                                             max.main.to.correlated.ratio.linear)
 
     #### Plot out the scatter plot for the two correlated exposures
+    if(add.info){
     cat("Plotting correlation scatterplot for exposures of two signatures...\n")
     PlotCorrelationScatterplotForExposures(pdf.filename = paste(dir.name,"/scatterplot.pdf",sep = ""),
                                            main.signature = main.signature,
@@ -620,14 +641,14 @@ CreateSBS1SBS5CorrelatedSyntheticData <-
                                            exposure.counts = dataset$exposure,
                                            xlim = c(0,4),
                                            ylim = c(0,4))
-
+    }
 
     #### Using the exposure count generate synthetic spectra catalog.
     dataset$spectra <-
       CreateSynCatalogs(sp.sigs[,c(main.signature,correlated.signature)],
                         dataset$exposure)
 
-    cat("Spectra generated.")
+    cat("Spectra generated.\n")
 
     #### Output Duke-NUS formatted mutational spectra and exposure.counts
     WriteCatalog(dataset$spectra$ground.truth.catalog,
@@ -639,17 +660,26 @@ CreateSBS1SBS5CorrelatedSyntheticData <-
     WriteCatalog(dataset$spectra$ground.truth.signatures,
                  paste0(dir.name,"/ground.truth.syn.sigs.csv"))
 
-    #### Output parameters used for better reproducibility
-    write.table(t(data.frame(dataset$parameter)),
-                paste0(dir.name,"/parameters.txt"),
-                col.names = F,quote = F,sep = ":\t")
+    #### In debug mode,
+    #### Output parameters used for better reproducibility.
+    #### In usual cases, we don't output this information,
+    #### for passing diff check (NewDiff4SynDataSets)
+    if(add.info){
+      write.table(t(data.frame(dataset$parameter)),
+                  paste0(dir.name,"/parameters.txt"),
+                  col.names = F,quote = F,sep = ":\t")
+    }
 
-
-    ## Save seeds and session information
-    ## for better reproducibility
-    capture.output(sessionInfo(), file = paste0(dir.name,"/sessionInfo.txt")) ## Save session info
-    write(x = seedInUse, file = paste0(dir.name,"/seedInUse.txt")) ## Save seed in use to a text file
-    write(x = RNGInUse, file = paste0(dir.name,"/RNGInUse.txt")) ## Save seed in use to a text file
+    #### In debug mode,
+    #### Save seeds and session information
+    #### for better reproducibility.
+    #### In usual cases, we don't output this information,
+    #### for passing diff check (NewDiff4SynDataSets)
+    if(add.info){
+      capture.output(sessionInfo(), file = paste0(dir.name,"/sessionInfo.txt")) ## Save session info
+      write(x = seedInUse, file = paste0(dir.name,"/seedInUse.txt")) ## Save seed in use to a text file
+      write(x = RNGInUse, file = paste0(dir.name,"/RNGInUse.txt")) ## Save seed in use to a text file
+    }
     cat(paste("All result files have been stored in folder ",
               dir.name,"\n",sep = ""))
     cat("\n\nData generation has been finished successfully!\n\n")
@@ -684,14 +714,26 @@ CreateSBS1SBS5CorrelatedSyntheticData <-
 #' sessionInfo.txt: information related to R versions, platforms,
 #' loaded or imported packages, etc. (For better reproducibility)
 #'
-#'
 #' @param top.level.dir Top-level-folder to place 20 spectra
 #' datasets generated by this function.
 #' Default: ./ (Current working directory)
 #'
+#' @param regress.dir If not \code{NULL}, compare the result to
+#' the contents of this directory with a \code{diff}.
+#'
 #' @param overwrite Whether to overwrite
 #' (Default: FALSE)
 #'
+#' @param add.info Whether to generate additional information.
+#'
+#' You should set it to \code{FALSE} when you want to make a \code{diff}
+#' (i.e. \code{regressdir} is not \code{NULL}). This is because
+#' Additional information may differ on different OS or R sessions,
+#' thus may prevent the dataset from passing the NewDiff4SynDatasets check.
+#' (Default: TRUE)
+#'
+#' @param unlink Whether to delete temporary dataset folder \code{top.level.dir}.
+#' (Set to TRUE for testing)
 #'
 #' @importFrom ICAMS WriteCatalog
 #' @importFrom utils capture.output sessionInfo
@@ -699,42 +741,38 @@ CreateSBS1SBS5CorrelatedSyntheticData <-
 #' @export
 #'
 CreateSBS1SBS5CorrelatedSyntheticDataDemo <-
-  function(top.level.dir = "./",overwrite = FALSE){
+  function(top.level.dir = "./",
+           regress.dir = NULL,
+           overwrite = FALSE,
+           add.info = TRUE,
+           unlink = FALSE){
 
     datasetNames <- rownames(SynSigGen::SBS1SBS5parameter)
 
     for(datasetName in datasetNames){
-      ## Before calling the generation function, assign the parameters
-      ## as provided in SynSigGen::SBS1SBS5parameter.
-      for(parameter in colnames(SynSigGen::SBS1SBS5parameter)){
-        assign(x = parameter,
-               value = SynSigGen::SBS1SBS5parameter[datasetName,parameter])
-      }
       # dataset.name <- datasetName
       dir.name <- paste0(top.level.dir,"/",datasetName,"/sp.sp")
 
       ## Call the spectra generation function.
+      ## Assign most parameters in a named vector format.
       CreateSBS1SBS5CorrelatedSyntheticData(
-        SynSigGen::SBS1SBS5parameter[datasetName, ],
         dir.name = dir.name,
         dataset.name = datasetName,
         overwrite = overwrite,
-        seed = 1
-        # main.signature = main.signature,
-        # correlated.signature = correlated.signature,
-        # name.prefix = "TwoCorreSigsGen",
-        # sample.number = sample.number,
-        # main.mean.log = main.mean.log,
-        # main.stdev.log = main.stdev.log,
-        # correlated.stdev.log = correlated.stdev.log,
-        # slope.linear = slope.linear,
-        # main.signature.lower.thres = main.signature.lower.thres,
-        # correlated.signature.lower.thres = correlated.signature.lower.thres,
-        # pearson.r.2.lower.thres = pearson.r.2.lower.thres,
-        # pearson.r.2.higher.thres = pearson.r.2.higher.thres,
-        # min.main.to.correlated.ratio.linear = 1/3,
-        # max.main.to.correlated.ratio.linear = Inf
-        )
+        seed = 1,
+        parameter.df = SynSigGen::SBS1SBS5parameter[datasetName,],
+        add.info = add.info)
     }
 
+    ## In default mode, the return value will be TRUE
+    ## only if the contents in two directories are the same.
+    if (!is.null(regress.dir)) {
+      diff.result <-
+        NewDiff4SynDataSets(newdir         = top.level.dir,
+                            regressdirname = regress.dir,
+                            unlink         = unlink,
+                            verbose        = FALSE,
+                            long.diff      = FALSE)
+      return(diff.result[1] == "ok")
+    }
   }

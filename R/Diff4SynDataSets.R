@@ -17,7 +17,29 @@ Diff4SynDataSets <- function(dirname, unlink) {
                              unlink = unlink))
 }
 
-
+#' Diff two directories or files.
+#'
+#' @param newdir the path of \code{dir2} for a folder to be recursively compared with
+#' \code{dir1}; it can also be the path of a single file \code{file2} to diff with
+#' \code{file1}.
+#'
+#' @param regressdirname the path of \code{dir2} for a folder to be recursively compared with
+#' \code{dir1}; it can also be the path of a single file \code{file2} to diff with
+#' \code{file1}.
+#'
+#' @param unlink if \code{TRUE} unlink \code{newdir}, but do not unlink
+#' if there are diffs.
+#'
+#' @param verbose Whether to display additional R messages.
+#'
+#' @param long.diff If \code{TRUE}, invoke "diff -r" (detailed text information
+#' even if the two files/folders are the same); if \code{FALSE}, invoke "diff -rq"
+#' (detailed text information only if two files/folders are different).
+#' (Default: FALSE)
+#'
+#' @return The output of the diff command.
+#'
+#' @export
 NewDiff4SynDataSets <-
   function(newdir, regressdirname, unlink, verbose = FALSE, long.diff = FALSE) {
 

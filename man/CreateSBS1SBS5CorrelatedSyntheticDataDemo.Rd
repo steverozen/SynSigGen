@@ -5,7 +5,8 @@
 \title{Function to generate 20 SBS1-SBS5-correlated Synthetic datasets used in testing.}
 \usage{
 CreateSBS1SBS5CorrelatedSyntheticDataDemo(top.level.dir = "./",
-  overwrite = FALSE)
+  regressdir = NULL, overwrite = FALSE, add.info = TRUE,
+  unlink = FALSE)
 }
 \arguments{
 \item{top.level.dir}{Top-level-folder to place 20 spectra
@@ -14,6 +15,20 @@ Default: ./ (Current working directory)}
 
 \item{overwrite}{Whether to overwrite
 (Default: FALSE)}
+
+\item{add.info}{Whether to generate additional information.
+
+You should set it to \code{FALSE} when you want to make a \code{diff}
+(i.e. \code{regressdir} is not \code{NULL}). This is because
+Additional information may differ on different OS or R sessions,
+thus may prevent the dataset from passing the NewDiff4SynDatasets check.
+(Default: TRUE)}
+
+\item{unlink}{Whether to delete temporary dataset folder \code{top.level.dir}.
+(Set to TRUE for testing)}
+
+\item{regress.dir}{If not \code{NULL}, compare the result to
+the contents of this directory with a \code{diff}.}
 }
 \description{
 This function is a wrapper around \link{CreateSBS1SBS5CorrelatedSyntheticData}.
