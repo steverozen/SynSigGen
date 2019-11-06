@@ -4,7 +4,7 @@ SynSigGen
 =========
 
 <!-- badges: start -->
-[![Travis build status](https://travis-ci.org/steverozen/ICAMS.svg?branch=master)](https://travis-ci.org/steverozen/ICAMS)
+[![Travis build status](https://travis-ci.org/steverozen/SynSigGen.svg?branch=develop)](https://travis-ci.org/steverozen/SynSigGen)
 
 <!-- badges: end -->
 Synthetic (Mutational) Signature Generation ('SynSigGen')
