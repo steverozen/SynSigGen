@@ -541,7 +541,7 @@ PlotCorrelationScatterplotForExposures <-
 #'
 #' }
 #'
-#' #' @param add.info Whether to generate additional information.
+#' @param add.info Whether to generate additional information.
 #'
 #' You should set it to \code{FALSE} when you want to make a \code{diff}
 #' using \code{CreateSBS1SBS5CorrelatedSyntheticDataDemo()}

@@ -76,9 +76,9 @@ in LINEAR SPACE! (Default: 1/3)
 \item \code{max.main.to.correlated.ratio.linear} The upper ratio for count(SBS5) / count(SBS1)
 in LINEAR SPACE! (Default: Inf)
 
-}
+}}
 
-#' @param add.info Whether to generate additional information.
+\item{add.info}{Whether to generate additional information.
 
 You should set it to \code{FALSE} when you want to make a \code{diff}
 using \code{CreateSBS1SBS5CorrelatedSyntheticDataDemo()}
