@@ -6,7 +6,7 @@ test_that("CreateSBS1SBS5CorrelatedSyntheticData", {
   tmp.top.level.dir <- "./tmp.SBS1.5/"
 
   expect_true(
-    CreateSBS1SBS5CorrelatedSyntheticDataDemo(
+    CreateSBS1SBS5CorrelatedSyntheticData(
       top.level.dir = "./tmp.SBS1.5/",
       regress.dir = "rdata/SBS1.5/",
       overwrite = FALSE,

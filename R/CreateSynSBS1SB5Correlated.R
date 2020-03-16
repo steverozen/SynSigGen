@@ -564,7 +564,7 @@ PlotCorrelationScatterplotForExposures <-
 #'
 #' @export
 #'
-CreateSBS1SBS5CorrelatedSyntheticData <-
+CreateSBS1SBS5CorrelatedSyntheticDataOneDataset <-
   function(dir.name = "./S.0.5.Rsq.0.3",
            dataset.name = NULL,
            overwrite = FALSE,
@@ -740,7 +740,7 @@ CreateSBS1SBS5CorrelatedSyntheticData <-
 #'
 #' @export
 #'
-CreateSBS1SBS5CorrelatedSyntheticDataDemo <-
+CreateSBS1SBS5CorrelatedSyntheticData <-
   function(top.level.dir = "./",
            regress.dir = NULL,
            overwrite = FALSE,
@@ -755,7 +755,7 @@ CreateSBS1SBS5CorrelatedSyntheticDataDemo <-
 
       ## Call the spectra generation function.
       ## Assign most parameters in a named vector format.
-      CreateSBS1SBS5CorrelatedSyntheticData(
+      CreateSBS1SBS5CorrelatedSyntheticDataOneDataset(
         dir.name = dir.name,
         dataset.name = datasetName,
         overwrite = overwrite,
