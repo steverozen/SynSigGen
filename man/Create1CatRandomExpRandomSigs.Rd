@@ -4,9 +4,17 @@
 \alias{Create1CatRandomExpRandomSigs}
 \title{Create a catalog of "random" synthetic spectra for 96-channel mutation types.}
 \usage{
-Create1CatRandomExpRandomSigs(num.syn.tumors, total.num.sigs, mut.mean,
-  mut.sd, mean.num.sigs.per.tumor, sd.num.sigs.per.tumor, dir.name,
-  overwrite = FALSE, verbose = TRUE)
+Create1CatRandomExpRandomSigs(
+  num.syn.tumors,
+  total.num.sigs,
+  mut.mean,
+  mut.sd,
+  mean.num.sigs.per.tumor,
+  sd.num.sigs.per.tumor,
+  dir.name,
+  overwrite = FALSE,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{num.syn.tumors}{Total number of synthetic tumors to create.}

@@ -12,15 +12,22 @@ NOTE: \code{pearson.r.2.lower.thres} and \code{pearson.r2.higher.thres}
 are used to constraint the Pearson's R^2 of mutation burdens of two signatures
 in multiple tumors.}
 \usage{
-GenSBS1SBS5Exposure(main.signature = "SBS5",
-  correlated.signature = "SBS1", sample.number = 500,
-  name.prefix = "TwoCorreSigsGen", main.mean.log = 2.5,
-  main.stdev.log = 0.25, correlated.stdev.log = 0.25,
-  slope.linear = 1, main.signature.lower.thres = 50,
-  correlated.signature.lower.thres = 30, pearson.r.2.lower.thres = 0.1,
+GenSBS1SBS5Exposure(
+  main.signature = "SBS5",
+  correlated.signature = "SBS1",
+  sample.number = 500,
+  name.prefix = "TwoCorreSigsGen",
+  main.mean.log = 2.5,
+  main.stdev.log = 0.25,
+  correlated.stdev.log = 0.25,
+  slope.linear = 1,
+  main.signature.lower.thres = 50,
+  correlated.signature.lower.thres = 30,
+  pearson.r.2.lower.thres = 0.1,
   pearson.r.2.higher.thres = 1,
   min.main.to.correlated.ratio.linear = 1/3,
-  max.main.to.correlated.ratio.linear = Inf)
+  max.main.to.correlated.ratio.linear = Inf
+)
 }
 \arguments{
 \item{main.signature}{Name of a signature with smaller variance

@@ -4,9 +4,12 @@
 \alias{GenerateAllRandomSA}
 \title{Generate a full set of random data with characteristics somewhat like SignatureAnalyzer signatures and attribution.}
 \usage{
-
-  GenerateAllRandomSA(top.level.dir = "../SA.like.rand.exp.rand.sigs.2019.10.29",
-  overwite = TRUE, verbose = TRUE, num.replicates = 10)
+GenerateAllRandomSA(
+  top.level.dir = "../SA.like.rand.exp.rand.sigs.2019.10.29",
+  overwite = TRUE,
+  verbose = TRUE,
+  num.replicates = 10
+)
 }
 \description{
 Generate a full set of random data with characteristics somewhat like SignatureAnalyzer signatures and attribution.

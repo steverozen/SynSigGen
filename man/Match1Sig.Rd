@@ -20,7 +20,8 @@ of a signature with the maximum similarity.
 Find signatures in \code{other.sigs} with the highest cosine similarity to \code{query.sig}.
 }
 \seealso{
-Other signature matching functions: \code{\link{MatchSigs1Direction}},
-  \code{\link{MatchSigs2Directions}}
+Other signature matching functions: 
+\code{\link{MatchSigs1Direction}()},
+\code{\link{MatchSigs2Directions}()}
 }
 \concept{signature matching functions}

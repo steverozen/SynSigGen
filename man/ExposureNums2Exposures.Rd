@@ -4,8 +4,12 @@
 \alias{ExposureNums2Exposures}
 \title{Select \code{num.exp} signatures from the members of \code{sig.names} and create one column of an exposure matrix (as a vector).}
 \usage{
-ExposureNums2Exposures(target.num.exp, all.sig.names, target.sig.means,
-  target.sig.sds)
+ExposureNums2Exposures(
+  target.num.exp,
+  all.sig.names,
+  target.sig.means,
+  target.sig.sds
+)
 }
 \arguments{
 \item{target.num.exp}{Number of signatures to which sample "was" exposed.}

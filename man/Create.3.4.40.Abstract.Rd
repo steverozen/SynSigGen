@@ -4,8 +4,11 @@
 \alias{Create.3.4.40.Abstract}
 \title{This function supersedes the second part of \code{data-raw/Create.3.5.40.Rmd}.}
 \usage{
-Create.3.4.40.Abstract(seed = 44, overwrite = TRUE,
-  regress.dir = "data-raw/long.test.regression.data/syn.3.5.40.abst/")
+Create.3.4.40.Abstract(
+  seed = 44,
+  overwrite = TRUE,
+  regress.dir = "data-raw/long.test.regression.data/syn.3.5.40.abst/"
+)
 }
 \description{
 With default arguments, this function generates the same results as

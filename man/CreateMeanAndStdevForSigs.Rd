@@ -4,8 +4,7 @@
 \alias{CreateMeanAndStdevForSigs}
 \title{Create means and standard deviations of log10 mutation counts for synthetic signatures.}
 \usage{
-CreateMeanAndStdevForSigs(num.sigs, target.mut.mean, target.mut.sd,
-  sig.names)
+CreateMeanAndStdevForSigs(num.sigs, target.mut.mean, target.mut.sd, sig.names)
 }
 \arguments{
 \item{num.sigs}{Number of signatures for which means and standard deviations

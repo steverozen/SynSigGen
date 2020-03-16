@@ -4,8 +4,13 @@
 \alias{GenerateSynFromReal}
 \title{Generate synthetic exposures from real exposures.}
 \usage{
-GenerateSynFromReal(real.exp, num.syn.tumors, file.prefix,
-  sample.id.prefix, top.level.dir = NULL)
+GenerateSynFromReal(
+  real.exp,
+  num.syn.tumors,
+  file.prefix,
+  sample.id.prefix,
+  top.level.dir = NULL
+)
 }
 \arguments{
 \item{real.exp}{The actual (real) exposures upon which to base

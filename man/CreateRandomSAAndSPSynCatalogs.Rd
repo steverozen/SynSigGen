@@ -4,8 +4,12 @@
 \alias{CreateRandomSAAndSPSynCatalogs}
 \title{Create a full SignatureAnalyzer / SigProfiler test data set for "random" artificial signatures.}
 \usage{
-CreateRandomSAAndSPSynCatalogs(top.level.dir, num.syn.tumors,
-  overwrite = FALSE, verbose = FALSE)
+CreateRandomSAAndSPSynCatalogs(
+  top.level.dir,
+  num.syn.tumors,
+  overwrite = FALSE,
+  verbose = FALSE
+)
 }
 \arguments{
 \item{top.level.dir}{Path to top level of directory structure to be created.}

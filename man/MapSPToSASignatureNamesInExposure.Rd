@@ -5,8 +5,10 @@
 \title{With the signatures represented in a matrix of exposures, find the nearest
 SignatureAnalyzer exposure.}
 \usage{
-MapSPToSASignatureNamesInExposure(sp.exposures,
-  sa.sig.names.to.consider = colnames(sa.96.sigs))
+MapSPToSASignatureNamesInExposure(
+  sp.exposures,
+  sa.sig.names.to.consider = colnames(sa.96.sigs)
+)
 }
 \arguments{
 \item{sp.exposures}{The exposures}

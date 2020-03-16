@@ -4,10 +4,16 @@
 \alias{CreateMixedTumorTypeSyntheticData}
 \title{Create a test data set based on >= 1 tumor types.}
 \usage{
-CreateMixedTumorTypeSyntheticData(top.level.dir, cancer.type.strings,
-  num.syn.tumors, overwrite = FALSE, sa.exp = sa.all.real.exposures,
-  sp.exp = sp.all.real.exposures, verbose = FALSE,
-  bladder.regress.hack = FALSE)
+CreateMixedTumorTypeSyntheticData(
+  top.level.dir,
+  cancer.type.strings,
+  num.syn.tumors,
+  overwrite = FALSE,
+  sa.exp = sa.all.real.exposures,
+  sp.exp = sp.all.real.exposures,
+  verbose = FALSE,
+  bladder.regress.hack = FALSE
+)
 }
 \arguments{
 \item{top.level.dir}{Path to top level of directory structure to be created.}

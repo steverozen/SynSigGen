@@ -4,8 +4,13 @@
 \alias{NewDiff4SynDataSets}
 \title{Diff two directories or files.}
 \usage{
-NewDiff4SynDataSets(newdir, regressdirname, unlink, verbose = FALSE,
-  long.diff = FALSE)
+NewDiff4SynDataSets(
+  newdir,
+  regressdirname,
+  unlink,
+  verbose = FALSE,
+  long.diff = FALSE
+)
 }
 \arguments{
 \item{newdir}{the path of \code{dir2} for a folder to be recursively compared with

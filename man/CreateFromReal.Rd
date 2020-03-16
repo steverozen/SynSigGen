@@ -4,12 +4,21 @@
 \alias{CreateFromReal}
 \title{Create a specific synthetic data set based on real exposures in one or more cancer types.}
 \usage{
-CreateFromReal(seed, top.level.dir = NULL, enclosing.dir = NULL,
-  num.syn.tumors, cancer.types, data.suite.name = NULL,
+CreateFromReal(
+  seed,
+  top.level.dir = NULL,
+  enclosing.dir = NULL,
+  num.syn.tumors,
+  cancer.types,
+  data.suite.name = NULL,
   sa.exp = SynSigGen::sa.all.real.exposures,
-  sp.exp = SynSigGen::sp.all.real.exposures, overwrite = TRUE,
-  regress.dir = NULL, unlink = FALSE, verbose = FALSE,
-  bladder.regress.hack = FALSE)
+  sp.exp = SynSigGen::sp.all.real.exposures,
+  overwrite = TRUE,
+  regress.dir = NULL,
+  unlink = FALSE,
+  verbose = FALSE,
+  bladder.regress.hack = FALSE
+)
 }
 \arguments{
 \item{seed}{A random seed to use.}

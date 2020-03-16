@@ -4,8 +4,13 @@
 \alias{GenerateSynAbstract}
 \title{Generate synthetic exposures from abstract parameters.}
 \usage{
-GenerateSynAbstract(parms, num.syn.tumors, file.prefix = NULL,
-  sample.id.prefix, froot = NULL)
+GenerateSynAbstract(
+  parms,
+  num.syn.tumors,
+  file.prefix = NULL,
+  sample.id.prefix,
+  froot = NULL
+)
 }
 \arguments{
 \item{parms}{The actual exposures upon which to base

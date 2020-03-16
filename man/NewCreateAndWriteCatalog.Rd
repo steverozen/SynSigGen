@@ -4,8 +4,13 @@
 \alias{NewCreateAndWriteCatalog}
 \title{Create and write a mutational spectra catalog}
 \usage{
-NewCreateAndWriteCatalog(sigs, exp, dir, extra.file.suffix = "",
-  overwrite = FALSE)
+NewCreateAndWriteCatalog(
+  sigs,
+  exp,
+  dir,
+  extra.file.suffix = "",
+  overwrite = FALSE
+)
 }
 \arguments{
 \item{sigs}{Signatures to use.}

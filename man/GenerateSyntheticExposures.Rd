@@ -4,8 +4,7 @@
 \alias{GenerateSyntheticExposures}
 \title{Create synthetic exposures based given parameters}
 \usage{
-GenerateSyntheticExposures(sig.params, num.samples = 10,
-  name = "synthetic")
+GenerateSyntheticExposures(sig.params, num.samples = 10, name = "synthetic")
 }
 \arguments{
 \item{sig.params}{Parameters from \code{synsig.parameters.from.attribution}}

@@ -4,10 +4,13 @@
 \alias{PancAdenoCA1000}
 \title{Replaces \code{data-raw/Create.pancrease.Rmd}.}
 \usage{
-PancAdenoCA1000(seed = 191907,
+PancAdenoCA1000(
+  seed = 191907,
   regress.dir = "data-raw/long.test.regression.data/syn.pancreas/",
-  num.syn.tumors = 1000, top.level.dir = "../Pan-AdenoCA",
-  unlink = FALSE)
+  num.syn.tumors = 1000,
+  top.level.dir = "../Pan-AdenoCA",
+  unlink = FALSE
+)
 }
 \description{
 Replaces \code{data-raw/Create.pancrease.Rmd}.

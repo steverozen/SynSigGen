@@ -4,9 +4,16 @@
 \alias{CreateRandomExposures}
 \title{Create synthetic exposure data.}
 \usage{
-CreateRandomExposures(num.exposures, mean.num.sigs.per.tumor,
-  sd.num.sigs.per.tumor, total.num.sigs, per.sig.mean.and.sd,
-  sample.name.prefix = "S", sigs, verbose)
+CreateRandomExposures(
+  num.exposures,
+  mean.num.sigs.per.tumor,
+  sd.num.sigs.per.tumor,
+  total.num.sigs,
+  per.sig.mean.and.sd,
+  sample.name.prefix = "S",
+  sigs,
+  verbose
+)
 }
 \description{
 Create synthetic exposure data.

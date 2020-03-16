@@ -27,7 +27,8 @@ A list with one element for each signature in query.sigs. The names
 Find the closest match in \code{other.sigs} for each signature in \code{query.sigs}
 }
 \seealso{
-Other signature matching functions: \code{\link{Match1Sig}},
-  \code{\link{MatchSigs2Directions}}
+Other signature matching functions: 
+\code{\link{Match1Sig}()},
+\code{\link{MatchSigs2Directions}()}
 }
 \concept{signature matching functions}

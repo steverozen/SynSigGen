@@ -7,14 +7,19 @@
 Function to generate exposure of two correlated signatures
 (Example: SBS1 and SBS5) for ONE synthetic tumor.}
 \usage{
-GenSBS1SBS5ExposureOneTumor(tumor.name = "TwoCorreSigsGen::1",
-  main.signature = "SBS5", correlated.signature = "SBS1",
-  main.mean.log = 2.5, main.stdev.log = 0.25,
-  correlated.stdev.log = 0.25, slope.linear = 1,
+GenSBS1SBS5ExposureOneTumor(
+  tumor.name = "TwoCorreSigsGen::1",
+  main.signature = "SBS5",
+  correlated.signature = "SBS1",
+  main.mean.log = 2.5,
+  main.stdev.log = 0.25,
+  correlated.stdev.log = 0.25,
+  slope.linear = 1,
   main.signature.lower.thres = 50,
   correlated.signature.lower.thres = 30,
   min.main.to.correlated.ratio.linear = 1/3,
-  max.main.to.correlated.ratio.linear = Inf)
+  max.main.to.correlated.ratio.linear = Inf
+)
 }
 \arguments{
 \item{tumor.name}{Name of synthetic tumor you want to generate.

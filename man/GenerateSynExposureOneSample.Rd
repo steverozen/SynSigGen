@@ -4,8 +4,7 @@
 \alias{GenerateSynExposureOneSample}
 \title{Using parameters given to generate exposures for synthetic tumors}
 \usage{
-GenerateSynExposureOneSample(tumor, sig.interest, burden.per.sig,
-  sd.per.sig)
+GenerateSynExposureOneSample(tumor, sig.interest, burden.per.sig, sd.per.sig)
 }
 \arguments{
 \item{tumor}{Signature presence matrix or exposure matrix for a tumor.

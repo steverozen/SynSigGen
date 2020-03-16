@@ -14,8 +14,15 @@ It will draw a scatterplot, and it will also print information
 onto the plot, including correlation between \code{x} and \code{y},
 mean and stdev of \code{x} and \code{y}, etc.}
 \usage{
-PlotCorrelationScatterplot(x, y, xlab = NULL, ylab = NULL,
-  main = NULL, optional.remarks = "", ...)
+PlotCorrelationScatterplot(
+  x,
+  y,
+  xlab = NULL,
+  ylab = NULL,
+  main = NULL,
+  optional.remarks = "",
+  ...
+)
 }
 \arguments{
 \item{x}{vector of exposures of \code{main.signature}

@@ -6,8 +6,12 @@
 
 The parameters written are prevalence, mean(log(exposure)), and sd(log(exposure)).}
 \usage{
-WriteSynSigParams(params, file, append = FALSE,
-  col.names = ifelse(append, FALSE, NA))
+WriteSynSigParams(
+  params,
+  file,
+  append = FALSE,
+  col.names = ifelse(append, FALSE, NA)
+)
 }
 \arguments{
 \item{params}{The parameters to write.}

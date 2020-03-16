@@ -37,7 +37,8 @@ Calculate bidirectional closest similarities between two sets of signatures
 and the average of the similarities.
 }
 \seealso{
-Other signature matching functions: \code{\link{Match1Sig}},
-  \code{\link{MatchSigs1Direction}}
+Other signature matching functions: 
+\code{\link{Match1Sig}()},
+\code{\link{MatchSigs1Direction}()}
 }
 \concept{signature matching functions}

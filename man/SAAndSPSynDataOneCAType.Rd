@@ -4,8 +4,14 @@
 \alias{SAAndSPSynDataOneCAType}
 \title{Generate parallel synthetic exposures from real SA and SP exposures and signatures}
 \usage{
-SAAndSPSynDataOneCAType(sa.real.exp, sp.real.exp, ca.type, num.syn.tumors,
-  file.prefix, top.level.dir = NULL)
+SAAndSPSynDataOneCAType(
+  sa.real.exp,
+  sp.real.exp,
+  ca.type,
+  num.syn.tumors,
+  file.prefix,
+  top.level.dir = NULL
+)
 }
 \arguments{
 \item{sa.real.exp}{Exposure matrix from SignatureAnalyzer.}

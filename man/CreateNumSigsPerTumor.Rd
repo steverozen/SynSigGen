@@ -4,8 +4,12 @@
 \alias{CreateNumSigsPerTumor}
 \title{Create \code{num.exposures} signature counts from a normal distribution with \code{mean} and \code{sd}.}
 \usage{
-CreateNumSigsPerTumor(num.exposures, mean.num.sigs.per.tumor,
-  sd.num.sigs.per.tumor, total.num.sigs)
+CreateNumSigsPerTumor(
+  num.exposures,
+  mean.num.sigs.per.tumor,
+  sd.num.sigs.per.tumor,
+  total.num.sigs
+)
 }
 \arguments{
 \item{num.exposures}{Number of exposures to create.}

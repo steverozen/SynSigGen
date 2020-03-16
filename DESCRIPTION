@@ -14,7 +14,7 @@ LazyData: true
 biocViews:
 Imports: lsa, data.table, ICAMS
 Depends: R (>= 3.6)
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2
 Suggests: 
     testthat,
     knitr,
@@ -22,4 +22,3 @@ Suggests:
     DelayedArray,
     BSgenome,
     BSgenome.Hsapiens.1000genomes.hs37d5
-

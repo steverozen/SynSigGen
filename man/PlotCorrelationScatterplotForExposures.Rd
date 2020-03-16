@@ -12,9 +12,16 @@ is a wrapper around \code{\link{PlotCorrelationScatterplot}}.
 It lets \code{exposure.counts <-} the exposure matrix,
 and will draw a scatterplot for exposures of two signatures.}
 \usage{
-PlotCorrelationScatterplotForExposures(pdf.filename,
-  main.signature = "SBS5", correlated.signature = "SBS1", slope.linear,
-  exposure.counts, xlim = c(0, 4), ylim = c(0, 4), ...)
+PlotCorrelationScatterplotForExposures(
+  pdf.filename,
+  main.signature = "SBS5",
+  correlated.signature = "SBS1",
+  slope.linear,
+  exposure.counts,
+  xlim = c(0, 4),
+  ylim = c(0, 4),
+  ...
+)
 }
 \arguments{
 \item{pdf.filename}{Name of the PDF to contain the scatterplots.}

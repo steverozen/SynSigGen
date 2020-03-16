@@ -4,10 +4,15 @@
 \alias{CreateRandomSyn}
 \title{This is the top-level function to create a set of spectra from random signatures.}
 \usage{
-CreateRandomSyn(top.level.dir, seed = 1443196,
+CreateRandomSyn(
+  top.level.dir,
+  seed = 1443196,
   regress.dir = "data-raw/long.test.regression.data/syn.30.random.sigs/",
-  num.syn.tumors = 1000, overwrite = FALSE, unlink = FALSE,
-  verbose = FALSE)
+  num.syn.tumors = 1000,
+  overwrite = FALSE,
+  unlink = FALSE,
+  verbose = FALSE
+)
 }
 \arguments{
 \item{top.level.dir}{Directory in which to put all results. It will be
