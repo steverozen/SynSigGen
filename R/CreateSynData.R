@@ -36,9 +36,9 @@ SynSigParamsOneSignature <- function(counts, target.size = 1 ) {
 #'
 #' @param verbose If > 0 cat various messages.
 #'
-#' @return A data frame with one row for
+#' @return A data frame with one column for
 #' each of a subset of the input signatures
-#' and the following columns:
+#' and the following rows
 #' \enumerate{
 #' \item the proportion of tumors with the signature
 #' \item mean(log_10(mutations.per.Mb))
@@ -115,7 +115,17 @@ WriteSynSigParams <-
 #' generated samples. Each entry is the count of mutations due to one
 #' signature in one sample.
 #'
-#' @param sig.params Parameters from \code{synsig.parameters.from.attribution}
+#' @param sig.params Parameters from \code{\link{GetSynSigParamsFromExposures}}
+#'   or another source. Should be
+#'   a matrix or data frame with one column for
+#'   each signature and the following rows:
+#' \description{
+#' \item{prob}{The proportion of tumors with the signature.}
+#' \item{mean}{The mean(log_10(number of mutations)).}
+#' \item{stdev}{The stdev(log_10(number of mutations)).}
+#' }
+#'   The rownames need to be the column names of a signature
+#'   catalog.
 #'
 #' @param num.samples Number of samples to generate
 #'
@@ -130,13 +140,13 @@ GenerateSyntheticExposures <-
 
     sigs <- colnames(sig.params)
     stopifnot(!is.null(sigs))
-    prev.present <- sig.params['prob', ] # Note, get a vector
-    sig.burden <- sig.params['mean', , drop = F]
-    sig.sd <- sig.params['stdev', , drop = F]
+    prev.present <- unlist(sig.params['prob', ]) # Note, get a vector
+    sig.burden <- sig.params['mean', , drop = FALSE]
+    sig.sd <- sig.params['stdev', , drop = FALSE]
 
     sig.present <- present.sigs(num.samples, prev.present)
 
-    colnames(sig.present) <- paste(name, seq(1, num.samples), sep='.')
+    colnames(sig.present) <- paste(name, seq(1, num.samples), sep = '.')
 
     # Create a synthetic exposures for each column (sample)
     # in sig.present.
@@ -200,7 +210,7 @@ present.sigs <-
 
     present.list <- list()
 
-    for (i in 1:num.process){
+    for (i in 1:num.process) {
       present.each <- rbinom(num.tumors,
                              1,
                              prob = prev.present[i])
@@ -243,8 +253,8 @@ present.sigs <-
 #' @param sd.per.sig standard deviation of mutation burden.
 #' It has one row, and K columns. Each column name refers to a mutational signature.
 #'
-#' @details ??Determine the intensity of each
-#' mutational signature in a tumor, returning mutations per mb
+#' @details Determine the intensity of each
+#' mutational signature in a tumor, returning the number of mutations
 #' using the mean mutation burden per signature and the std dev
 #'
 #' @importFrom stats rbinom rnorm
@@ -276,11 +286,7 @@ GenerateSynExposureOneSample <-
 
       ## mutational intensity follows a log normal distibution
       ## use the normal distribution with log-ed values instead
-      mutations.per.mb <- 10^(rnorm(1,
-                                    sd = stdev,
-                                    mean = burden))
-
-      tumor[sigs] <- mutations.per.mb
+      tumor[sigs] <- 10^(rnorm(1, sd = stdev, mean = burden))
     }
 
     tumor <- as.matrix(tumor)
@@ -339,12 +345,9 @@ CreateSynCatalogs <-
   # for e mutations in that tumor, sample e mutations
   # from the signature profile.
   catalog <- signatures %*% exposures
-  stopifnot(!any(colSums(catalog) < 1))
 
   i.cat <- round(catalog, digits = 0)
 
-  # The condition below can occur even if any(colSUms(catalog) < 1) is FALSE,
-  # if before rounding mutiple mutational classes had < 0.5 mutations.
   if (any(colSums(i.cat) == 0))
     warning("Some tumors with 0 mutations")
 
@@ -381,9 +384,9 @@ CreateSynCatalogs <-
   ## $ground.truth.signatures: Signatures active in $ground.truth.catalog
   ## $ground.truth.exposures: Exposures of $ground.truth.signatures in
   ## $ground.truth.catalog.
-  return(list(ground.truth.catalog=i.cat,
-              ground.truth.signatures=signatures,
-              ground.truth.exposures=exposures))
+  return(list(ground.truth.catalog = i.cat,
+              ground.truth.signatures = signatures,
+              ground.truth.exposures = exposures))
   # TODO(Steve) In future, add noise
   }
 
@@ -621,8 +624,13 @@ GenerateSynFromReal <- function(real.exp,
 #'  and writes \code{sigs} to \code{input.sigs.csv}.
 #'
 CreateAndWriteCatalog <-
-  function(sigs, exp, dir = NULL, write.cat.fn, extra.file.suffix = "",
-           overwrite = FALSE, my.dir = NULL) {
+  function(sigs,
+           exp,
+           dir               = NULL,
+           write.cat.fn      = ICAMS::WriteCatalog,
+           extra.file.suffix = "",
+           overwrite         = FALSE,
+           my.dir            = NULL) {
     info <- CreateSynCatalogs(sigs, exp)
 
     if (is.null(my.dir)) {
