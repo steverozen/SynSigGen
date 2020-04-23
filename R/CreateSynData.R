@@ -324,7 +324,7 @@ GenerateSynExposureOneSample <-
 CreateSynCatalogs <-
   function(signatures, exposures, sample.id.suffix = NULL) {
 
-  if (any(colSums(exposures) < 1)) warning("Some exposures < 1")
+  # if (any(colSums(exposures) < 1)) warning("Some exposures < 1")
 
   exposed.sigs <- rownames(exposures)
 
