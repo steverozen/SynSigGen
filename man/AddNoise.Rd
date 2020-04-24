@@ -2,9 +2,9 @@
 % Please edit documentation in R/CreateSynData.R
 \name{AddNoise}
 \alias{AddNoise}
-\title{Add Poisson noise to each mutation type in each signature in an epxosure.}
+\title{Exposures and spectra with Poisson or negative binomial noise in epxosures.}
 \usage{
-AddNoise(input.exposure, signatures)
+AddNoise(input.exposure, signatures, n.binom.size = NULL)
 }
 \arguments{
 \item{input.exposure}{The exposures to which to add noise; a numeric matrix
@@ -14,8 +14,11 @@ signature in a particular sample.}
 
 \item{signatures}{The signatures in the exposure; the column names
 of \code{signatures} have to include all row names in
-\coce{input.exposure}; can be an \code{\link[ICAMS]{ICAMS}}
+\code{input.exposure}; can be an \code{\link[ICAMS]{ICAMS}}
 catalog or a numerical matrix or data frame.}
+
+\item{nbinom.size}{If non \code{NULL}, use negative binomial noise
+with this size parameter; see \code{\link[stats]{NegativeBinomial}}.}
 }
 \value{
 A list with the elements \describe{
@@ -25,5 +28,5 @@ A list with the elements \describe{
 }
 }
 \description{
-Add Poisson noise to each mutation type in each signature in an epxosure.
+Exposures and spectra with Poisson or negative binomial noise in epxosures.
 }
