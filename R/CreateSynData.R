@@ -119,7 +119,7 @@ WriteSynSigParams <-
 #'   or another source. Should be
 #'   a matrix or data frame with one column for
 #'   each signature and the following rows:
-#' \description{
+#' \describe{
 #' \item{prob}{The proportion of tumors with the signature.}
 #' \item{mean}{The mean(log_10(number of mutations)).}
 #' \item{stdev}{The stdev(log_10(number of mutations)).}
@@ -802,18 +802,20 @@ AddAllScripts <- function(maxK = 30, top.level.dir = NULL) {
   AddScript(maxK = maxK, 4, file.path(top.level.dir, "sp.sa.COMPOSITE"))
 }
 
-#' Add Poisson noise to each mutation type in each signature in an epxosure.
+#' Exposures and spectra with Poisson or negative binomial noise in epxosures.
 #'
 #' @param input.exposure The exposures to which to add noise; a numeric matrix
 #'    or data frame in which the rows are signatures and the columns are
 #'    samples. Each cell indicates the number of mutations due to a particular
 #'    signature in a particular sample.
 #'
-#'
 #' @param signatures The signatures in the exposure; the column names
 #'     of \code{signatures} have to include all row names in
-#'     \coce{input.exposure}; can be an \code{\link[ICAMS]{ICAMS}}
+#'     \code{input.exposure}; can be an \code{\link[ICAMS]{ICAMS}}
 #'     catalog or a numerical matrix or data frame.
+#'
+#' @param nbinom.size If non \code{NULL}, use negative binomial noise
+#'     with this size parameter; see \code{\link[stats]{NegativeBinomial}}.
 #'
 #' @return A list with the elements \describe{
 #' \item{expsoures}{The numbers of mutations due to each signature
@@ -823,7 +825,7 @@ AddAllScripts <- function(maxK = 30, top.level.dir = NULL) {
 #'
 #' @export
 
-AddNoise <- function(input.exposure, signatures) {
+AddNoise <- function(input.exposure, signatures, n.binom.size = NULL) {
 
   exposures <- input.exposure
   exposures[ , ] <- NA
@@ -835,9 +837,15 @@ AddNoise <- function(input.exposure, signatures) {
   for (sig in rownames(input.exposure)) {
 
     partial.spec <- signatures[ , sig] %*% input.exposure[sig, , drop = FALSE]
+    if (is.null(n.binom.size)) {
+      noised.vec <-
+        rpois(n = length(partial.spec), lambda = partial.spec)
+    } else {
+      noised.vec <-
+        rnbinom(n = length(partial.spec), size = 10, mu = partial.spec)
+    }
     noisy.partial.spec <-
-      matrix(rpois(length(partial.spec), partial.spec),
-             nrow = nrow(partial.spec))
+      matrix(noised.vec, nrow = nrow(partial.spec))
     exposures[sig, ] <- colSums(noisy.partial.spec)
     spectra <- spectra + noisy.partial.spec
 
@@ -855,6 +863,9 @@ if (FALSE) {
   retval <- AddNoise(input.exposure = in.exp,
                      signatures     = PCAWG7::signature$genome$SBS96)
   PlotCatalogToPdf(ICAMS::as.catalog(retval$spectra), "foo.pdf")
-
+  retval2 <- AddNoise(input.exposure = in.exp,
+                     signatures     = PCAWG7::signature$genome$SBS96,
+                     n.binom.size   = 10)
+  PlotCatalogToPdf(ICAMS::as.catalog(retval2$spectra), "foo2.pdf")
 
 }
