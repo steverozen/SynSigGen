@@ -802,4 +802,59 @@ AddAllScripts <- function(maxK = 30, top.level.dir = NULL) {
   AddScript(maxK = maxK, 4, file.path(top.level.dir, "sp.sa.COMPOSITE"))
 }
 
+#' Add Poisson noise to each mutation type in each signature in an epxosure.
+#'
+#' @param input.exposure The exposures to which to add noise; a numeric matrix
+#'    or data frame in which the rows are signatures and the columns are
+#'    samples. Each cell indicates the number of mutations due to a particular
+#'    signature in a particular sample.
+#'
+#'
+#' @param signatures The signatures in the exposure; the column names
+#'     of \code{signatures} have to include all row names in
+#'     \coce{input.exposure}; can be an \code{\link[ICAMS]{ICAMS}}
+#'     catalog or a numerical matrix or data frame.
+#'
+#' @return A list with the elements \describe{
+#' \item{expsoures}{The numbers of mutations due to each signature
+#'    after adding noise}
+#' \item{spectra}{The spectra based on the noisy signature exposures.}
+#' }
+#'
+#' @export
 
+AddNoise <- function(input.exposure, signatures) {
+
+  exposures <- input.exposure
+  exposures[ , ] <- NA
+
+  spectra <- matrix(0, ncol = ncol(input.exposure), nrow = nrow(signatures))
+  rownames(spectra) <- rownames(signatures)
+  colnames(spectra) <- colnames(input.exposure)
+
+  for (sig in rownames(input.exposure)) {
+
+    partial.spec <- signatures[ , sig] %*% input.exposure[sig, , drop = FALSE]
+    noisy.partial.spec <-
+      matrix(rpois(length(partial.spec), partial.spec),
+             nrow = nrow(partial.spec))
+    exposures[sig, ] <- colSums(noisy.partial.spec)
+    spectra <- spectra + noisy.partial.spec
+
+  }
+
+  return(list(exposures = exposures, spectra = spectra))
+
+}
+
+if (FALSE) {
+  in.exp <- matrix(c(1000, 2000, 2000, 2000, 4000, 1000),nrow = 3)
+  rownames(in.exp) <- c("SBS1", "SBS4", "SBS13")
+  colnames(in.exp) <- c("a", "b")
+  set.seed(20200601)
+  retval <- AddNoise(input.exposure = in.exp,
+                     signatures     = PCAWG7::signature$genome$SBS96)
+  PlotCatalogToPdf(ICAMS::as.catalog(retval$spectra), "foo.pdf")
+
+
+}
