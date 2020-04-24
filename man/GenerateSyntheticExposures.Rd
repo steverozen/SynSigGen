@@ -11,7 +11,7 @@ GenerateSyntheticExposures(sig.params, num.samples = 10, name = "synthetic")
   or another source. Should be
   a matrix or data frame with one column for
   each signature and the following rows:
-\description{
+\describe{
 \item{prob}{The proportion of tumors with the signature.}
 \item{mean}{The mean(log_10(number of mutations)).}
 \item{stdev}{The stdev(log_10(number of mutations)).}
