@@ -5,10 +5,6 @@
 \alias{SynSigGen}
 \title{SynSigGen: Create catalogs of synthetic mutational spectra for
 assessing the performance of mutational-signature analysis programs.}
-\description{
-SynSigGen: Create catalogs of synthetic mutational spectra for
-assessing the performance of mutational-signature analysis programs.
-}
 \section{Overview}{
 
 
