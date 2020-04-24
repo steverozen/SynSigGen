@@ -8,7 +8,7 @@ CreateAndWriteCatalog(
   sigs,
   exp,
   dir = NULL,
-  write.cat.fn,
+  write.cat.fn = ICAMS::WriteCatalog,
   extra.file.suffix = "",
   overwrite = FALSE,
   my.dir = NULL

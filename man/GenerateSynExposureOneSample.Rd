@@ -27,8 +27,8 @@ It has one row, and K columns. Each column name refers to a mutational signature
 Using parameters given to generate exposures for synthetic tumors
 }
 \details{
-??Determine the intensity of each
-mutational signature in a tumor, returning mutations per mb
+Determine the intensity of each
+mutational signature in a tumor, returning the number of mutations
 using the mean mutation burden per signature and the std dev
 }
 \keyword{internal}

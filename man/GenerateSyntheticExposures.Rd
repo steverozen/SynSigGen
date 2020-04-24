@@ -7,7 +7,17 @@
 GenerateSyntheticExposures(sig.params, num.samples = 10, name = "synthetic")
 }
 \arguments{
-\item{sig.params}{Parameters from \code{synsig.parameters.from.attribution}}
+\item{sig.params}{Parameters from \code{\link{GetSynSigParamsFromExposures}}
+  or another source. Should be
+  a matrix or data frame with one column for
+  each signature and the following rows:
+\description{
+\item{prob}{The proportion of tumors with the signature.}
+\item{mean}{The mean(log_10(number of mutations)).}
+\item{stdev}{The stdev(log_10(number of mutations)).}
+}
+  The rownames need to be the column names of a signature
+  catalog.}
 
 \item{num.samples}{Number of samples to generate}
 

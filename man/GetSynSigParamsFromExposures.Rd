@@ -15,9 +15,9 @@ i.e. mutation count attributed to a
 \item{verbose}{If > 0 cat various messages.}
 }
 \value{
-A data frame with one row for
+A data frame with one column for
 each of a subset of the input signatures
-and the following columns:
+and the following rows
 \enumerate{
 \item the proportion of tumors with the signature
 \item mean(log_10(mutations.per.Mb))
