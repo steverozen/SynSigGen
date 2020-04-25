@@ -1,4 +1,4 @@
-test_that("Create.2.7a.7b.Abstract", {
+test_that("Synthetic exposures for indels", {
   skip_if_not_installed("ICAMS", minimum_version = "2.0.9")
 
 
