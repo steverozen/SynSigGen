@@ -837,6 +837,7 @@ AddNoise <- function(input.exposure, signatures, n.binom.size = NULL) {
   for (sig in rownames(input.exposure)) {
 
     partial.spec <- signatures[ , sig] %*% input.exposure[sig, , drop = FALSE]
+    # Resample (add noise) to the "partial spectra" due to sig
     if (is.null(n.binom.size)) {
       noised.vec <-
         rpois(n = length(partial.spec), lambda = partial.spec)
@@ -844,28 +845,13 @@ AddNoise <- function(input.exposure, signatures, n.binom.size = NULL) {
       noised.vec <-
         rnbinom(n = length(partial.spec), size = 10, mu = partial.spec)
     }
-    noisy.partial.spec <-
-      matrix(noised.vec, nrow = nrow(partial.spec))
+    # Turn the vector back into a matrix
+    noisy.partial.spec <- matrix(noised.vec, nrow = nrow(partial.spec))
     exposures[sig, ] <- colSums(noisy.partial.spec)
     spectra <- spectra + noisy.partial.spec
 
   }
 
   return(list(exposures = exposures, spectra = spectra))
-
-}
-
-if (FALSE) {
-  in.exp <- matrix(c(1000, 2000, 2000, 2000, 4000, 1000),nrow = 3)
-  rownames(in.exp) <- c("SBS1", "SBS4", "SBS13")
-  colnames(in.exp) <- c("a", "b")
-  set.seed(20200601)
-  retval <- AddNoise(input.exposure = in.exp,
-                     signatures     = PCAWG7::signature$genome$SBS96)
-  PlotCatalogToPdf(ICAMS::as.catalog(retval$spectra), "foo.pdf")
-  retval2 <- AddNoise(input.exposure = in.exp,
-                     signatures     = PCAWG7::signature$genome$SBS96,
-                     n.binom.size   = 10)
-  PlotCatalogToPdf(ICAMS::as.catalog(retval2$spectra), "foo2.pdf")
 
 }
