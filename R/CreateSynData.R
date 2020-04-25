@@ -827,6 +827,10 @@ AddAllScripts <- function(maxK = 30, top.level.dir = NULL) {
 
 AddNoise <- function(input.exposure, signatures, n.binom.size = NULL) {
 
+  if (is.data.frame(input.exposure)) {
+    input.exposure <- as.matrix(input.exposure)
+  }
+  stopifnot(is.numeric(input.exposure))
   exposures <- input.exposure
   exposures[ , ] <- NA
 
