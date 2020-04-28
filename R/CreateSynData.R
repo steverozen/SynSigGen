@@ -847,7 +847,7 @@ AddNoise <- function(input.exposure, signatures, n.binom.size = NULL) {
         rpois(n = length(partial.spec), lambda = partial.spec)
     } else {
       noised.vec <-
-        rnbinom(n = length(partial.spec), size = 10, mu = partial.spec)
+        rnbinom(n = length(partial.spec), size = n.binom.size, mu = partial.spec)
     }
     # Turn the vector back into a matrix
     noisy.partial.spec <- matrix(noised.vec, nrow = nrow(partial.spec))
