@@ -52,7 +52,7 @@ WriteCatCOMPOSITE <- function(ct, path) {
 #' @return a list, containing 3 catalog matrices in MultiModalMuSig format.
 #' Each matrix contains SNS1536, DBS78 and ID83 information, respectively.
 
-SplitCatCOMPOSITE <- function(catalog) {
+OLD.SplitCatCOMPOSITE <- function(catalog) {
 
   # Read COMPOSITE catalog. Either from file or matrix-like
   stopifnot(is.character(catalog) | is.data.frame(catalog) | is.matrix(catalog))
