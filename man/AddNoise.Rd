@@ -17,8 +17,8 @@ of \code{signatures} have to include all row names in
 \code{input.exposure}; can be an \code{\link[ICAMS]{ICAMS}}
 catalog or a numerical matrix or data frame.}
 
-\item{nbinom.size}{If non \code{NULL}, use negative binomial noise
-with this size parameter; see \code{\link[stats]{NegativeBinomial}}.}
+\item{n.binom.size}{If non \code{NULL}, use negative binomial noise
+with this size parameter; see \code{\link[stats]{NegBinomial}}.}
 }
 \value{
 A list with the elements \describe{
