@@ -174,6 +174,8 @@ GenerateSyntheticExposures <-
 #' \code{length(prev.present)}, and for which
 #' \code{sum(prev.present) > 0}.
 #'
+#' @importFrom stats rbinom
+#'
 #' @keywords internal
 AssignPresentAbsentOneSample <- function(prev.present, verbose = 0) {
   v <- numeric(length(prev.present))
@@ -200,6 +202,8 @@ AssignPresentAbsentOneSample <- function(prev.present, verbose = 0) {
 #' per signature and one column per tumor, with
 #' 1 in a cell indicated the presence of a signature
 #' and 0 indicating absence.
+#'
+#' @importFrom stats rbinom
 #'
 #' @keywords internal
 
@@ -257,7 +261,7 @@ present.sigs <-
 #' mutational signature in a tumor, returning the number of mutations
 #' using the mean mutation burden per signature and the std dev
 #'
-#' @importFrom stats rbinom rnorm
+#' @importFrom stats rnorm
 #'
 #' @keywords internal
 GenerateSynExposureOneSample <-
@@ -814,14 +818,16 @@ AddAllScripts <- function(maxK = 30, top.level.dir = NULL) {
 #'     \code{input.exposure}; can be an \code{\link[ICAMS]{ICAMS}}
 #'     catalog or a numerical matrix or data frame.
 #'
-#' @param nbinom.size If non \code{NULL}, use negative binomial noise
-#'     with this size parameter; see \code{\link[stats]{NegativeBinomial}}.
+#' @param n.binom.size If non \code{NULL}, use negative binomial noise
+#'     with this size parameter; see \code{\link[stats]{NegBinomial}}.
 #'
 #' @return A list with the elements \describe{
 #' \item{expsoures}{The numbers of mutations due to each signature
 #'    after adding noise}
 #' \item{spectra}{The spectra based on the noisy signature exposures.}
 #' }
+#'
+#' @importFrom stats rpois rnbinom
 #'
 #' @export
 
