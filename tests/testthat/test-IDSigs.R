@@ -1,5 +1,6 @@
 test_that("Synthetic exposures for indels", {
   skip_if_not_installed("ICAMS", minimum_version = "2.0.9")
+  skip_if_not_installed("PCAWG7")
 
 
 TestIDSigParams <- function() {

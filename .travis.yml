@@ -6,3 +6,9 @@ cache: packages
 r:
   - release
   - devel
+# we need to install BiocInstaller for testing Bioconductor packages
+bioc_required: true
+
+r_github_packages:
+  - steverozen/ICAMS
+  - steverozen/PCAWG7

@@ -1,5 +1,7 @@
 test_that("AddNoise", {
 
+  skip_if_not_installed("PCAWG7")
+
   in.exp <- matrix(c(1000, 2000, 2000, 2000, 4000, 1000),nrow = 3)
   rownames(in.exp) <- c("SBS1", "SBS4", "SBS13")
   colnames(in.exp) <- c("a", "b")
