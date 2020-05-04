@@ -2,12 +2,18 @@ context("Test CreateFromReal")
 
 test_that("CreateFromReal PancAdeno-CA", {
   skip_if_not_installed("ICAMS", minimum_version = "2.0.9")
-  expect_true(
-    PancAdenoCA1000(seed = 123,
-                    num.syn.tumors = 5,
-                    top.level.dir  = tempfile(pattern = "regress.pancadeno"),
-                    regress.dir    = "rdata/Panc-AdenoCA.123/",
-                    unlink         = TRUE))
+  reg <- new.env()
+  load(system.file("tests/test.data/PancAdenoCA1000.retval.Rdata",
+                   package = "SynSigGen",
+                   mustWork = TRUE),
+       envir = reg)
+
+    retval <- PancAdenoCA1000(seed = 123,
+                              num.syn.tumors = 5,
+                              top.level.dir  = tempfile(pattern = "regress.pancadeno"),
+                              regress.dir    = NULL, # "rdata/Panc-AdenoCA.123/",
+                              unlink         = TRUE)
+   expect_equal(retval, reg$retval)
 })
 
 test_that("CreateFromReal Many", {
