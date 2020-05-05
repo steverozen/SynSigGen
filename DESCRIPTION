@@ -11,7 +11,6 @@ License: GPL-3
 Language: en-US
 Encoding: UTF-8
 LazyData: true
-biocViews:
 Imports: lsa, data.table, ICAMS
 Depends: R (>= 3.6)
 RoxygenNote: 7.1.0
