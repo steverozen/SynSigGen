@@ -1,4 +1,4 @@
-#' SynSigGen
+#' @title SynSigGen
 #'
 #' @description Create catalogs of synthetic mutational spectra for
 #' assessing the performance of mutational-signature analysis programs.
