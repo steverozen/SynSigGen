@@ -3,8 +3,11 @@
 \docType{package}
 \name{SynSigGen}
 \alias{SynSigGen}
-\title{SynSigGen: Create catalogs of synthetic mutational spectra for
-assessing the performance of mutational-signature analysis programs.}
+\title{SynSigGen}
+\description{
+Create catalogs of synthetic mutational spectra for
+assessing the performance of mutational-signature analysis programs.
+}
 \section{Overview}{
 
 
