@@ -53,13 +53,15 @@ ret.prob1 <- CreateAndWriteCatalog(
 # This is how the regression data were generated:
 #
 # save(expos.partial, expos.prob1, ret.partial, ret.prob1,
-#     file = "tests/test.data/ID.test.results.Rdata")
+#     file = "tests/testthat/testdata/ID.test.results.Rdata")
 
 reg.data <- new.env()
 load("testdata/ID.test.results.Rdata",envir = reg.data)
 
 testthat::expect_equal(expos.prob1,   reg.data$expos.prob1)
 testthat::expect_equal(expos.partial, reg.data$expos.partial)
+cat("\nret.prob1", class(ret.prob1), "\n")
+cat("\nreg.data$ret.probl1", class(reg.data$ret.prob1), "\n")
 testthat::expect_equal(ret.prob1,     reg.data$ret.prob1)
 testthat::expect_equal(ret.partial,   reg.data$ret.partial)
 })
