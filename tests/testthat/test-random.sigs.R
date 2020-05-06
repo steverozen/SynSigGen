@@ -27,10 +27,14 @@ test_that("CreateRandomSyn 1000 spectra", {
   skip_if_not_installed("ICAMS", minimum_version = "2.0.9")
   skip_on_cran()
   # debug(CreateOneSetOfRandomCatalogs)
-  expect_true(
-    CreateRandomSyn(top.level.dir  = tempfile("test.random.1000"),
+
+  reg <- new.env()
+  load("testdata/CreateRandomSyn.retval.Rdata",envir = reg)
+
+  retval <- CreateRandomSyn(top.level.dir  = tempfile("test.random.1000"),
                     seed           = 1443196,
                     num.syn.tumors = 1000,
-                    regress.dir    = "rdata/syn.30.random.sigs/",
-                    verbose        = TRUE))
+                    regress.dir    = NULL,
+                    verbose        = FALSE)
+  expect_equal(retval, reg$retval)
 })
