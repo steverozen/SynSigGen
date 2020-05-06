@@ -39,5 +39,5 @@ test_that("CreateRandomSyn 1000 spectra", {
                     num.syn.tumors = 1000,
                     regress.dir    = NULL,
                     verbose        = FALSE)
-  expect_condition(retval, reg$retval)
+  expect_equal(retval, reg$retval)
 })

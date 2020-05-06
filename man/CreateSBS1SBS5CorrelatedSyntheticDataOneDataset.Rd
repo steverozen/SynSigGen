@@ -10,7 +10,8 @@ CreateSBS1SBS5CorrelatedSyntheticDataOneDataset(
   overwrite = FALSE,
   seed = 1,
   parameter.df = SynSigGen::SBS1SBS5parameter["S.0.5.Rsq.0.3", ],
-  add.info = TRUE
+  add.info = TRUE,
+  verbose = FALSE
 )
 }
 \arguments{
@@ -82,8 +83,9 @@ in LINEAR SPACE! (Default: Inf)
 
 }}
 
-\item{add.info}{Whether to generate additional information.
+\item{add.info}{Whether to generate additional information.}
 
+\item{verbose}{If \code{TRUE} cat progress messages.
 You should set it to \code{FALSE} when you want to make a \code{diff}
 using \code{CreateSBS1SBS5CorrelatedSyntheticDataDemo()}
 (i.e. parameter \code{regressdir} is not \code{NULL}). This is because

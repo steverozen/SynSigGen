@@ -543,6 +543,7 @@ PlotCorrelationScatterplotForExposures <-
 #'
 #' @param add.info Whether to generate additional information.
 #'
+#' @param verbose If \code{TRUE} cat progress messages.
 #' You should set it to \code{FALSE} when you want to make a \code{diff}
 #' using \code{CreateSBS1SBS5CorrelatedSyntheticDataDemo()}
 #' (i.e. parameter \code{regressdir} is not \code{NULL}). This is because
@@ -570,7 +571,8 @@ CreateSBS1SBS5CorrelatedSyntheticDataOneDataset <-
            overwrite = FALSE,
            seed = 1,
            parameter.df = SynSigGen::SBS1SBS5parameter["S.0.5.Rsq.0.3",],
-           add.info = TRUE)
+           add.info = TRUE,
+           verbose = FALSE)
   {
     ## Read in parameters
     if(is.null(dataset.name))
@@ -608,14 +610,16 @@ CreateSBS1SBS5CorrelatedSyntheticDataOneDataset <-
 
     ## make a directory to store the dataset,
     ## and set the working directory to it.
-    cat(paste("Specifying dataset.name as: ",dataset.name,"...\n",sep = ""))
+    if (verbose) {
+      cat(paste("Specifying dataset.name as: ", dataset.name,"...\n",sep = ""))
+    }
     MustCreateDir(dir.name,overwrite)
-    cat(paste("Output folder for this dataset is: ",dir.name,"\n",sep = ""))
-
-
+    if (verbose) {
+      cat(paste("Output folder for this dataset is: ", dir.name,"\n",sep = ""))
+    }
 
     #### Generate exposure matrices for main.signature
-    cat("Generating ground-truth exposures according to parameters specified...\n")
+    if (verbose) cat("Generating ground-truth exposures...\n")
     dataset$exposure <- GenSBS1SBS5Exposure(main.signature,
                                             correlated.signature,
                                             sample.number,
@@ -633,7 +637,7 @@ CreateSBS1SBS5CorrelatedSyntheticDataOneDataset <-
 
     #### Plot out the scatter plot for the two correlated exposures
     if(add.info){
-    cat("Plotting correlation scatterplot for exposures of two signatures...\n")
+    if (verbose) cat("Plotting correlation scatterplot for exposures...\n")
     PlotCorrelationScatterplotForExposures(pdf.filename = paste(dir.name,"/scatterplot.pdf",sep = ""),
                                            main.signature = main.signature,
                                            correlated.signature = correlated.signature,
@@ -648,7 +652,7 @@ CreateSBS1SBS5CorrelatedSyntheticDataOneDataset <-
       CreateSynCatalogs(sp.sigs[,c(main.signature,correlated.signature)],
                         dataset$exposure)
 
-    cat("Spectra generated.\n")
+    if (verbose) cat("Spectra generated.\n")
 
     #### Output Duke-NUS formatted mutational spectra and exposure.counts
     WriteCatalog(dataset$spectra$ground.truth.catalog,
@@ -680,9 +684,11 @@ CreateSBS1SBS5CorrelatedSyntheticDataOneDataset <-
       write(x = seedInUse, file = paste0(dir.name,"/seedInUse.txt")) ## Save seed in use to a text file
       write(x = RNGInUse, file = paste0(dir.name,"/RNGInUse.txt")) ## Save seed in use to a text file
     }
-    cat(paste("All result files have been stored in folder ",
-              dir.name,"\n",sep = ""))
-    cat("\n\nData generation has been finished successfully!\n\n")
+    if (verbose) {
+      # cat(paste("All result files have been stored in folder ",
+      #          dir.name,"\n",sep = ""))
+      cat("\n\nData generation finished.\n\n")
+    }
 
   }
 

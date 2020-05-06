@@ -4,9 +4,7 @@
 \name{SBS1SBS5parameter}
 \alias{SBS1SBS5parameter}
 \title{Parameters used to generate synthetic spectra with correlated SBS1 and SBS5 exposures.}
-\format{
-A data.frame with parameters for generating the synthetic data.
-}
+\format{A data.frame with parameters for generating the synthetic data.}
 \usage{
 SBS1SBS5parameter
 }

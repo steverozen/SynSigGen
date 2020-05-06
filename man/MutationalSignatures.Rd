@@ -9,20 +9,8 @@
 \alias{sa.ID.sigs}
 \alias{sp.sigs}
 \title{Reference mutational signature profiles from PCAWG7.}
-\format{
-Numerical matrix with rows indicating mutation
-types and columns indicating signatures.
-
-An object of class \code{matrix} (inherits from \code{array}) with 96 rows and 60 columns.
-
-An object of class \code{matrix} (inherits from \code{array}) with 1697 rows and 60 columns.
-
-An object of class \code{matrix} (inherits from \code{array}) with 78 rows and 15 columns.
-
-An object of class \code{matrix} (inherits from \code{array}) with 83 rows and 29 columns.
-
-An object of class \code{matrix} (inherits from \code{array}) with 96 rows and 65 columns.
-}
+\format{Numerical matrix with rows indicating mutation
+types and columns indicating signatures.}
 \source{
 \url{https://www.synapse.org/#!Synapse:syn11738310}
 
