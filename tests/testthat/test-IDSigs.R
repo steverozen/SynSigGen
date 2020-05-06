@@ -56,10 +56,7 @@ ret.prob1 <- CreateAndWriteCatalog(
 #     file = "tests/test.data/ID.test.results.Rdata")
 
 reg.data <- new.env()
-load(
-  system.file("tests/test.data/ID.test.results.Rdata",
-              package = "SynSigGen"),
-  envir = reg.data)
+load("testdata/ID.test.results.Rdata",envir = reg.data)
 
 testthat::expect_equal(expos.prob1,   reg.data$expos.prob1)
 testthat::expect_equal(expos.partial, reg.data$expos.partial)

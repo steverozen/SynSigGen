@@ -7,10 +7,7 @@ test_that("AddNoise", {
   colnames(in.exp) <- c("a", "b")
 
   reg.data <- new.env()
-  load(
-    system.file("tests/test.data/AddNoise.test.results.Rdata",
-                package = "SynSigGen"),
-    envir = reg.data)
+  load("testdata/AddNoise.test.results.Rdata", envir = reg.data)
 
 
   set.seed(20200601)

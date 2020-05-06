@@ -1,7 +1,5 @@
 test_that("ReadExposure", {
-  in.exposure <- system.file("tests/test.data/tiny.exposure.csv",
-                             package = "SynSigGen",
-                             mustWork = TRUE)
+  in.exposure <- "testdata/tiny.exposure.csv"
   expect_warning(x <- ReadExposure(in.exposure))
   tfile <- tempfile()
   WriteExposure(x, tfile)
@@ -13,8 +11,6 @@ test_that("ReadExposure", {
   x2 <- ReadExposure(tfile, check.names = FALSE)
   expect_equal(x, x2)
 
-  in.exposure2 <- system.file("tests/test.data/tiny.exposure.dup.csv",
-                             package = "SynSigGen",
-                             mustWork = TRUE)
+  in.exposure2 <- "testdata/tiny.exposure.dup.csv"
   expect_error(x <- ReadExposure(in.exposure2, check = FALSE))
 })
