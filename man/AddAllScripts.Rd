@@ -2,8 +2,7 @@
 % Please edit documentation in R/CreateSynData.R
 \name{AddAllScripts}
 \alias{AddAllScripts}
-\title{Create scripts to run SignatureAnalyzer in all subdirectories
-of \code{OutDir()}.}
+\title{Create scripts to run SignatureAnalyzer in all subdirectories of \code{top.level.dir}.}
 \usage{
 AddAllScripts(maxK = 30, top.level.dir = NULL)
 }
@@ -15,7 +14,6 @@ AddAllScripts(maxK = 30, top.level.dir = NULL)
 directory.}
 }
 \description{
-Create scripts to run SignatureAnalyzer in all subdirectories
-of \code{OutDir()}.
+WARNING, not tested recently as of 2020 05 12
 }
 \keyword{internal}

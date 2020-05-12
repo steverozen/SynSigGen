@@ -4,11 +4,7 @@
 \alias{AddScript}
 \title{Add an R script to a particular subdirectory.}
 \usage{
-AddScript(
-  maxK,
-  slice,
-  dir.name = c("sa.sa.96", "sp.sp", "sa.sa.COMPOSITE", "sp.sa.COMPOSITE")
-)
+AddScript(maxK, slice, dir.name)
 }
 \arguments{
 \item{maxK}{The \code{maxK} argument for SignatureAnalyzers.}

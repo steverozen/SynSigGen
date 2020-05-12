@@ -8,8 +8,18 @@
 \alias{sa.no.hyper.real.exposures}
 \alias{sp.no.hyper.real.exposures}
 \title{Real exposure (signature attributions) from SignatureAnalyzer and SigProfiler}
-\format{Numerical matrix with rows indicating signatures and columns indicating
-(tumor) samples.}
+\format{
+Numerical matrix with rows indicating signatures and columns indicating
+(tumor) samples.
+
+An object of class \code{matrix} (inherits from \code{array}) with 60 rows and 2780 columns.
+
+An object of class \code{matrix} (inherits from \code{array}) with 65 rows and 2780 columns.
+
+An object of class \code{matrix} (inherits from \code{array}) with 35 rows and 2624 columns.
+
+An object of class \code{matrix} (inherits from \code{array}) with 65 rows and 2624 columns.
+}
 \source{
 \url{https://dx.doi.org/10.7303/syn11761237.4}
 

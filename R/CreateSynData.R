@@ -455,6 +455,7 @@ MergeExposures <- function(list.of.exposures) {
 # Paste of OutDir.dir / file.name (or just file.name)
 OutDir <- function(file.name) {
   warning("Use of function OutDir is deprecated")
+  if (!exists("OutDir.dir")) return(file.name)
   if (is.null(OutDir.dir)) return(file.name)
   tmp <- OutDir.dir
   n <- nchar(tmp)
@@ -465,6 +466,7 @@ OutDir <- function(file.name) {
   }
   return(paste0(tmp, file.name))
 }
+
 
 #' Generate synthetic exposures from abstract parameters.
 #'
@@ -608,8 +610,9 @@ GenerateSynFromReal <- function(real.exp,
 #'
 #' @param exp (Synthetic) exposures.
 #'
-#' @param dir Directory in which to put the signatures;
-#' NOTE: this will be a subdirectory based on \code{\link{OutDir}}.
+#' @param dir Deprecated, maintained only to avoid
+#' breaking old code. A subdirectory based on
+#' the deprecated global variable \code{\link{OutDir}}.
 #'
 #' @param write.cat.fn Function to write catalogs \strong{or}
 #' spectra to files.
@@ -638,8 +641,15 @@ CreateAndWriteCatalog <-
     info <- CreateSynCatalogs(sigs, exp)
 
     if (is.null(my.dir)) {
-      warning("In CreateAndWriteCatalog top.level.dir is NULL, using deprecated work-around")
-      my.dir <-  OutDir(dir)
+      warning("In CreateAndWriteCatalog my.dir is NULL, using deprecated work-around\n",
+              "Do not use the argument dir, use out.dir")
+      if (exists("OutDir") && exists("OutDir.dir")) {
+        my.dir <-  OutDir(dir)
+      } else {
+        warning("In CreateAndWriteCatalog my.dir is NULL and OutDir() does not exist\n",
+                "setting my.dir <- dir")
+        my.dir <- dir
+      }
     }
 
     if (dir.exists(my.dir)) {
@@ -736,75 +746,6 @@ NewCreateAndWriteCatalog <-
     invisible(info$ground.truth.catalog)
   }
 
-#' Add an R script to a particular subdirectory.
-#'
-#' @param maxK The \code{maxK} argument for SignatureAnalyzers.
-#'
-#' @param slice Which subdirectory to put the script into.
-#'
-#' @param dir.name The name of the subdirectory.
-#'
-#' @keywords internal
-
-AddScript <- function(maxK, slice,
-                      dir.name = c("sa.sa.96",
-                                   "sp.sp",
-                                   "sa.sa.COMPOSITE",
-                                   "sp.sa.COMPOSITE")) {
-
-  lines <- c(
-    "",
-    "",
-    "",
-    "library(SynSig)",
-    "library(ICAMS)",
-    "cat(\"\\n\\nRunning, maxK.for.SA is\", maxK.for.SA, \"\\n\\n\")",
-    "RNGkind(kind = \"L'Ecuyer-CMRG\")",
-    "set.seed(888)",
-    "",
-    "reval <- SignatureAnalyzer4MatchedCatalogs(",
-    "  num.runs = 20,",
-    "  signatureanalyzer.code.dir = \"/home/gmssgr/bin/SignatureAnalzyer.052418/\",",
-    "  dir.root = \"..\",",
-    "",
-    "  overwrite = FALSE,",
-    "  maxK = maxK.for.SA,",
-    "  mc.cores = 20",
-    "  )"
-  )
-
-  out.script.name <- paste0(slice, ".run.SA.R")
-  lines[1]  <-
-    paste0("# Put this file in <top.level.dir>/", dir.name,
-           " and run Rscript ", out.script.name)
-  lines[2]  <- paste0("maxK.for.SA <- ", maxK)
-  lines[14] <- paste0("  slice = ", slice, ",")
-  out.name  <- OutDir(paste0(dir.name, "/", out.script.name))
-  writeLines(lines, con = out.name)
-}
-
-
-#' Create scripts to run SignatureAnalyzer in all subdirectories
-#' of \code{OutDir()}.
-#'
-#' @param maxK The \code{maxK} argument for SignatureAnalyzer.
-#'
-#' @param top.level.dir Add the scripts to sub-directories
-#'    \code{sa.sa.96}, \code{sp.sp}, etc. of this
-#'    directory.
-#'
-#' @keywords internal
-
-AddAllScripts <- function(maxK = 30, top.level.dir = NULL) {
-  if (is.null(top.level.dir)) {
-    warning("Need to supply non.null top.level.dir to AddAllScripts; no scripts generated")
-    return(NULL)
-  }
-  AddScript(maxK = maxK, 1, file.path(top.level.dir, "sa.sa.96"))
-  AddScript(maxK = maxK, 2, file.path(top.level.dir, "sp.sp"))
-  AddScript(maxK = maxK, 3, file.path(top.level.dir, "sa.sa.COMPOSITE"))
-  AddScript(maxK = maxK, 4, file.path(top.level.dir, "sp.sa.COMPOSITE"))
-}
 
 #' Exposures and spectra with Poisson or negative binomial noise in epxosures.
 #'

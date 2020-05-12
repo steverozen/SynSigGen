@@ -19,8 +19,9 @@ CreateAndWriteCatalog(
 
 \item{exp}{(Synthetic) exposures.}
 
-\item{dir}{Directory in which to put the signatures;
-NOTE: this will be a subdirectory based on \code{\link{OutDir}}.}
+\item{dir}{Deprecated, maintained only to avoid
+breaking old code. A subdirectory based on
+the deprecated global variable \code{\link{OutDir}}.}
 
 \item{write.cat.fn}{Function to write catalogs \strong{or}
 spectra to files.}
