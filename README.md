@@ -37,4 +37,4 @@ BiocManager::install("BSgenome")
 
 ## Reference manual
 
-<https://github.com/steverozen/SynSigGen/blob/master/data-raw/SynSigGen_1.0.2.9003.pdf>
+<https://github.com/steverozen/SynSigGen/blob/master/data-raw/SynSigGen_1.0.2.9005.pdf>
