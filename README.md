@@ -6,7 +6,7 @@
 <!-- badges: start -->
 
 [![Travis build
-status](https://travis-ci.org/steverozen/ICAMS.svg?branch=master)](https://travis-ci.org/steverozen/ICAMS)
+status](https://travis-ci.com/steverozen/SynSigGen.svg?branch=master)](https://travis-ci.org/steverozen/SynSigGen)
 
 <!-- badges: end -->
 
