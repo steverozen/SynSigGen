@@ -141,6 +141,8 @@ MatchSigs2Directions <- function(sigs1, sigs2) {
 #'
 #' @return A vector, each element of which is the integer
 #' corresponding to the first string of digits of an element of s
+#'
+#' @export
 NumFromId<- function(s) {
   return(
     as.numeric(
