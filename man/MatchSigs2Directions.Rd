@@ -17,7 +17,7 @@ those in \code{sigs2}.}
 \value{
 A list with the elements:
 
-\code{avg}: the average of the cosine similarities between each signature in
+\code{averCosSim}: the average of the cosine similarities between each signature in
 \code{sigs1} and its closest match in \code{sigs2} and the closest match
 between each signature in \code{sigs2} and its closest match in \code{sigs1}.
 

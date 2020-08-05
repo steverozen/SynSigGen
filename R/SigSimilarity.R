@@ -80,7 +80,7 @@ MatchSigs1Direction <- function(query.sigs, other.sigs) {
 #'
 #' @return A list with the elements:
 #'
-#' \code{avg}: the average of the cosine similarities between each signature in
+#' \code{averCosSim}: the average of the cosine similarities between each signature in
 #' \code{sigs1} and its closest match in \code{sigs2} and the closest match
 #' between each signature in \code{sigs2} and its closest match in \code{sigs1}.
 #'
@@ -107,7 +107,7 @@ MatchSigs2Directions <- function(sigs1, sigs2) {
 
   match1 <- MatchSigs1Direction(sigs1, sigs2)
   match2 <- MatchSigs1Direction(sigs2, sigs1)
-  avg <-
+  averCosSim <-
     (sum(unlist(match1)) + sum(unlist(match2))) /
     (length(match1) + length(match2))
 
@@ -127,7 +127,7 @@ MatchSigs2Directions <- function(sigs1, sigs2) {
   rownames(table2) <- table2$from
   table2 <-table2[ , -1, drop = FALSE]
 
-  return(list(avg=avg, match1=table1, match2=table2))
+  return(list(averCosSim=averCosSim, match1=table1, match2=table2))
 }
 
 #' Get the numerical parts of signature ids
