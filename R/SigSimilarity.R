@@ -26,6 +26,8 @@ Match1Sig <- function(query.sig, other.sigs) {
             })
   max.sim <- max(sims)
   max.name <- names(sims)[sims == max.sim]
+  if(length(max.sim)) > 1
+    message("There is more than one signature in other.sigs with the highest cosine similarity to query.sig.\n")
   names(max.sim) <- max.name[1] # There might be mulitple signatures
                                 # with the maximum similarity.
   return(max.sim)
