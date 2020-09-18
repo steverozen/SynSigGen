@@ -6,7 +6,7 @@
 <!-- badges: start -->
 
 [![Travis build
-status](https://travis-ci.com/steverozen/SynSigGen.svg?branch=master)](https://travis-ci.org/steverozen/SynSigGen)
+status](https://travis-ci.com/steverozen/SynSigGen.svg?branch=master)](https://travis-ci.com/steverozen/SynSigGen)
 
 <!-- badges: end -->
 

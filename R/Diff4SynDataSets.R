@@ -32,8 +32,8 @@ Diff4SynDataSets <- function(dirname, unlink) {
 #'
 #' @param verbose Whether to display additional R messages.
 #'
-#' @param long.diff If \code{TRUE}, invoke "diff -r" (detailed text information
-#' even if the two files/folders are the same); if \code{FALSE}, invoke "diff -rq"
+#' @param long.diff If \code{TRUE}, invoke \code{diff -r} (detailed text information
+#' even if the two files/folders are the same); if \code{FALSE}, invoke \code{diff -rq}
 #' (detailed text information only if two files/folders are different).
 #' (Default: FALSE)
 #'

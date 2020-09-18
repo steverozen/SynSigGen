@@ -27,7 +27,7 @@ If NULL, it will be changed to the last part of the \code{dir.name}
 \item{overwrite}{Whether to overwrite
 (Default: FALSE)}
 
-\item{seed}{The seed number used to initizalize pesudo-random number
+\item{seed}{The seed number used to initialize pseudo-random number
 generator (RNG). This makes the generation of the correlated
 datasets repeatable. (Default: 1)}
 
@@ -42,7 +42,7 @@ can vary freely. (Default: SBS5)
 whose exposure is influenced by and co-varies with the exposure
 of main.signature. In this study, it defaults as "SBS1".
 
-\item \code{name.prefix} Default: "TwoCorreSigsGen"
+\item \code{name.prefix} Default: \code{TwoCorreSigsGen}
 
 \item \code{sample.number} The number of synthetic tumors you want to generate.
 Default: 500
@@ -62,11 +62,11 @@ Default: 0.4
 Default: 0.5
 
 \item \code{main.signature.lower.thres} This program will force the exposure count of
-main.signature to be greater than this threhold.
+main.signature to be greater than this threshold.
 Default: 100
 
 \item \code{correlated.signature.lower.thres} This program will force the exposure count of
-correlated.signature to be greater than this threhold.
+correlated.signature to be greater than this threshold.
 Default: 1
 
 \item \code{pearson.r.2.lower.thres} Lower boundary of Pearson's R^2
@@ -87,10 +87,10 @@ in LINEAR SPACE! (Default: Inf)
 
 \item{verbose}{If \code{TRUE} cat progress messages.
 You should set it to \code{FALSE} when you want to make a \code{diff}
-using \code{CreateSBS1SBS5CorrelatedSyntheticDataDemo()}
+using \code{\link{CreateSBS1SBS5CorrelatedSyntheticData}}
 (i.e. parameter \code{regressdir} is not \code{NULL}). This is because
 Additional information may differ on different OS or R sessions,
-thus may prevent the dataset from passing the NewDiff4SynDatasets check.
+thus may prevent the dataset from passing the \code{NewDiff4SynDatasets} check.
 (Default: TRUE)
 
 \strong{Warning} \cr
@@ -109,7 +109,7 @@ from SBS1 and SBS5, and mutation burdens of both signatures
 are highly correlated.
 }
 \details{
-If you want to customize the dataset's Pearson R^2,
+If you want to customize Pearson R^2 of the dataset,
 you need to change the standard deviations of two signatures.
 i.e., main.stdev.log and correlated.stdev.log.
 

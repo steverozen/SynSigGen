@@ -2,7 +2,7 @@
 % Please edit documentation in R/CreateSynData.R
 \name{AddNoise}
 \alias{AddNoise}
-\title{Exposures and spectra with Poisson or negative binomial noise in epxosures.}
+\title{Exposures and spectra with Poisson or negative binomial noise in exposures.}
 \usage{
 AddNoise(input.exposure, signatures, n.binom.size = NULL)
 }
@@ -28,5 +28,5 @@ A list with the elements \describe{
 }
 }
 \description{
-Exposures and spectra with Poisson or negative binomial noise in epxosures.
+Exposures and spectra with Poisson or negative binomial noise in exposures.
 }

@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 
-  [![Travis build status](https://travis-ci.com/steverozen/SynSigGen.svg?branch=master)](https://travis-ci.org/steverozen/SynSigGen)
+  [![Travis build status](https://travis-ci.com/steverozen/SynSigGen.svg?branch=master)](https://travis-ci.com/steverozen/SynSigGen)
 
 <!-- badges: end -->
 

@@ -4,7 +4,7 @@
 \alias{GenSBS1SBS5Exposure}
 \title{Generate correlated exposures for multiple tumors
 
-Wrapper function around GenSBS1SBS5ExposureOneTumor():
+Wrapper function around \code{\link{GenSBS1SBS5ExposureOneTumor}}:
 A function to generate exposure of two correlated signatures
 (Example: SBS1 and SBS5) for \code{sample.number} (e.g. 500) synthetic tumors.
 
@@ -80,7 +80,7 @@ of two signatures in \code{sample.number} tumors.}
 \description{
 Generate correlated exposures for multiple tumors
 
-Wrapper function around GenSBS1SBS5ExposureOneTumor():
+Wrapper function around \code{\link{GenSBS1SBS5ExposureOneTumor}}:
 A function to generate exposure of two correlated signatures
 (Example: SBS1 and SBS5) for \code{sample.number} (e.g. 500) synthetic tumors.
 

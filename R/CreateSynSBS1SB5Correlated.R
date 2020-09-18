@@ -11,7 +11,7 @@
 #' (Example: SBS1 and SBS5) for ONE synthetic tumor.
 #'
 #' @param tumor.name Name of synthetic tumor you want to generate.
-#' (default: "TwoCorreSigsGen::1")
+#' (default: \code{TwoCorreSigsGen::1})
 #'
 #' @param main.signature Name of a signature with smaller variance
 #' in the log10 space. (default: "SBS5")
@@ -25,9 +25,9 @@
 #' of \code{main.signature})
 #'
 #' @param correlated.stdev.log Contribute to part of the standard deviation of
-#' log10(mutation burden of correlated.signature). In this script, the s.d. of
-#' log10(mutation burden of correlated.signature)
-#' = main.stdev.log + correlated.stdev.log
+#' log10(mutation burden of \code{correlated.signature}). In this script, the s.d. of
+#' log10(mutation burden of \code{correlated.signature})
+#' = \code{main.stdev.log} + \code{correlated.stdev.log}
 #'
 #' @param slope.linear Average ratio of mutation burden of \code{correlated.signature}
 #' over mutation burden of \code{main.signature}
@@ -49,10 +49,11 @@
 #' @section Warning Warning 1: forcing dataset to have high Pearson's R^2,
 #' while inputting large main.stdev.log value will cause
 #' the program to reject unqualified datasets and regenerate
-#' new datasets for HOURS OR EVEN DAYS!
+#' new datasets for HOURS OR EVEN DAYS.
 #'
-#' Warning 2: For replication of paperresults, only specify
-#' parameters as indicated by supplementary information!
+#' Warning 2: If users intend to replicate results of SBS1-SBS5
+#' paper, please specify parameters as indicated in the
+#' Supplementary Information of the paper.
 #'
 #' @keywords internal
 #'
@@ -172,7 +173,7 @@ GenSBS1SBS5ExposureOneTumor <- function(
 
 #' @title Generate correlated exposures for multiple tumors
 #'
-#' Wrapper function around GenSBS1SBS5ExposureOneTumor():
+#' Wrapper function around \code{\link{GenSBS1SBS5ExposureOneTumor}}:
 #' A function to generate exposure of two correlated signatures
 #' (Example: SBS1 and SBS5) for \code{sample.number} (e.g. 500) synthetic tumors.
 #'
@@ -445,7 +446,7 @@ PlotCorrelationScatterplotForExposures <-
 #' from SBS1 and SBS5, and mutation burdens of both signatures
 #' are highly correlated.
 #'
-#' If you want to customize the dataset's Pearson R^2,
+#' If you want to customize Pearson R^2 of the dataset,
 #' you need to change the standard deviations of two signatures.
 #' i.e., main.stdev.log and correlated.stdev.log.
 #'
@@ -485,7 +486,7 @@ PlotCorrelationScatterplotForExposures <-
 #' @param overwrite Whether to overwrite
 #' (Default: FALSE)
 #'
-#' @param seed The seed number used to initizalize pesudo-random number
+#' @param seed The seed number used to initialize pseudo-random number
 #' generator (RNG). This makes the generation of the correlated
 #' datasets repeatable. (Default: 1)
 #'
@@ -500,7 +501,7 @@ PlotCorrelationScatterplotForExposures <-
 #' whose exposure is influenced by and co-varies with the exposure
 #' of main.signature. In this study, it defaults as "SBS1".
 #'
-#' \item \code{name.prefix} Default: "TwoCorreSigsGen"
+#' \item \code{name.prefix} Default: \code{TwoCorreSigsGen}
 #'
 #' \item \code{sample.number} The number of synthetic tumors you want to generate.
 #' Default: 500
@@ -520,11 +521,11 @@ PlotCorrelationScatterplotForExposures <-
 #' Default: 0.5
 #'
 #' \item \code{main.signature.lower.thres} This program will force the exposure count of
-#' main.signature to be greater than this threhold.
+#' main.signature to be greater than this threshold.
 #' Default: 100
 #'
 #' \item \code{correlated.signature.lower.thres} This program will force the exposure count of
-#' correlated.signature to be greater than this threhold.
+#' correlated.signature to be greater than this threshold.
 #' Default: 1
 #'
 #' \item \code{pearson.r.2.lower.thres} Lower boundary of Pearson's R^2
@@ -545,10 +546,10 @@ PlotCorrelationScatterplotForExposures <-
 #'
 #' @param verbose If \code{TRUE} cat progress messages.
 #' You should set it to \code{FALSE} when you want to make a \code{diff}
-#' using \code{CreateSBS1SBS5CorrelatedSyntheticDataDemo()}
+#' using \code{\link{CreateSBS1SBS5CorrelatedSyntheticData}}
 #' (i.e. parameter \code{regressdir} is not \code{NULL}). This is because
 #' Additional information may differ on different OS or R sessions,
-#' thus may prevent the dataset from passing the NewDiff4SynDatasets check.
+#' thus may prevent the dataset from passing the \code{NewDiff4SynDatasets} check.
 #' (Default: TRUE)
 #'
 #' \strong{Warning} \cr
@@ -694,7 +695,7 @@ CreateSBS1SBS5CorrelatedSyntheticDataOneDataset <-
 
 #' Function to generate 20 SBS1-SBS5-correlated Synthetic datasets used in testing.
 #'
-#' This function is a wrapper around \link{CreateSBS1SBS5CorrelatedSyntheticData}.
+#' This function is a wrapper around \code{\link{CreateSBS1SBS5CorrelatedSyntheticDataOneDataset}}.
 #' It will use the default parameters to repeat the results.
 #'
 #' This function will generate 20 datasets, each with files listed below:
@@ -735,7 +736,7 @@ CreateSBS1SBS5CorrelatedSyntheticDataOneDataset <-
 #' You should set it to \code{FALSE} when you want to make a \code{diff}
 #' (i.e. \code{regressdir} is not \code{NULL}). This is because
 #' Additional information may differ on different OS or R sessions,
-#' thus may prevent the dataset from passing the NewDiff4SynDatasets check.
+#' thus may prevent the dataset from passing the \code{NewDiff4SynDatasets} check.
 #' (Default: TRUE)
 #'
 #' @param unlink Whether to delete temporary dataset folder \code{top.level.dir}.

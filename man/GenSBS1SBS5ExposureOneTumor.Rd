@@ -23,7 +23,7 @@ GenSBS1SBS5ExposureOneTumor(
 }
 \arguments{
 \item{tumor.name}{Name of synthetic tumor you want to generate.
-(default: "TwoCorreSigsGen::1")}
+(default: \code{TwoCorreSigsGen::1})}
 
 \item{main.signature}{Name of a signature with smaller variance
 in the log10 space. (default: "SBS5")}
@@ -37,9 +37,9 @@ in the log10 space. (default: "SBS1")}
 of \code{main.signature})}
 
 \item{correlated.stdev.log}{Contribute to part of the standard deviation of
-log10(mutation burden of correlated.signature). In this script, the s.d. of
-log10(mutation burden of correlated.signature)
-= main.stdev.log + correlated.stdev.log}
+log10(mutation burden of \code{correlated.signature}). In this script, the s.d. of
+log10(mutation burden of \code{correlated.signature})
+= \code{main.stdev.log} + \code{correlated.stdev.log}}
 
 \item{slope.linear}{Average ratio of mutation burden of \code{correlated.signature}
 over mutation burden of \code{main.signature}}
@@ -68,10 +68,11 @@ Function to generate exposure of two correlated signatures
  forcing dataset to have high Pearson's R^2,
 while inputting large main.stdev.log value will cause
 the program to reject unqualified datasets and regenerate
-new datasets for HOURS OR EVEN DAYS!
+new datasets for HOURS OR EVEN DAYS.
 
-Warning 2: For replication of paperresults, only specify
-parameters as indicated by supplementary information!
+Warning 2: If users intend to replicate results of SBS1-SBS5
+paper, please specify parameters as indicated in the
+Supplementary Information of the paper.
 }
 
 \keyword{internal}

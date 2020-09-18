@@ -26,8 +26,8 @@ if there are diffs.}
 
 \item{verbose}{Whether to display additional R messages.}
 
-\item{long.diff}{If \code{TRUE}, invoke "diff -r" (detailed text information
-even if the two files/folders are the same); if \code{FALSE}, invoke "diff -rq"
+\item{long.diff}{If \code{TRUE}, invoke \code{diff -r} (detailed text information
+even if the two files/folders are the same); if \code{FALSE}, invoke \code{diff -rq}
 (detailed text information only if two files/folders are different).
 (Default: FALSE)}
 }

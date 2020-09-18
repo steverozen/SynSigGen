@@ -28,14 +28,14 @@ the contents of this directory with a \code{diff}.}
 You should set it to \code{FALSE} when you want to make a \code{diff}
 (i.e. \code{regressdir} is not \code{NULL}). This is because
 Additional information may differ on different OS or R sessions,
-thus may prevent the dataset from passing the NewDiff4SynDatasets check.
+thus may prevent the dataset from passing the \code{NewDiff4SynDatasets} check.
 (Default: TRUE)}
 
 \item{unlink}{Whether to delete temporary dataset folder \code{top.level.dir}.
 (Set to TRUE for testing)}
 }
 \description{
-This function is a wrapper around \link{CreateSBS1SBS5CorrelatedSyntheticData}.
+This function is a wrapper around \code{\link{CreateSBS1SBS5CorrelatedSyntheticDataOneDataset}}.
 It will use the default parameters to repeat the results.
 }
 \details{

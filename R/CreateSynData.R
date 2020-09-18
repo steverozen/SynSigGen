@@ -747,7 +747,7 @@ NewCreateAndWriteCatalog <-
   }
 
 
-#' Exposures and spectra with Poisson or negative binomial noise in epxosures.
+#' Exposures and spectra with Poisson or negative binomial noise in exposures.
 #'
 #' @param input.exposure The exposures to which to add noise; a numeric matrix
 #'    or data frame in which the rows are signatures and the columns are
