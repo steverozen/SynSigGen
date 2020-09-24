@@ -53,16 +53,3 @@ on parameters derived from signature profiles
 and attributions (exposures).
 }
 
-\section{Comparing two sets of mutational signatures}{
-
-
-Functions for comparing mutational signatures and
-sets of mutational signatures. Often we will be interested
-in comparing signature profiles extracted from synthetic data to the
-ground-truth signature profiles.
-
-\code{\link{Match1Sig}},
-\code{\link{MatchSigs1Direction}},
-\code{\link{MatchSigs2Directions}},
-}
-

@@ -29,7 +29,7 @@ MapSPToSASignatureNamesInExposure <-
            sa.sig.names.to.consider = colnames(sa.96.sigs))
   {
     SP.SA.mappings <-
-      MatchSigs2Directions(
+      ICAMSxtra::MatchSigs2Directions(
         sp.sigs[ , rownames(sp.exposures)],
         sa.96.sigs[ , sa.sig.names.to.consider, drop = FALSE])
     new.syn.exp.rownames <- SP.SA.mappings$match1[rownames(sp.exposures), "to"]

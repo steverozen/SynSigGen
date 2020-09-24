@@ -288,21 +288,21 @@ xFixSASigNames <- function(sig.names) {
 
 Defunct.How.We.Mapped.From.SP.to.SA.Sig <-
   function(rcc.sa.syn.exp, ovary.sa.syn.exp) {
-  # Find mapping from SBS3, SBS5, and SBS40 to SignatureAnalyzer signatures
-  # assigned to these tumor types
+    # Find mapping from SBS3, SBS5, and SBS40 to SignatureAnalyzer signatures
+    # assigned to these tumor types
 
 
-  MatchSigs1Direction(
-    SynSigGen::sp.sigs[ , "SBS5", drop = F],
-    SynSigGen::sa.96.sigs[ , xFixSASigNames(rownames(rcc.sa.syn.exp))])
+    ICAMSxtra::MatchSigs1Direction(
+      SynSigGen::sp.sigs[ , "SBS5", drop = F],
+      SynSigGen::sa.96.sigs[ , xFixSASigNames(rownames(rcc.sa.syn.exp))])
 
-  MatchSigs1Direction(
-    SynSigGen::sp.sigs[ , "SBS40", drop = F],
-    SynSigGen::sa.96.sigs[ , xFixSASigNames(rownames(rcc.sa.syn.exp))])
+    ICAMSxtra::MatchSigs1Direction(
+      SynSigGen::sp.sigs[ , "SBS40", drop = F],
+      SynSigGen::sa.96.sigs[ , xFixSASigNames(rownames(rcc.sa.syn.exp))])
 
-  MatchSigs1Direction(
-    SynSigGen::sp.sigs[ , "SBS3", drop = F],
-    SynSigGen::sa.96.sigs[ , xFixSASigNames(rownames(ovary.sa.syn.exp))])
+    ICAMSxtra::MatchSigs1Direction(
+      SynSigGen::sp.sigs[ , "SBS3", drop = F],
+      SynSigGen::sa.96.sigs[ , xFixSASigNames(rownames(ovary.sa.syn.exp))])
 
-  # Both BI..SBS3 and BI..SBS39 are in every ovarian; we select BI..SBS3
-}
+    # Both BI..SBS3 and BI..SBS39 are in every ovarian; we select BI..SBS3
+  }
