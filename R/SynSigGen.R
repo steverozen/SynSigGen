@@ -7,46 +7,80 @@
 #'
 #' The main focus is generating synthetic catalogs of mutational
 #' spectra (mutations in tumors) based on known mutational signature
-#' profiles and attributions (assignment of exposures to tumors) in
-#' the PCAWG7 data. We call this kind of synthetic
-#' data broadly "reality-based" synthetic
-#' data.  The package also has a set of functions that
-#' generate random mutational signature profiles and then create
-#' synthetic catalogs based on these random signature profiles. We
+#' profiles and software-inferred exposures (software's estimate on 
+#' number of mutations induced by mutational signatures in tumors) 
+#' in the PCAWG7 data. We call this kind of synthetic data broadly 
+#' "reality-based" synthetic data. 
+#' The package also has a set of functions that generate
+#' random mutational signature profiles and then create synthetic 
+#' mutational spectra based on these random signature profiles. We
 #' call this kind of synthetic data "random" synthetic data, while
 #' pointing out that much depends on the distributions from which
 #' the random signature profiles and attributions are generated.
 #'
+#' @section Workflow for generating "reality-based" synthetic mutational spectra:
+#'
 #' Typical workflow for generating catalogs of "reality-based" synthetic
-#' mutational spectra is as follows.
+#' mutational spectra is as follows. \enumerate{
 #'
-#' \preformatted{
+#' \item Input (based on SignatureAnalyzer or SigProfiler analysis of PCAWG tumors)
+#'   \code{E}, matrix of software-inferred exposures of mutational signatures (signatures x samples)
+#'   \code{S}, mutational signature profiles (mutation types x signatures)
 #'
-#' Input (based on SignatureAnalyzer or SigProfiler analysis of PCAWG tumors)
-#'   A, matrix of attributions (signatures x samples)
-#'   S, mutational signature profiles (mutation type x signature)
+#' \item Obtain distribution parameters from software-inferred exposures \preformatted{
+#'   P <- GetSynSigParamsFromExposures(E, ...)
+#' }
 #'
-#' P <- GetSynSigParamsFromExposures(A, ...)
+#' \item Generate exposures for synthetic mutational spectra based on \code{P} \preformatted{
+#'   synthetic.exposures <- GenerateSyntheticExposures(P, ...)
+#' }
 #'
-#' synthetic.exposures <- GenerateSyntheticExposures(P, ...)
-#'
-#' synthetic.spectra <- CreateAndWRiteCatalog(S, synthetic.exposures, ...)
-#'
-#' T <- Signatures extracted by SignatureAnalzer or SigProfiler on synthetic.spectra
-#'
-#' SummarizeResults(T, S, synthetic.exposures, ...)
+#' \item Generate synthetic mutational spectra by multiplying \code{S} and \code{synthetic.exposures},
+#' and round the product to the nearest unit: \preformatted{
+#'   synthetic.spectra <- CreateAndWriteCatalog(S, synthetic.exposures, ...)
+#' }
 #'
 #' }
 #'
-#' @section Creating Synthetic Mutational Catalogs:
+#' @section Workflow for generating "random" synthetic mutational spectra:
 #'
-#' These functions create synthetic mutational catalogs based
-#' on parameters derived from signature profiles
-#' and attributions (exposures).
+#' The top-level function for generating "random" synthetic mutational spectra is 
+#' \code{\link{CreateRandomSyn}}. It adopts the following steps to generate
+#' catalogs of "random" synthetic mutational spectra. \enumerate{
 #'
-
+#' \item Create random mutational signature profiles: \preformatted{
+#'   S <- CreateRandomMutSigProfiles(...)
+#' }
+#'
+#' \item Generate distribution parameters for exposures of random signatures: \preformatted{
+#'   P <- CreateMeanAndStdevForSigs(sig.names = colnames(S),...)
+#' }
+#'
+#' \item Create exposures for mutational signatures based on \code{P} and other 
+#' parameters: \preformatted{
+#'   synthetic.exposures <- CreateRandomExposures(sigs = S, per.sig.mean.and.sd = P)
+#' }
+#'
+#' \item Generate synthetic mutational spectra by multiplying \code{S} and \code{synthetic.exposures}
+#' and round the product to the nearest unit: \preformatted{
+#'   synthetic.spectra <- NewCreateAndWriteCatalog(S, synthetic.exposures, ...)
+#' }
+#'
+#' }
+#'
+#' @section Workflow for generating "SBS1-SBS5-correlated" synthetic mutational spectra
+#'
+#' Typical workflow for generating catalogs of "SBS1-SBS5-correlated" synthetic
+#' mutational spectra is as follows. \enumerate{
+#'
+#'
+#'
+#' }
+#'
+#'
+#'
 #'
 #' @docType package
 #' @name SynSigGen
-
+#'
 NULL
