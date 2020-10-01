@@ -7,12 +7,12 @@
 #'
 #' The main focus is generating synthetic catalogs of mutational
 #' spectra (mutations in tumors) based on known mutational signature
-#' profiles and software-inferred exposures (software's estimate on 
-#' number of mutations induced by mutational signatures in tumors) 
-#' in the PCAWG7 data. We call this kind of synthetic data broadly 
-#' "reality-based" synthetic data. 
+#' profiles and software-inferred exposures (software's estimate on
+#' number of mutations induced by mutational signatures in tumors)
+#' in the PCAWG7 data. We call this kind of synthetic data broadly
+#' "reality-based" synthetic data.
 #' The package also has a set of functions that generate
-#' random mutational signature profiles and then create synthetic 
+#' random mutational signature profiles and then create synthetic
 #' mutational spectra based on these random signature profiles. We
 #' call this kind of synthetic data "random" synthetic data, while
 #' pointing out that much depends on the distributions from which
@@ -44,7 +44,7 @@
 #'
 #' @section Workflow for generating "random" synthetic mutational spectra:
 #'
-#' The top-level function for generating "random" synthetic mutational spectra is 
+#' The top-level function for generating "random" synthetic mutational spectra is
 #' \code{\link{CreateRandomSyn}}. It adopts the following steps to generate
 #' catalogs of "random" synthetic mutational spectra. \enumerate{
 #'
@@ -56,7 +56,7 @@
 #'   P <- CreateMeanAndStdevForSigs(sig.names = colnames(S),...)
 #' }
 #'
-#' \item Create exposures for mutational signatures based on \code{P} and other 
+#' \item Create exposures for mutational signatures based on \code{P} and other
 #' parameters: \preformatted{
 #'   synthetic.exposures <- CreateRandomExposures(sigs = S, per.sig.mean.and.sd = P)
 #' }
@@ -68,16 +68,62 @@
 #'
 #' }
 #'
-#' @section Workflow for generating "SBS1-SBS5-correlated" synthetic mutational spectra
+#' @section Function for generating "SBS1-SBS5-correlated" synthetic mutational spectra:
 #'
-#' Typical workflow for generating catalogs of "SBS1-SBS5-correlated" synthetic
-#' mutational spectra is as follows. \enumerate{
+#' \code{CreateSBS1SBS5CorrelatedSyntheticData} is the top-level function for
+#' generating 20 data sets which only have 2 active signatures (SBS1 and SBS5)
+#' with positively-correlated exposures.
+#'
+#' This function is used for generating synthetic mutational spectra used in paper
+#' "Performance of Mutational Signature Software on Correlated Signatures".
 #'
 #'
 #'
+#' @section Functions for generating synthetic tumor spectra used in paper \emph{The repertoire of mutational signatures in human cancer}:
+#'
+#' \emph{The repertoire of mutational signatures in human cancer} (https://doi.org/10.1038/s41586-020-1943-3)
+#' involves evaluation of performances on two computational approaches
+#' (\code{SigProfiler} and \code{SignatureAnalyzer}) on 11 synthetic data sets
+#' (Synapse ID: syn18497223). \enumerate{
+#'
+#' \item Function \code{\link{PancAdenoCA1000}} creates 1000 pancreatic adenocarcinoma
+#' spectra data set (syn18500212).
+#'
+#' \item Script \preformatted{
+#'
+#'
+#' } creates 2,700 synthetic spectra (syn18500213). This data set consists of 9 cancer types
+#' each with 300 synthetic tumors: \itemize{
+#' \item bladder transitional cell carcinoma,
+#' \item oesophageal adenocarcinoma,
+#' \item breast adenocarcinoma,
+#' \item lung squamous cell carcinoma,
+#' \item renal cell carcinoma, 
+#' \item ovarian adenocarcinoma,
+#' \item osteosarcoma,
+#' \item cervical adenocarcinoma and
+#' \item stomach adenocarcinoma.}
+#'
+#' \item Function \code{\link{RCCOvary1000}} creates spectra dataset consists of
+#' 500 synthetic kidney (RCC) with high prevalence and mutation load from
+#' SBS5 and SBS40 signatures, and 500 synthetic ovarian adenocarcinoma with
+#' high prevalence and mutation load from SBS3.
+#'
+#' \strong{Notes:} \itemize{
+#' \item Mutation loads from other mutational signatures (besides SBS3, SBS5, SBS30)
+#' also exist in the spectra dataset created by function \link{RCCOvary1000};
+#'
+#' \item SBS3, SBS5, SBS40 are flat signatures. This dataset challenges the computational
+#' approaches on accurately separating these 3 mutational signatures, as mixing SBS5 and
+#' SBS40 can get a mutational signature similar to SBS3.
 #' }
 #'
+#' \item Function \code{\link{Create.3.4.40.Abstract}} creates 1000 synthetic spectra all constructed
+#' entirely from SBS3, SBS5, and SBS40, using mutational loads modelled on kidney-RCC
+#' (SBS5 and SBS40) and ovarian adenocarcinoma (SBS3). Most synthetic spectra have contributions
+#' from all three signatures.
 #'
+#' }
 #'
 #'
 #' @docType package
