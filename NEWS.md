@@ -1,3 +1,12 @@
+# SynSigGen 1.0.4
+## Clarified
+* Clarified package README
+* Clarified package documentation
+* Clarified function documentation
+
+## Fixed typo 
+*Renamed function Create.3.4.40.Abstract() to Create.3.5.40.Abstract()
+
 # SynSigGen 1.0.3
 * Removed R/SigSimilarity.R (functionality now in ICAMSxtra)
   and adjusted code in this package.
