@@ -25,7 +25,7 @@ Before installation, prerequisites in
 
 ``` r
 install.packages("BiocManager")
-BiocManager::install("BSgenome")
+BiocManager::install(c("Biostrings","BSgenome","GenomeInfoDb","GenomicRanges"))
 ```
 
 Install from GitHub with the R command line:
