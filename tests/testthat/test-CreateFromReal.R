@@ -13,7 +13,7 @@ test_that("CreateFromReal PancAdeno-CA", {
    expect_equal(retval, reg$retval)
 })
 
-test_that("CreateFromReal Many", {
+test_that("CreateFromReal ManyTypes - Fast test - only generate 18 tumors", {
   run.manually <- FALSE
   if (!run.manually) {
     skip(
@@ -30,7 +30,7 @@ test_that("CreateFromReal Many", {
 
   expect_true(
   CreateFromReal(
-    seed           = 123,
+    seed           = 191906,
     top.level.dir  = tempfile(pattern = "regress.create.many"),
     num.syn.tumors = 2,
     cancer.types   = c("Bladder-TCC",    "Eso-AdenoCA",
@@ -40,7 +40,7 @@ test_that("CreateFromReal Many", {
                        "Stomach-AdenoCA"),
     sa.exp          = sa.all.real.exposures,
     sp.exp          = sp.all.real.exposures,
-    regress.dir     = "rdata/many.syn.123/",
+    regress.dir     = "rdata/many.syn.191906/",
     unlink          = TRUE))
 })
 

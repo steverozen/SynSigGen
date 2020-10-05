@@ -28,8 +28,8 @@ the random signature profiles and attributions are generated.
 \section{Workflow for generating "reality-based" synthetic mutational spectra}{
 
 
-Typical workflow for generating catalogs of "reality-based" synthetic
-mutational spectra is as follows. \enumerate{
+Typical workflow for generating synthetic mutational spectra 
+is as follows. \enumerate{
 
 \item Input (based on SignatureAnalyzer or SigProfiler analysis of PCAWG tumors)
   \code{E}, matrix of software-inferred exposures of mutational signatures (signatures x samples)
@@ -130,7 +130,7 @@ approaches on accurately separating these 3 mutational signatures, as mixing SBS
 SBS40 can get a mutational signature similar to SBS3.
 }
 
-\item Function \code{\link{Create.3.4.40.Abstract}} creates 1000 synthetic spectra all constructed
+\item Function \code{\link{Create.3.5.40.Abstract}} creates 1000 synthetic spectra all constructed
 entirely from SBS3, SBS5, and SBS40, using mutational loads modelled on kidney-RCC
 (SBS5 and SBS40) and ovarian adenocarcinoma (SBS3). Most synthetic spectra have contributions
 from all three signatures.

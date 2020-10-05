@@ -26,9 +26,18 @@ Synthetic (Mutational) Signature Generation ('SynSigGen')
 
 Create catalogs of synthetic mutational spectra for assessing the
   performance of mutational signature analysis programs. 'SynSigGen' stands
-  for Synthetic Signature Generation.
+  for Generation of Synthetic Signatures and Spectra.
 
 ## Installation
+
+Before installation, prerequisites in 
+[Bioconductor](https://www.bioconductor.org/)
+needs to be installed:
+
+``` r
+install.packages("BiocManager")
+BiocManager::install("BSgenome")
+```
 
 Install from GitHub with the R command line:
 
@@ -36,14 +45,39 @@ Install from GitHub with the R command line:
 install.packages("devtools")
 devtools::install_github("steverozen/SynSigGen")
 ```
-You may need some
-[Bioconductor](https://www.bioconductor.org/)
-packages. If so:
 
-``` r
-install.packages("BiocManager")
-BiocManager::install("BSgenome")
+## Example usage
+
+``` {r include = FALSE}
+require(SynSigGen)
 ```
 
+### Generate synthetic tumor spectra used in paper *The repertoire of mutational signatures in human cancer*
+
+Use functions below to generate 11 spectra datasets used in paper
+*The repertoire of mutational signatures in human cancer* 
+(https://doi.org/10.1038/s41586-020-1943-3):
+
+``` r
+PancAdenoCA1000()
+ManyTypes2700()
+RCCOvary1000()
+Create.3.4.40.Abstract()
+BladderSkin1000()
+Create.2.7a.7b.Abstract()
+CreateRandomSyn()
+```
+
+### Generate synthetic spectra used in paper *"Performance of Mutational Signature Software on Correlated Signatures"*
+
+To generate 20 spectra data sets with mutation load of 
+and correlation between SBS1 and SBS5 varied, use function 
+
+``` r
+CreateSBS1SBS5CorrelatedSyntheticData()
+```
+
+
+
 ## Reference manual
-https://github.com/steverozen/SynSigGen/blob/master/data-raw/SynSigGen_1.0.2.9005.pdf
+https://github.com/steverozen/SynSigGen/blob/master/data-raw/SynSigGen_1.0.4.pdf

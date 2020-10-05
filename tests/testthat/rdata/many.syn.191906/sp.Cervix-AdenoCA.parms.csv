@@ -1,0 +1,14 @@
+# Original paramaters
+"","SBS1","SBS5"
+"prob",1,1
+"mean",2.95575724471613,3.36400229127682
+"stdev",0.0783334533529959,0.0709016972281521
+# Parameters derived from synthetic exposures
+"prob",1,1
+"mean",2.90509205547944,3.30206278517477
+"stdev",0.260365642395295,0.0255739322792839
+# Difference between original parameters and parameters derived from synthetic exposures
+"prob",0,0
+"mean",0.0506651892366898,0.061939506102048
+"stdev",-0.182032189042299,0.0453277649488682
+# The difference should be small

@@ -13,8 +13,102 @@ Create.2.7a.7b.Abstract(
   unlink = FALSE
 )
 }
+\arguments{
+\item{seed}{A random seed to use.}
+
+\item{overwrite}{If TRUE, overwrite existing directories and files.}
+
+\item{regress.dir}{If not \code{NULL}, compare the result to
+the contents of this directory with a \code{diff}.}
+
+\item{num.syn.tumors}{The number of tumors to create \strong{for each cancer
+type} in \code{cancer.types}.}
+
+\item{top.level.dir}{The directory in which to put the output; will
+be created if necessary.}
+
+\item{unlink}{If \code{TRUE} and \code{!is.null(regress.dir)}, then
+unlink the result directory if there are no differences.}
+}
 \description{
 With default arguments, this function generates the same results as
 the second half of \code{data-raw/Create.2.7a.7b.Rmd}.
 }
+\keyword{(UV-related}
+\keyword{(signature}
+\keyword{Data}
+\keyword{Generate}
+\keyword{GitHub}
+\keyword{ID:}
+\keyword{SBS2}
+\keyword{SBS7a}
+\keyword{SBS7b}
+\keyword{SBS7b,}
+\keyword{Synapse}
+\keyword{TCC}
+\keyword{This}
+\keyword{With}
+\keyword{\code{data-raw/Create.2.7a.7b.Rmd}.}
+\keyword{\code{steverozen/SynSig}.}
+\keyword{\href{https://www.synapse.org/#!Synapse:syn18500216}{syn18500216}.}
+\keyword{a}
+\keyword{accurately}
+\keyword{and}
+\keyword{approaches}
+\keyword{arguments,}
+\keyword{as}
+\keyword{at}
+\keyword{be}
+\keyword{bladder}
+\keyword{by}
+\keyword{can}
+\keyword{carcinoma),}
+\keyword{cell}
+\keyword{challenges}
+\keyword{computational}
+\keyword{data}
+\keyword{dataset}
+\keyword{default}
+\keyword{existence}
+\keyword{extracting}
+\keyword{found}
+\keyword{from}
+\keyword{function}
+\keyword{generated}
+\keyword{generates}
+\keyword{has}
+\keyword{in}
+\keyword{interfere}
 \keyword{internal}
+\keyword{loads}
+\keyword{may}
+\keyword{melanoma).}
+\keyword{melanoma.}
+\keyword{mixture}
+\keyword{modeled}
+\keyword{mutation}
+\keyword{of}
+\keyword{on}
+\keyword{part}
+\keyword{pattern}
+\keyword{prevalent}
+\keyword{repository}
+\keyword{results}
+\keyword{same}
+\keyword{second}
+\keyword{set}
+\keyword{sets}
+\keyword{signatures}
+\keyword{signatures.}
+\keyword{similar}
+\keyword{skin}
+\keyword{spectra}
+\keyword{supersedes}
+\keyword{synthetic}
+\keyword{the}
+\keyword{these}
+\keyword{this}
+\keyword{thus}
+\keyword{to}
+\keyword{transitional}
+\keyword{with}
