@@ -758,7 +758,7 @@ CreateSBS1SBS5CorrelatedSyntheticData <-
 
     for(datasetName in datasetNames){
       # dataset.name <- datasetName
-      dir.name <- paste0(top.level.dir,"/",datasetName,"/sp.sp")
+      dir.name <- paste0(top.level.dir,"/",datasetName,"/")
 
       ## Call the spectra generation function.
       ## Assign most parameters in a named vector format.
