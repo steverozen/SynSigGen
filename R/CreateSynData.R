@@ -273,7 +273,7 @@ GenerateSynExposureOneSample <-
 
     ## starts with individual tumors, only generate exposures for signatures
     ## with a flag does not equal to 0.
-    active.sigs <- which(tumor != 0)
+    active.sigs <- base::which(tumor != 0)
 
     for (sigs in active.sigs) {
       stdev <- sd.per.sig[,sigs]
@@ -666,7 +666,7 @@ CreateAndWriteCatalog <-
     write.cat.fn(info$ground.truth.signatures,
                   paste0(my.dir, "/ground.truth.syn.sigs", suffix))
 
-    zero.mutation <- which(colSums(info$ground.truth.catalog) == 0)
+    zero.mutation <- base::which(colSums(info$ground.truth.catalog) == 0)
 
     if (length(zero.mutation) > 0) {
       warning("Tumors with no mutation:\n\n",
@@ -732,7 +732,7 @@ NewCreateAndWriteCatalog <-
     ICAMS::WriteCatalog(info$ground.truth.signatures,
                         paste0(dir, "/ground.truth.syn.sigs", suffix))
 
-    zero.mutation <- which(colSums(info$ground.truth.catalog) == 0)
+    zero.mutation <- base::which(colSums(info$ground.truth.catalog) == 0)
 
     if (length(zero.mutation) > 0) {
       warning("Tumors with no mutation:\n\n",

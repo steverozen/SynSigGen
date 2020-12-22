@@ -213,7 +213,7 @@ ReadAndAnalyzeExposures <-
   ## this input signature.
   for(gtSigName in gtSigsNames){
 
-    matchedExtrSigIndex <- which(sigMatch$match1[,1] == gtSigName)
+    matchedExtrSigIndex <- base::which(sigMatch$match1[,1] == gtSigName)
 
     if(length(matchedExtrSigIndex) > 0) ## 1 or more extracted signatures match to gtSigName in match1
       matchedExtrSigName <- rownames(sigMatch$match1)[matchedExtrSigIndex]
