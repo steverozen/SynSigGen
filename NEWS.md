@@ -9,7 +9,7 @@ The files of synthetic datasets are under the dataset folders, and no more
 ### Last version generates SBS1-SBS5-correlated dataset with two-layer directory  structure:
 
 * Name of dataset (e.g. `S.0.1.Rsq.0.1`)
-* Folder `sp.sp`, means that two ground-truth signatures (`SBS1` and `SBS5`) are from results of SigProFiler in (https://doi.org/10.1038/s41586-020-1943-3)
+* Folder `sp.sp`, means that two ground-truth signatures (`SBS1` and `SBS5`) are from results of SigProfiler in (https://doi.org/10.1038/s41586-020-1943-3)
 * Files of synthetic datasets.
 
 ### Clarified

@@ -23,7 +23,7 @@ This function generates synthetic spectra with mutation loads of SBS3
 (signature prevalent in ovarian adenocarcinoma),
  SBS5 and SBS40 (signatures prevalent in renal cell carcinoma). This
 dataset challenges the computational approaches as these three signatures
-are "flat" signatures hard to be extracted accrately.
+are "flat" signatures hard to be extracted accurately.
 }
 \details{
 This function supersedes the second part of \code{data-raw/Create.3.5.40.Rmd}

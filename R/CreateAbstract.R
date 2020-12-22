@@ -13,7 +13,7 @@ three.5.40.abstract.for.ludmil.2019.08.18 <- function() {
 #' (signature prevalent in ovarian adenocarcinoma),
 #'  SBS5 and SBS40 (signatures prevalent in renal cell carcinoma). This
 #' dataset challenges the computational approaches as these three signatures
-#' are "flat" signatures hard to be extracted accrately.
+#' are "flat" signatures hard to be extracted accurately.
 #'
 #' This function supersedes the second part of \code{data-raw/Create.3.5.40.Rmd}
 #' in GitHub repository \code{steverozen/SynSig}. With default arguments, this function generates the same results as

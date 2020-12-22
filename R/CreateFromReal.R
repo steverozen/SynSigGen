@@ -313,7 +313,7 @@ PancAdenoCA1000 <- function(
 #' with high prevalence and mutation load from SBS5 and SBS40 signatures,
 #' and 500 synthetic ovarian adenocarcinoma with high prevalence and
 #' mutation load from SBS3. This dataset challenges the computational approaches
-#' as these three signatures are "flat" signatures hard to be extracted accrately.
+#' as these three signatures are "flat" signatures hard to be extracted accurately.
 #'
 #' This function Replaces the first part of \code{data-raw/Create.3.5.40.Rmd} in
 #' GitHub repository \code{steverozen/SynSig}. With default arguments, this
