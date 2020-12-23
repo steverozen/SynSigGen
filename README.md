@@ -64,4 +64,4 @@ CreateSBS1SBS5CorrelatedSyntheticData()
 
 ## Reference manual
 
-<https://github.com/steverozen/SynSigGen/blob/master/data-raw/SynSigGen_1.0.5.pdf>
+<https://github.com/steverozen/SynSigGen/blob/1.0.5/data-raw/SynSigGen_1.0.5.pdf>
