@@ -5,4 +5,5 @@
 ^packrat/
 ^\.Rprofile$
 ^\.travis\.yml$
+^\.gitattributes$
 ^\.github$
