@@ -16,7 +16,7 @@ Imports: data.table, ICAMS, PCAWG7
 Remotes:
     github::steverozen/PCAWG7,
     github::steverozen/ICAMSxtra@*release
-Depends: R (>= 3.6)
+Depends: R (>= 4.0)
 RoxygenNote: 7.1.1
 Suggests: 
     testthat,
