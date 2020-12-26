@@ -18,6 +18,7 @@ knitr::opts_chunk$set(
 
   [![Travis build status](https://travis-ci.com/steverozen/SynSigGen.svg?branch=master)](https://travis-ci.com/steverozen/SynSigGen)
 
+[![R-CMD-check](https://github.com/steverozen/SynSigGen/workflows/R-CMD-check/badge.svg)](https://github.com/steverozen/SynSigGen/actions)
 <!-- badges: end -->
 
 Synthetic (Mutational) Signature Generation ('SynSigGen')
