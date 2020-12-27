@@ -64,7 +64,13 @@ jobs:
             eval sudo $cmd
           done < <(Rscript -e 'writeLines(remotes::system_requirements("ubuntu", "16.04"))')
 
-      - name: Install dependencies
+      - name: Install dependencies ICAMS and ICAMSxtra
+        run: |
+          remotes::install_github("steverozen/ICAMS", dependencies = TRUE)
+          remotes::install_github("steverozen/ICAMSxtra", dependencies = TRUE)
+        shell: Rscript {0}
+
+      - name: Install remaining dependencies
         run: |
           remotes::install_deps(dependencies = TRUE)
           remotes::install_cran("rcmdcheck")
