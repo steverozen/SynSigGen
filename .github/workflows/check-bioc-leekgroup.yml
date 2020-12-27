@@ -35,8 +35,9 @@ name: R-CMD-check-bioc
 ## "/nocache" in the commit message.
 env:
   has_testthat: 'true'
+  run_BiocCheck: 'false'
   run_covr: 'true'
-  run_pkgdown: 'true'
+  run_pkgdown: 'false'
   has_RUnit: 'false'
   cache-version: 'cache-v1'
 
@@ -166,7 +167,7 @@ jobs:
           ## Pass #2 at installing dependencies
           message(paste('****', Sys.time(), 'pass number 2 at installing dependencies: any remaining dependencies ****'))
           remotes::install_local(dependencies = TRUE, repos = BiocManager::repositories(), build_vignettes = TRUE, upgrade = TRUE)
-          
+
           ## For running the checks
           message(paste('****', Sys.time(), 'installing rcmdcheck and BiocCheck ****'))
           remotes::install_cran("rcmdcheck")
@@ -199,7 +200,7 @@ jobs:
           sessioninfo::session_info(pkgs, include_base = TRUE)
         shell: Rscript {0}
 
-      - name: Run CMD check
+      - name: Run R CMD check
         env:
           _R_CHECK_CRAN_INCOMING_: false
         run: |
@@ -223,6 +224,7 @@ jobs:
         shell: Rscript {0}
 
       - name: Run BiocCheck
+        if: env.run_BiocCheck == 'true'
         run: |
           BiocCheck::BiocCheck(
               dir('check', 'tar.gz$', full.names = TRUE),
