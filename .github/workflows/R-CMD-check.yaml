@@ -64,11 +64,12 @@ jobs:
             eval sudo $cmd
           done < <(Rscript -e 'writeLines(remotes::system_requirements("ubuntu", "16.04"))')
 
-      - name: (Linux only) Pre-install Bioconductor, and BSgenome
+      - name: (Linux only) Pre-install Bioconductor, and BSgenome packages
         if: runner.os == 'Linux'
         run: |
           install.packages("BiocManager")
           BiocManager::install("BiocVersion")
+          BiocManager::install("BSgenome")
           BiocManager::install(c("BSgenome.Mmusculus.UCSC.mm10","BSgenome.Hsapiens.UCSC.hg38","BSgenome.Hsapiens.1000genomes.hs37d5"))
         shell: Rscript {0}
 
