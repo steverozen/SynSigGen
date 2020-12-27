@@ -84,8 +84,7 @@ jobs:
           ## Edit below if you have any Windows system dependencies
         shell: Rscript {0}
 
-      - name: (Linux only) Pre-install Bioconductor, and BSgenome packages
-        if: runner.os == 'Linux'
+      - name: Pre-install Bioconductor, and BSgenome packages
         run: |
           install.packages("BiocManager")
           BiocManager::install("BiocVersion")
