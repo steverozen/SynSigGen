@@ -68,8 +68,8 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           install.packages("BiocManager")
-          BiocManger::install("BiocVersion")
-          BiocManger::install(c("BSgenome.Mmusculus.UCSC.mm10","BSgenome.Hsapiens.UCSC.hg38","BSgenome.Hsapiens.1000genomes.hs37d5"))
+          BiocManager::install("BiocVersion")
+          BiocManager::install(c("BSgenome.Mmusculus.UCSC.mm10","BSgenome.Hsapiens.UCSC.hg38","BSgenome.Hsapiens.1000genomes.hs37d5"))
         shell: Rscript {0}
 
       - name: Install ICAMS and ICAMSxtra and their dependencies
