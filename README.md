@@ -5,12 +5,13 @@
 
 <!-- badges: start -->
 
-[![Travis build
-status](https://travis-ci.com/steverozen/SynSigGen.svg?branch=master)](https://travis-ci.com/steverozen/SynSigGen)
+[![R-CMD-check](https://github.com/steverozen/SynSigGen/workflows/R-CMD-check/badge.svg)](https://github.com/steverozen/SynSigGen/actions?query=workflow%3AR-CMD-check)
+
+[![R-CMD-check-bioc](https://github.com/steverozen/SynSigGen/workflows/R-CMD-check-bioc/badge.svg)](https://github.com/steverozen/SynSigGen/actions?query=workflow%3AR-CMD-check-bioc)
 
 <!-- badges: end -->
 
-Synthetic (Mutational) Signature Generation (‘SynSigGen’)
+Synthetic (Mutational) Signature Generation (**`SynSigGen`**)
 
 ## Purpose
 

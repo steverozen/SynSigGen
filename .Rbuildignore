@@ -4,6 +4,5 @@
 ^\.Rproj\.user$
 ^packrat/
 ^\.Rprofile$
-^\.travis\.yml$
 ^\.gitattributes$
 ^\.github$
