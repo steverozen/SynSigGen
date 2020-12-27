@@ -67,7 +67,7 @@ jobs:
       - name: (Linux only) Pre-install Bioconductor, and BSgenome
         if: runner.os == 'Linux'
         run: |
-          remotes::install_cran("BiocManager")
+          install.packages("BiocManager")
           BiocManger::install("BiocVersion")
           BiocManger::install(c("BSgenome.Mmusculus.UCSC.mm10","BSgenome.Hsapiens.UCSC.hg38","BSgenome.Hsapiens.1000genomes.hs37d5"))
 
@@ -75,6 +75,7 @@ jobs:
         run: |
           remotes::install_github("steverozen/ICAMS", dependencies = TRUE)
           remotes::install_github("steverozen/ICAMSxtra", dependencies = TRUE)
+          remotes::install_github("steverozen/PCAWG7", dependencies = TRUE)
         shell: Rscript {0}
 
       - name: Install remaining dependencies
