@@ -64,8 +64,9 @@ jobs:
             eval sudo $cmd
           done < <(Rscript -e 'writeLines(remotes::system_requirements("ubuntu", "16.04"))')
 
-      - name: Install dependencies ICAMS and ICAMSxtra
+      - name: Install ICAMS and ICAMSxtra and their dependencies
         run: |
+          remotes::install_bioc(c("BSgenome.Mmusculus.UCSC.mm10","BSgenome.Hsapiens.UCSC.hg38","BSgenome.Hsapiens.1000genomes.hs37d5"))
           remotes::install_github("steverozen/ICAMS", dependencies = TRUE)
           remotes::install_github("steverozen/ICAMSxtra", dependencies = TRUE)
         shell: Rscript {0}
