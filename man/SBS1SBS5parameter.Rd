@@ -6,6 +6,8 @@
 \title{Parameters used to generate synthetic spectra with correlated SBS1 and SBS5 exposures.}
 \format{
 A data.frame with parameters for generating the synthetic data.
+The row names of the data.frame refers to the names of datasets, equals to
+\code{\link{SBS1SBS5datasetNames}}.
 }
 \usage{
 SBS1SBS5parameter

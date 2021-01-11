@@ -20,7 +20,7 @@ WriteExposure <- function(exposure.matrix, file) {
 #'
 #' @param file CSV file containing an exposure matrix
 #'
-#' @param check.names Passed to \code{\link[utils]{read.csv}}.
+#' @param check.names Passed to \code{utils::read.csv}.
 #' IMPORTANT: If \code{TRUE} this will replace the double
 #' colon in identifiers of the form <tumor_type>::<sample_id>
 #' with two periods (i.e. <tumor_type>..<sample_id>.

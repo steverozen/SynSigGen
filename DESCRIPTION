@@ -1,7 +1,7 @@
 Package: SynSigGen
 Type: Package
 Title: Create Catalogs of Synthetic Mutational Spectra
-Version: 1.0.5
+Version: 1.0.6
 Author: Steven G. Rozen, Yang Wu
 Maintainer: Steven G. Rozen <steverozen@gmail.com>
 Description: Create catalogs of synthetic mutational spectra for assessing the
@@ -24,6 +24,4 @@ Suggests:
     rmarkdown,
     DelayedArray,
     ICAMSxtra (>= 0.0.2),
-    BSgenome,
-    BSgenome.Hsapiens.1000genomes.hs37d5,
     lsa
