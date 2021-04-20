@@ -4,7 +4,12 @@
 \alias{GenerateSyntheticExposures}
 \title{Create synthetic exposures based given parameters}
 \usage{
-GenerateSyntheticExposures(sig.params, num.samples = 10, name = "synthetic")
+GenerateSyntheticExposures(
+  sig.params,
+  num.samples = 10,
+  name = "synthetic",
+  sig.matrix = NULL
+)
 }
 \arguments{
 \item{sig.params}{Parameters from \code{\link{GetSynSigParamsFromExposures}}
@@ -22,6 +27,8 @@ GenerateSyntheticExposures(sig.params, num.samples = 10, name = "synthetic")
 \item{num.samples}{Number of samples to generate}
 
 \item{name}{Prefix for sample identifiers in the simulated dataset}
+
+\item{sig.matrix}{Signature matrix to construct synthetic tumors}
 }
 \value{
 A matrix with the rows being each signature and the columns being

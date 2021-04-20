@@ -4,7 +4,13 @@
 \alias{GenerateSynExposureOneSample}
 \title{Using parameters given to generate exposures for synthetic tumors}
 \usage{
-GenerateSynExposureOneSample(tumor, sig.interest, burden.per.sig, sd.per.sig)
+GenerateSynExposureOneSample(
+  tumor,
+  sig.interest,
+  burden.per.sig,
+  sd.per.sig,
+  sig.matrix = NULL
+)
 }
 \arguments{
 \item{tumor}{Signature presence matrix or exposure matrix for a tumor.
@@ -22,6 +28,8 @@ It has one row, and K columns. Each column name refers to a mutational signature
 
 \item{sd.per.sig}{standard deviation of mutation burden.
 It has one row, and K columns. Each column name refers to a mutational signature.}
+
+\item{sig.matrix}{Signature matrix to construct synthetic tumors.}
 }
 \description{
 Using parameters given to generate exposures for synthetic tumors
