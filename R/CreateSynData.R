@@ -670,8 +670,8 @@ CreateAndWriteCatalog <-
 
     if (length(zero.mutation) > 0) {
       warning("Tumors with no mutation:\n\n",
-              colnames(info$ground.truth.catalog)[zero.mutation],
-              "in", my.dir)
+              paste(colnames(info$ground.truth.catalog)[zero.mutation], collapse = " "),
+              " in", my.dir)
     }
     write.cat.fn(info$ground.truth.catalog,
                  paste0(my.dir, "/ground.truth.syn.catalog", suffix))
