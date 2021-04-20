@@ -54,7 +54,7 @@ GetSynSigParamsFromExposures <- function(exposures, verbose = 0) {
   stopifnot(ncol(exposures) > 0)
 
   integer.counts <- round(exposures, digits = 0)
-  integer.counts <- integer.counts[rowSums(integer.counts) > 0 , ]
+  integer.counts <- integer.counts[rowSums(integer.counts) > 0 , , drop = FALSE]
   ret1 <- apply(X      = integer.counts,
                 MARGIN = 1,
                 FUN    = SynSigParamsOneSignature)
