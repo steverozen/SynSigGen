@@ -4,7 +4,7 @@
 \alias{GetSynSigParamsFromExposures}
 \title{Empirical estimates of key parameters describing exposures due to signatures.}
 \usage{
-GetSynSigParamsFromExposures(exposures, verbose = 0)
+GetSynSigParamsFromExposures(exposures, verbose = 0, distribution = NULL)
 }
 \arguments{
 \item{exposures}{A matrix in which each column is a sample and each row is a mutation
@@ -13,9 +13,16 @@ i.e. mutation count attributed to a
 (sample, signature) pair.}
 
 \item{verbose}{If > 0 cat various messages.}
+
+\item{distribution}{Probability distribution used to fit exposures due to one
+mutational signature. Can be \code{neg.binom} which stands for negative
+binomial distribution. If \code{NULL} (Default), then this function uses
+log normal distribution with base 10.}
 }
 \value{
-A data frame with one column for
+\itemize{
+\item For log normal distribution,
+a data frame with one column for
 each of a subset of the input signatures
 and the following rows
 \enumerate{
@@ -24,8 +31,18 @@ and the following rows
 \item stdev(log_10(mutations.per.Mb))
 }
 Signatures not present in
- \code{exposures} or present only in a single tumor in
- \code{exposures} are removed.
+\code{exposures} or present only in a single tumor in
+\code{exposures} are removed.
+\item For negative binomial distribution,
+a data frame with one column for
+each of a subset of the input signatures
+and the following rows
+\enumerate{
+\item the proportion of tumors with the signature
+\item size(dispersion parameter)
+\item mu(mean)
+}
+}
 }
 \description{
 Empirical estimates of key parameters describing exposures due to signatures.

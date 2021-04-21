@@ -4,7 +4,7 @@
 \alias{SynSigParamsOneSignature}
 \title{Extract  parameters for one mutational signature profile}
 \usage{
-SynSigParamsOneSignature(counts, target.size = 1)
+SynSigParamsOneSignature(counts, target.size = 1, distribution = NULL)
 }
 \arguments{
 \item{counts}{A vector of mutation counts attributed to one signature across
@@ -12,9 +12,19 @@ length(counts) samples. TODO(Steve): rename to exposures}
 
 \item{target.size}{The length of genomic sequence from which the counts
 were derived, in megabases. Deprecated, set this to 1.}
+
+\item{distribution}{Probability distribution used to fit exposures due to one
+mutational signature. Can be \code{neg.binom} which stands for negative
+binomial distribution. If \code{NULL} (Default), then this function uses
+log normal distribution with base 10.}
 }
 \value{
-A 3-element vector with names "prevalence", "mean", and "stdev"
+\itemize{
+\item For log normal distribution, a 3-element vector with names "prob", "mean",
+and "stdev".
+\item For negative binomial distribution, a 3-element vector with
+names "prob", "size", and "mu".
+}
 }
 \description{
 Extract  parameters for one mutational signature profile

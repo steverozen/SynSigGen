@@ -6,26 +6,43 @@
 #' @param target.size The length of genomic sequence from which the counts
 #'                were derived, in megabases. Deprecated, set this to 1.
 #'
+#' @param distribution Probability distribution used to fit exposures due to one
+#'   mutational signature. Can be \code{neg.binom} which stands for negative
+#'   binomial distribution. If \code{NULL} (Default), then this function uses
+#'   log normal distribution with base 10.
+#'
 #' @return
-#'   A 3-element vector with names "prevalence", "mean", and "stdev"
+#' * For log normal distribution, a 3-element vector with names "prob", "mean",
+#' and "stdev".
+#'
+#' * For negative binomial distribution, a 3-element vector with
+#' names "prob", "size", and "mu".
 #'
 #' @importFrom stats sd
 #'
+#' @md
+#'
 #' @keywords internal
 
-SynSigParamsOneSignature <- function(counts, target.size = 1 ) {
-
+SynSigParamsOneSignature <- function(counts, target.size = 1, distribution = NULL) {
   prevalence <-  length(counts[counts >= 1 ]) / length(counts)
 
-  counts.per.mb <- counts[counts >= 1 ] / target.size
+  if (is.null(distribution)) {
+    counts.per.mb <- counts[counts >= 1 ] / target.size
 
-  ## generate log10(mut/mb) values for mean and sd
-  mean.per.mb <- mean(log10(counts.per.mb))
-  sd.per.mb <- sd(log10(counts.per.mb))
-
-  c(prob = prevalence, mean = mean.per.mb, stdev = sd.per.mb)
+    ## generate log10(mut/mb) values for mean and sd
+    mean.per.mb <- mean(log10(counts.per.mb))
+    sd.per.mb <- sd(log10(counts.per.mb))
+    return(c(prob = prevalence, mean = mean.per.mb, stdev = sd.per.mb))
+  } else if (distribution == "neg.binom") {
+    fit <- fitdistrplus::fitdist(counts, distr = "nbinom", method = "mle",
+                                 lower = c(0, 0))
+    names(fit$estimate) <- NULL
+    return(c(prob = prevalence, size = fit$estimate[1], mu = fit$estimate[2]))
+  } else {
+    stop("Only 'neg.binom' distribution is supported")
+  }
 }
-
 
 #' @title Empirical estimates of key parameters describing exposures due to signatures.
 #'
@@ -36,7 +53,14 @@ SynSigParamsOneSignature <- function(counts, target.size = 1 ) {
 #'
 #' @param verbose If > 0 cat various messages.
 #'
-#' @return A data frame with one column for
+#' @param distribution Probability distribution used to fit exposures due to one
+#'   mutational signature. Can be \code{neg.binom} which stands for negative
+#'   binomial distribution. If \code{NULL} (Default), then this function uses
+#'   log normal distribution with base 10.
+#'
+#' @return
+#' * For log normal distribution,
+#' a data frame with one column for
 #' each of a subset of the input signatures
 #' and the following rows
 #' \enumerate{
@@ -48,27 +72,46 @@ SynSigParamsOneSignature <- function(counts, target.size = 1 ) {
 #'  \code{exposures} or present only in a single tumor in
 #'  \code{exposures} are removed.
 #'
+#' * For negative binomial distribution,
+#' a data frame with one column for
+#' each of a subset of the input signatures
+#' and the following rows
+#' \enumerate{
+#' \item the proportion of tumors with the signature
+#' \item size(dispersion parameter)
+#' \item mu(mean)
+#' }
+#'
+#' @md
+#'
 #' @export
 
-GetSynSigParamsFromExposures <- function(exposures, verbose = 0) {
+GetSynSigParamsFromExposures <-
+  function(exposures, verbose = 0, distribution = NULL) {
   stopifnot(ncol(exposures) > 0)
 
   integer.counts <- round(exposures, digits = 0)
   integer.counts <- integer.counts[rowSums(integer.counts) > 0 , , drop = FALSE]
-  ret1 <- apply(X      = integer.counts,
-                MARGIN = 1,
-                FUN    = SynSigParamsOneSignature)
+  ret1 <- apply(X            = integer.counts,
+                MARGIN       = 1,
+                FUN          = SynSigParamsOneSignature,
+                distribution = distribution)
 
-  # Some standard deviations can be NA (if there is only one tumor
-  # with mutations for that signature). We pretend we did not see
-  # these signatures. TODO(Steve): impute from similar signatures.
-  if (any(is.na(ret1['stdev', ]))) {
-    if (verbose > 0) {
-      cat("\nWarning, some signatures present in only one sample, dropping:\n")
-      cat(colnames(ret1)[is.na(ret1['stdev', ])], "\n")
+  if (is.null(distribution)) {
+    # Some standard deviations can be NA (if there is only one tumor
+    # with mutations for that signature). We pretend we did not see
+    # these signatures. TODO(Steve): impute from similar signatures.
+    if (any(is.na(ret1['stdev', ]))) {
+      if (verbose > 0) {
+        cat("\nWarning, some signatures present in only one sample, dropping:\n")
+        cat(colnames(ret1)[is.na(ret1['stdev', ])], "\n")
+      }
     }
+    retval <- ret1[,!is.na(ret1['stdev',]) , drop = FALSE]
+  } else if (distribution == "neg.binom") {
+    retval <- ret1
   }
-  retval <- ret1[,!is.na(ret1['stdev',]) , drop = FALSE]
+
   if (ncol(retval) == 0) {
     stop("No signatures with usable parameters (> 1 sample with exposure)")
   }
