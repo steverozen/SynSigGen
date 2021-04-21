@@ -24,5 +24,4 @@ Suggests:
     knitr,
     rmarkdown,
     DelayedArray,
-    ICAMSxtra (>= 0.0.2),
     lsa
