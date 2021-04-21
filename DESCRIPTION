@@ -18,8 +18,9 @@ Imports: data.table,
     ICAMSxtra, 
     PCAWG7
 Remotes:
-    github::steverozen/PCAWG7@master,
-    github::steverozen/ICAMSxtra@master
+    github::steverozen/ICAMS@master,
+    github::steverozen/ICAMSxtra@master,
+    github::steverozen/PCAWG7@master
 Depends: R (>= 4.0)
 RoxygenNote: 7.1.1
 Suggests: 
