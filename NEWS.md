@@ -5,6 +5,9 @@
 * Added new argument `sig.matrix` in functions `GenerateSynExposureOneSample` and `GenerateSyntheticExposures` so that we can resample the synthetic exposures to make
 sure the total mutations for the reconstructed catalog is not zero.
 
+* Created new exported functions `GenerateSyntheticTumors` and `GenerateNoisyTumors` and 
+added examples.
+
 ### Fixed 
 * Fixed a bug in `GetSynSigParamsFromExposures` when the exposures only have one row that are
 not all zeros.

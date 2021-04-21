@@ -12,10 +12,11 @@ Language: en-US
 Encoding: UTF-8
 LazyData: true
 biocViews:
-Imports: data.table, ICAMS, PCAWG7
+Imports: data.table, ICAMS, ICAMSxtra, PCAWG7
 Remotes:
-    github::steverozen/PCAWG7,
-    github::steverozen/ICAMSxtra@*release
+    github::steverozen/ICAMS@master,
+    github::steverozen/ICAMSxtra@master,
+    github::steverozen/PCAWG7@master
 Depends: R (>= 4.0)
 RoxygenNote: 7.1.1
 Suggests: 
