@@ -303,38 +303,39 @@ GenerateSynExposureOneSample <-
     tumor <- as.matrix(tumor)
     names(tumor) <- sig.interest
 
-
-    if (!is.null(sig.matrix)) {
-      sigs.to.use <- sig.matrix[, names(tumor), drop = FALSE]
-      catalog <- sigs.to.use %*% tumor
-      i.cat <- round(catalog, digits = 0)
-
-      # Resample the exposures until the mutation counts for one sample is not zero
-      while (colSums(i.cat) == 0) {
-        for (sigs in active.sigs) {
-          stdev <- sd.per.sig[,sigs]
-          burden <- burden.per.sig[,sigs]
-
-          ## if std dev is too big, >= 3, max = 3
-          ### consider handling this different. the worry is that the variation
-          ##  is too large, the sampled mutation burden will be very high,
-          ### which will have a mutation burden that is not biologically possible
-          if (stdev >= 3) {
-            cat("Very large stdev", stdev, "\n")
-            stdev = 3
-          }
-
-          ## mutational intensity follows a log normal distibution
-          ## use the normal distribution with log-ed values instead
-          tumor[sigs] <- 10^(rnorm(1, sd = stdev, mean = burden))
-        }
-
-        tumor <- as.matrix(tumor)
-        names(tumor) <- sig.interest
-
+    if (FALSE) {
+      if (!is.null(sig.matrix)) {
         sigs.to.use <- sig.matrix[, names(tumor), drop = FALSE]
         catalog <- sigs.to.use %*% tumor
         i.cat <- round(catalog, digits = 0)
+
+        # Resample the exposures until the mutation counts for one sample is not zero
+        while (colSums(i.cat) == 0) {
+          for (sigs in active.sigs) {
+            stdev <- sd.per.sig[,sigs]
+            burden <- burden.per.sig[,sigs]
+
+            ## if std dev is too big, >= 3, max = 3
+            ### consider handling this different. the worry is that the variation
+            ##  is too large, the sampled mutation burden will be very high,
+            ### which will have a mutation burden that is not biologically possible
+            if (stdev >= 3) {
+              cat("Very large stdev", stdev, "\n")
+              stdev = 3
+            }
+
+            ## mutational intensity follows a log normal distibution
+            ## use the normal distribution with log-ed values instead
+            tumor[sigs] <- 10^(rnorm(1, sd = stdev, mean = burden))
+          }
+
+          tumor <- as.matrix(tumor)
+          names(tumor) <- sig.interest
+
+          sigs.to.use <- sig.matrix[, names(tumor), drop = FALSE]
+          catalog <- sigs.to.use %*% tumor
+          i.cat <- round(catalog, digits = 0)
+        }
       }
     }
 
