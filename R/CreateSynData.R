@@ -63,10 +63,10 @@ SynSigParamsOneSignature <- function(counts, target.size = 1, distribution = NUL
 #' a data frame with one column for
 #' each of a subset of the input signatures
 #' and the following rows
-#' \enumerate{
-#' \item the proportion of tumors with the signature
-#' \item mean(log_10(mutations.per.Mb))
-#' \item stdev(log_10(mutations.per.Mb))
+#' \describe{
+#' \item{prob}{The proportion of tumors with the signature.}
+#' \item{mean}{The mean(log_10(number of mutations)).}
+#' \item{stdev}{The stdev(log_10(number of mutations)).}
 #' }
 #' Signatures not present in
 #'  \code{exposures} or present only in a single tumor in
@@ -76,10 +76,10 @@ SynSigParamsOneSignature <- function(counts, target.size = 1, distribution = NUL
 #' a data frame with one column for
 #' each of a subset of the input signatures
 #' and the following rows
-#' \enumerate{
-#' \item the proportion of tumors with the signature
-#' \item size(dispersion parameter)
-#' \item mu(mean)
+#' \describe{
+#' \item{prob}{The proportion of tumors with the signature.}
+#' \item{size}{Dispersion parameter.}
+#' \item{mu}{Mean.}
 #' }
 #'
 #' @md
@@ -306,9 +306,38 @@ present.sigs <-
 #'
 #' @param sig.matrix Signature matrix to construct synthetic tumors.
 #'
+#' @param distribution Probability distribution used to generate synthetic
+#'   exposures due to active mutational signatures. Can be \code{neg.binom}
+#'   which stands for negative binomial distribution. If \code{NULL} (Default),
+#'   then this function uses log normal distribution with base 10.
+#'
+#' @param sig.params Parameters from \code{\link{GetSynSigParamsFromExposures}}
+#'   or another source. Should be
+#'   a matrix or data frame with one column for
+#'   each signature and the following rows:
+#'
+#'   * For log normal distribution,
+#' \describe{
+#' \item{prob}{The proportion of tumors with the signature.}
+#' \item{mean}{The mean(log_10(number of mutations)).}
+#' \item{stdev}{The stdev(log_10(number of mutations)).}
+#' }
+#'
+#'  * For negative binomial distribution,
+#' \describe{
+#' \item{prob}{The proportion of tumors with the signature.}
+#' \item{size}{Dispersion parameter.}
+#' \item{mu}{Mean.}
+#' }
+#'
+#'   The rownames need to be the column names of a signature
+#'   catalog.
+#'
 #' @details Determine the intensity of each
 #' mutational signature in a tumor, returning the number of mutations
 #' using the mean mutation burden per signature and the std dev
+#'
+#' @md
 #'
 #' @importFrom stats rnorm
 #'
@@ -318,43 +347,19 @@ GenerateSynExposureOneSample <-
            sig.interest,
            burden.per.sig,
            sd.per.sig,
-           sig.matrix = NULL
+           sig.matrix = NULL,
+           distribution = NULL,
+           sigs.params = NULL
   ) {
 
     ## starts with individual tumors, only generate exposures for signatures
     ## with a flag does not equal to 0.
     active.sigs <- base::which(tumor != 0)
 
-    for (sigs in active.sigs) {
-      stdev <- sd.per.sig[,sigs]
-      burden <- burden.per.sig[,sigs]
-
-      ## if std dev is too big, >= 3, max = 3
-      ### consider handling this different. the worry is that the variation
-      ##  is too large, the sampled mutation burden will be very high,
-      ### which will have a mutation burden that is not biologically possible
-      if (stdev >= 3) {
-        cat("Very large stdev", stdev, "\n")
-        stdev = 3
-      }
-
-      ## mutational intensity follows a log normal distibution
-      ## use the normal distribution with log-ed values instead
-      tumor[sigs] <- 10^(rnorm(1, sd = stdev, mean = burden))
-    }
-
-    tumor <- as.matrix(tumor)
-    names(tumor) <- sig.interest
-
-
-    if (!is.null(sig.matrix)) {
-      sigs.to.use <- sig.matrix[, names(tumor), drop = FALSE]
-      catalog <- sigs.to.use %*% tumor
-      i.cat <- round(catalog, digits = 0)
-
-      # Resample the exposures until the mutation counts for one sample is not zero
-      while (colSums(i.cat) == 0) {
-        for (sigs in active.sigs) {
+    GenerateSynExposureFromDistribution <-
+      function(tumor, sigs, burden.per.sig, sd.per.sig,
+               distribution = NULL, sigs.params = NULL) {
+        if (is.null(distribution)) {
           stdev <- sd.per.sig[,sigs]
           burden <- burden.per.sig[,sigs]
 
@@ -367,9 +372,54 @@ GenerateSynExposureOneSample <-
             stdev = 3
           }
 
-          ## mutational intensity follows a log normal distibution
+          ## mutational intensity follows a log normal distribution
           ## use the normal distribution with log-ed values instead
-          tumor[sigs] <- 10^(rnorm(1, sd = stdev, mean = burden))
+          return(10^(rnorm(1, sd = stdev, mean = burden)))
+        } else if (distribution == "neg.binom") {
+          if (is.null(sigs.params)) {
+            stop("sigs.params cannot be NULL when distribution is non-NULL")
+          }
+
+          param.not.available <- setdiff(c("size", "mu"), rownames(sigs.params))
+          if (length(param.not.available) > 0) {
+            stop("Parameter ", paste(param.not.available, collapse = " "),
+                 " not available in sigs.params")
+          }
+
+          size <- sigs.params["size", sigs]
+          mu <- sigs.params["mu", sigs]
+          return(stats::rnbinom(n = 1, size = size, mu = mu))
+        }
+      }
+
+    for (sigs in active.sigs) {
+      tumor[sigs] <-
+        GenerateSynExposureFromDistribution(tumor = tumor,
+                                            sigs = sigs,
+                                            burden.per.sig = burden.per.sig,
+                                            sd.per.sig = sd.per.sig,
+                                            distribution = distribution,
+                                            sigs.params = sigs.params)
+    }
+
+    tumor <- as.matrix(tumor)
+    names(tumor) <- sig.interest
+
+    if (!is.null(sig.matrix)) {
+      sigs.to.use <- sig.matrix[, names(tumor), drop = FALSE]
+      catalog <- sigs.to.use %*% tumor
+      i.cat <- round(catalog, digits = 0)
+
+      # Resample the exposures until the mutation counts for one sample is not zero
+      while (colSums(i.cat) == 0) {
+        for (sigs in active.sigs) {
+          tumor[sigs] <-
+            GenerateSynExposureFromDistribution(tumor = tumor,
+                                                sigs = sigs,
+                                                burden.per.sig = burden.per.sig,
+                                                sd.per.sig = sd.per.sig,
+                                                distribution = distribution,
+                                                sigs.params = sigs.params)
         }
 
         tumor <- as.matrix(tumor)
@@ -382,7 +432,6 @@ GenerateSynExposureOneSample <-
     }
 
     return(tumor)
-
   }
 
 #' @title Generate synthetic spectra catalogs given

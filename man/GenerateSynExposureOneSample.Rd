@@ -9,7 +9,9 @@ GenerateSynExposureOneSample(
   sig.interest,
   burden.per.sig,
   sd.per.sig,
-  sig.matrix = NULL
+  sig.matrix = NULL,
+  distribution = NULL,
+  sigs.params = NULL
 )
 }
 \arguments{
@@ -30,6 +32,33 @@ It has one row, and K columns. Each column name refers to a mutational signature
 It has one row, and K columns. Each column name refers to a mutational signature.}
 
 \item{sig.matrix}{Signature matrix to construct synthetic tumors.}
+
+\item{distribution}{Probability distribution used to generate synthetic
+exposures due to active mutational signatures. Can be \code{neg.binom}
+which stands for negative binomial distribution. If \code{NULL} (Default),
+then this function uses log normal distribution with base 10.}
+
+\item{sig.params}{Parameters from \code{\link{GetSynSigParamsFromExposures}}
+or another source. Should be
+a matrix or data frame with one column for
+each signature and the following rows:
+\itemize{
+\item For log normal distribution,
+\describe{
+\item{prob}{The proportion of tumors with the signature.}
+\item{mean}{The mean(log_10(number of mutations)).}
+\item{stdev}{The stdev(log_10(number of mutations)).}
+}
+\item For negative binomial distribution,
+\describe{
+\item{prob}{The proportion of tumors with the signature.}
+\item{size}{Dispersion parameter.}
+\item{mu}{Mean.}
+}
+}
+
+The rownames need to be the column names of a signature
+catalog.}
 }
 \description{
 Using parameters given to generate exposures for synthetic tumors

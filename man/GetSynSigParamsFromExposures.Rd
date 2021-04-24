@@ -25,10 +25,10 @@ log normal distribution with base 10.}
 a data frame with one column for
 each of a subset of the input signatures
 and the following rows
-\enumerate{
-\item the proportion of tumors with the signature
-\item mean(log_10(mutations.per.Mb))
-\item stdev(log_10(mutations.per.Mb))
+\describe{
+\item{prob}{The proportion of tumors with the signature.}
+\item{mean}{The mean(log_10(number of mutations)).}
+\item{stdev}{The stdev(log_10(number of mutations)).}
 }
 Signatures not present in
 \code{exposures} or present only in a single tumor in
@@ -37,10 +37,10 @@ Signatures not present in
 a data frame with one column for
 each of a subset of the input signatures
 and the following rows
-\enumerate{
-\item the proportion of tumors with the signature
-\item size(dispersion parameter)
-\item mu(mean)
+\describe{
+\item{prob}{The proportion of tumors with the signature.}
+\item{size}{Dispersion parameter.}
+\item{mu}{Mean.}
 }
 }
 }
