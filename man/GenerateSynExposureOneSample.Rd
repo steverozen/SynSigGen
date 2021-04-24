@@ -11,7 +11,7 @@ GenerateSynExposureOneSample(
   sd.per.sig,
   sig.matrix = NULL,
   distribution = NULL,
-  sigs.params = NULL
+  sig.params = NULL
 )
 }
 \arguments{

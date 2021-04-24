@@ -176,37 +176,54 @@ WriteSynSigParams <-
 #'
 #' @param sig.matrix Signature matrix to construct synthetic tumors
 #'
+#' @param distribution Probability distribution used to generate synthetic
+#'   exposures due to active mutational signatures. Can be \code{neg.binom}
+#'   which stands for negative binomial distribution. If \code{NULL} (Default),
+#'   then this function uses log normal distribution with base 10.
+#'
 #' @export
 
 GenerateSyntheticExposures <-
   function(sig.params,
            num.samples = 10,
            name = 'synthetic',
-           sig.matrix = NULL) {
+           sig.matrix = NULL,
+           distribution = NULL) {
 
     sigs <- colnames(sig.params)
     stopifnot(!is.null(sigs))
     prev.present <- unlist(sig.params['prob', ]) # Note, get a vector
-    sig.burden <- sig.params['mean', , drop = FALSE]
-    sig.sd <- sig.params['stdev', , drop = FALSE]
-
     sig.present <- present.sigs(num.samples, prev.present)
-
     colnames(sig.present) <- paste(name, seq(1, num.samples), sep = '.')
 
     # Create a synthetic exposures for each column (sample)
     # in sig.present.
-    retval <-
-      apply(sig.present,
-            2,
-            GenerateSynExposureOneSample,
-            sigs,
-            sig.burden, ## burden is in mutation per megabase
-            sig.sd,
-            sig.matrix)
+    if (is.null(distribution)) {
+      sig.burden <- sig.params['mean', , drop = FALSE]
+      sig.sd <- sig.params['stdev', , drop = FALSE]
+      retval <-
+        apply(sig.present,
+              2,
+              GenerateSynExposureOneSample,
+              sigs,
+              sig.burden, ## burden is in mutation per megabase
+              sig.sd,
+              sig.matrix)
+    } else if (distribution == "neg.binom") {
+      retval <-
+        apply(sig.present,
+              2,
+              GenerateSynExposureOneSample,
+              sigs,
+              NULL,
+              NULL,
+              sig.matrix,
+              distribution,
+              sig.params)
+    }
+
     return(retval)
   }
-
 
 #' Randomly assign present / absent to each of a set of signatures, and
 #' keep trying until at least one is present
@@ -349,7 +366,7 @@ GenerateSynExposureOneSample <-
            sd.per.sig,
            sig.matrix = NULL,
            distribution = NULL,
-           sigs.params = NULL
+           sig.params = NULL
   ) {
 
     ## starts with individual tumors, only generate exposures for signatures
@@ -358,7 +375,7 @@ GenerateSynExposureOneSample <-
 
     GenerateSynExposureFromDistribution <-
       function(tumor, sigs, burden.per.sig, sd.per.sig,
-               distribution = NULL, sigs.params = NULL) {
+               distribution = NULL, sig.params = NULL) {
         if (is.null(distribution)) {
           stdev <- sd.per.sig[,sigs]
           burden <- burden.per.sig[,sigs]
@@ -376,19 +393,26 @@ GenerateSynExposureOneSample <-
           ## use the normal distribution with log-ed values instead
           return(10^(rnorm(1, sd = stdev, mean = burden)))
         } else if (distribution == "neg.binom") {
-          if (is.null(sigs.params)) {
-            stop("sigs.params cannot be NULL when distribution is non-NULL")
+          if (is.null(sig.params)) {
+            stop("sig.params cannot be NULL when distribution is non-NULL")
           }
 
-          param.not.available <- setdiff(c("size", "mu"), rownames(sigs.params))
+          param.not.available <- setdiff(c("size", "mu"), rownames(sig.params))
           if (length(param.not.available) > 0) {
             stop("Parameter ", paste(param.not.available, collapse = " "),
-                 " not available in sigs.params")
+                 " not available in sig.params")
           }
 
-          size <- sigs.params["size", sigs]
-          mu <- sigs.params["mu", sigs]
-          return(stats::rnbinom(n = 1, size = size, mu = mu))
+          size <- sig.params["size", sigs]
+          mu <- sig.params["mu", sigs]
+          count <- stats::rnbinom(n = 1, size = size, mu = mu)
+
+          # sigs is active mutational signature, so resample until count is
+          # greater than 0
+          while(count == 0) {
+            count <- stats::rnbinom(n = 1, size = size, mu = mu)
+          }
+          return(count)
         }
       }
 
@@ -399,7 +423,7 @@ GenerateSynExposureOneSample <-
                                             burden.per.sig = burden.per.sig,
                                             sd.per.sig = sd.per.sig,
                                             distribution = distribution,
-                                            sigs.params = sigs.params)
+                                            sig.params = sig.params)
     }
 
     tumor <- as.matrix(tumor)
@@ -419,7 +443,7 @@ GenerateSynExposureOneSample <-
                                                 burden.per.sig = burden.per.sig,
                                                 sd.per.sig = sd.per.sig,
                                                 distribution = distribution,
-                                                sigs.params = sigs.params)
+                                                sig.params = sig.params)
         }
 
         tumor <- as.matrix(tumor)

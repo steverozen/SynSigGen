@@ -8,7 +8,8 @@ GenerateSyntheticExposures(
   sig.params,
   num.samples = 10,
   name = "synthetic",
-  sig.matrix = NULL
+  sig.matrix = NULL,
+  distribution = NULL
 )
 }
 \arguments{
@@ -29,6 +30,11 @@ GenerateSyntheticExposures(
 \item{name}{Prefix for sample identifiers in the simulated dataset}
 
 \item{sig.matrix}{Signature matrix to construct synthetic tumors}
+
+\item{distribution}{Probability distribution used to generate synthetic
+exposures due to active mutational signatures. Can be \code{neg.binom}
+which stands for negative binomial distribution. If \code{NULL} (Default),
+then this function uses log normal distribution with base 10.}
 }
 \value{
 A matrix with the rows being each signature and the columns being
