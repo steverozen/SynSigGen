@@ -54,7 +54,7 @@ test_that("Generate synthetic tumors for DBS78 by cancer types using negative bi
   # Generate synthetic tumors for DBS78
   input.sigs.DBS78 <- PCAWG7::signature$genome$DBS78
   real.exposures.DBS78 <- PCAWG7::exposure$PCAWG$DBS78
-  cancer.types <- PCAWG7::CancerTypes()[3]
+  cancer.types <- PCAWG7::CancerTypes()[1:2]
   DBS78.synthetic.tumors <-
     GenerateSyntheticTumors(seed = 191906,
                             dir = file.path(tempdir(), "DBS78.synthetic.tumors.neg.binom"),

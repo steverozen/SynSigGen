@@ -202,7 +202,7 @@ GenerateSyntheticTumors <- function(seed,
   catalog <- CreateAndWriteCatalog(sigs = input.sigs,
                                    exp = merged.exposures.sorted.rowname,
                                    my.dir = dir,
-                                   overwrite = TRUE)
+                                   overwrite = overwrite)
   ground.truth.signatures <-
     input.sigs[, rownames(merged.exposures.sorted.rowname), drop = FALSE]
   return(list(ground.truth.catalog = catalog,
