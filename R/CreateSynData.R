@@ -35,10 +35,17 @@ SynSigParamsOneSignature <- function(counts, target.size = 1, distribution = NUL
     sd.per.mb <- sd(log10(counts.per.mb))
     return(c(prob = prevalence, mean = mean.per.mb, stdev = sd.per.mb))
   } else if (distribution == "neg.binom") {
-    fit <- fitdistrplus::fitdist(counts, distr = "nbinom", method = "mle",
-                                 lower = c(0, 0))
-    names(fit$estimate) <- NULL
-    return(c(prob = prevalence, size = fit$estimate[1], mu = fit$estimate[2]))
+    counts.per.mb <- counts[counts >= 1 ] / target.size
+
+    if (length(counts.per.mb) == 1) {
+      # If there is only one data point, don't try to fit the data
+      return(c(prob = prevalence, size = NA, mu = NA))
+    } else {
+      fit <- fitdistrplus::fitdist(counts.per.mb, distr = "nbinom", method = "mle",
+                                   lower = c(0, 0))
+      names(fit$estimate) <- NULL
+      return(c(prob = prevalence, size = fit$estimate[1], mu = fit$estimate[2]))
+    }
   } else {
     stop("Only 'neg.binom' distribution is supported")
   }
@@ -109,7 +116,16 @@ GetSynSigParamsFromExposures <-
     }
     retval <- ret1[,!is.na(ret1['stdev',]) , drop = FALSE]
   } else if (distribution == "neg.binom") {
-    retval <- ret1
+    # Some parameter estimates can be NA (if there is only one tumor
+    # with mutations for that signature). We pretend we did not see
+    # these signatures.
+    if (any(is.na(ret1['size', ]))) {
+      if (verbose > 0) {
+        cat("\nWarning, some signatures present in only one sample, dropping:\n")
+        cat(colnames(ret1)[is.na(ret1['size', ])], "\n")
+      }
+    }
+    retval <- ret1[,!is.na(ret1['size',]) , drop = FALSE]
   }
 
   if (ncol(retval) == 0) {
