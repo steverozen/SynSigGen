@@ -13,7 +13,8 @@ GenerateSyntheticTumors(
   real.exposures,
   distribution = NULL,
   sample.prefix.name = "SP.Syn.",
-  overwrite = TRUE
+  overwrite = TRUE,
+  verbose = 0
 )
 }
 \arguments{
@@ -41,6 +42,8 @@ then this function uses log normal distribution with base 10.}
 \item{sample.prefix.name}{Prefix name to add to the synthetic tumors.}
 
 \item{overwrite}{If TRUE, overwrite existing directories and files.}
+
+\item{verbose}{If > 0 cat various messages.}
 }
 \value{
 A list of three elements that comprise the

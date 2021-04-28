@@ -25,6 +25,8 @@
 #'
 #' @param overwrite If TRUE, overwrite existing directories and files.
 #'
+#' @param verbose If > 0 cat various messages.
+#'
 #' @return A list of three elements that comprise the
 #' synthetic data: \enumerate{
 #'  \item \code{ground.truth.catalog}: Spectra catalog with rows denoting mutation
@@ -67,7 +69,8 @@ GenerateSyntheticTumors <- function(seed,
                                     real.exposures,
                                     distribution = NULL,
                                     sample.prefix.name = "SP.Syn.",
-                                    overwrite       = TRUE)
+                                    overwrite       = TRUE,
+                                    verbose = 0)
 {
   # Check whether the signatures in real.exposures are all available in input.sigs
   sigs.not.available <- setdiff(rownames(real.exposures), colnames(input.sigs))
@@ -95,7 +98,8 @@ GenerateSyntheticTumors <- function(seed,
     indices.one.type <- grep(pattern = x, x = colnames(real.exposures))
     exposures.one.type <- real.exposures[, indices.one.type, drop = FALSE]
     return(GetSynSigParamsFromExposures(exposures = exposures.one.type,
-                                        distribution = distribution))
+                                        distribution = distribution,
+                                        verbose = verbose))
   })
   names(params) <- cancer.types
 
