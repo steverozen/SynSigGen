@@ -4,7 +4,12 @@
 \alias{GetSynSigParamsFromExposures}
 \title{Empirical estimates of key parameters describing exposures due to signatures.}
 \usage{
-GetSynSigParamsFromExposures(exposures, verbose = 0, distribution = NULL)
+GetSynSigParamsFromExposures(
+  exposures,
+  verbose = 0,
+  distribution = NULL,
+  cancer.type = NULL
+)
 }
 \arguments{
 \item{exposures}{A matrix in which each column is a sample and each row is a mutation
@@ -18,6 +23,9 @@ i.e. mutation count attributed to a
 mutational signature. Can be \code{neg.binom} which stands for negative
 binomial distribution. If \code{NULL} (Default), then this function uses
 log normal distribution with base 10.}
+
+\item{cancer.type}{Optional argument specifying the cancer type of the
+samples being analyzed.}
 }
 \value{
 \itemize{

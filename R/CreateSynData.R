@@ -41,8 +41,8 @@ SynSigParamsOneSignature <- function(counts, target.size = 1, distribution = NUL
       # If there is only one data point, don't try to fit the data
       return(c(prob = prevalence, size = NA, mu = NA))
     } else {
-      fit <- fitdistrplus::fitdist(counts.per.mb, distr = "nbinom", method = "mle",
-                                   lower = c(0, 0))
+      fit <- fitdistrplus::mledist(counts.per.mb, distr = "nbinom")
+
       names(fit$estimate) <- NULL
       return(c(prob = prevalence, size = fit$estimate[1], mu = fit$estimate[2]))
     }
@@ -64,6 +64,9 @@ SynSigParamsOneSignature <- function(counts, target.size = 1, distribution = NUL
 #'   mutational signature. Can be \code{neg.binom} which stands for negative
 #'   binomial distribution. If \code{NULL} (Default), then this function uses
 #'   log normal distribution with base 10.
+#'
+#' @param cancer.type Optional argument specifying the cancer type of the
+#'   samples being analyzed.
 #'
 #' @return
 #' * For log normal distribution,
@@ -94,9 +97,8 @@ SynSigParamsOneSignature <- function(counts, target.size = 1, distribution = NUL
 #' @export
 
 GetSynSigParamsFromExposures <-
-  function(exposures, verbose = 0, distribution = NULL) {
+  function(exposures, verbose = 0, distribution = NULL, cancer.type = NULL) {
   stopifnot(ncol(exposures) > 0)
-
   integer.counts <- round(exposures, digits = 0)
   integer.counts <- integer.counts[rowSums(integer.counts) > 0 , , drop = FALSE]
   ret1 <- apply(X            = integer.counts,
@@ -104,12 +106,21 @@ GetSynSigParamsFromExposures <-
                 FUN          = SynSigParamsOneSignature,
                 distribution = distribution)
 
+  ret2 <- sapply(rownames(integer.counts), FUN = function(x) {
+    sig.name <- x
+    exposure.one.sig <- integer.counts[sig.name, ]
+    retval <- SynSigParamsOneSignature(counts = exposure.one.sig,
+                                       distribution = distribution)
+    return(retval)
+  })
+
   if (is.null(distribution)) {
     # Some standard deviations can be NA (if there is only one tumor
     # with mutations for that signature). We pretend we did not see
     # these signatures. TODO(Steve): impute from similar signatures.
     if (any(is.na(ret1['stdev', ]))) {
       if (verbose > 0) {
+        cat("\nAnalyzing samples", cancer.type)
         cat("\nWarning, some signatures present in only one sample, dropping:\n")
         cat(colnames(ret1)[is.na(ret1['stdev', ])], "\n")
       }
@@ -121,6 +132,7 @@ GetSynSigParamsFromExposures <-
     # these signatures.
     if (any(is.na(ret1['size', ]))) {
       if (verbose > 0) {
+        cat("\nAnalyzing samples", cancer.type)
         cat("\nWarning, some signatures present in only one sample, dropping:\n")
         cat(colnames(ret1)[is.na(ret1['size', ])], "\n")
       }
@@ -129,7 +141,8 @@ GetSynSigParamsFromExposures <-
   }
 
   if (ncol(retval) == 0) {
-    stop("No signatures with usable parameters (> 1 sample with exposure)")
+    stop("No signatures with usable parameters (> 1 sample with exposure) in samples ",
+         cancer.type)
   }
   return(retval)
 }

@@ -99,7 +99,8 @@ GenerateSyntheticTumors <- function(seed,
     exposures.one.type <- real.exposures[, indices.one.type, drop = FALSE]
     return(GetSynSigParamsFromExposures(exposures = exposures.one.type,
                                         distribution = distribution,
-                                        verbose = verbose))
+                                        verbose = verbose,
+                                        cancer.type = x))
   })
   names(params) <- cancer.types
 
@@ -174,7 +175,9 @@ GenerateSyntheticTumors <- function(seed,
 
     # Sanity check; we regenerate the parameters from the synthetic exposures.
     check.params <- GetSynSigParamsFromExposures(exposures = syn.exp,
-                                                 distribution = distribution)
+                                                 distribution = distribution,
+                                                 verbose = verbose,
+                                                 cancer.type = one.cancer.type)
 
     # check.params should be similar to parms
     cat("# Parameters derived from synthetic exposures\n",

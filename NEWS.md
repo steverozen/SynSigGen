@@ -17,6 +17,8 @@ synthetic tumors using negative binomial distribution.
 * Added new argument `verbose` in function `GenerateSyntheticTumors` which can
 cat various messages if value greater than 0.
 
+* Added new argument `cancer.type` in function `GetSynSigParamsFromExposures`.
+
 ### Fixed
 * Fixed a bug in function `SynSigParamsOneSignature` to generate parameter
 estimates (negative binomial distribution) for one signature only using those
