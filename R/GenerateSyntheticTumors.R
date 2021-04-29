@@ -201,8 +201,10 @@ GenerateSyntheticTumors <- function(seed,
         file = parm.file, append = TRUE)
     WriteSynSigParams(parms - check.params, parm.file,
                       append = TRUE)
-    cat("# The difference should be small\n",
-        file = parm.file, append = TRUE)
+    if (is.null(distribution)) {
+      cat("# The difference should be small\n",
+          file = parm.file, append = TRUE)
+    }
   }
   )
 
