@@ -1,4 +1,10 @@
-## SynSigGen 1.0.6.90xx
+## SynSigGen 1.0.8
+### Added 
+* Added new exported function  `GenerateNoisyTumors`.
+
+<br> 
+
+## SynSigGen 1.0.7
 ### Added 
 * Added new argument `distribution` in functions `SynSigParamsOneSignature` and
 `GetSynSigParamsFromExposures` to enable fitting the exposures using negative
@@ -28,6 +34,8 @@ tumors which have mutations for this particular signature.
 * Updated function `SynSigParamsOneSignature` to return NA for the parameter
 estimates (negative binomial distribution) for one signature if there is only
 one tumor which has mutation for this particular signature.
+
+<br> 
 
 ## SynSigGen 1.0.6
 ### Added 

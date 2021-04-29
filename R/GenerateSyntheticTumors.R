@@ -55,6 +55,21 @@
 #'                           sample.prefix.name = "SP.Syn."
 #'   )
 #'
+#' # Generate synthetic tumors for Indel (ID) using negative binomial distribution
+#' input.sigs.ID <- PCAWG7::signature$genome$ID
+#' real.exposures.ID <- PCAWG7::exposure$PCAWG$ID
+#' cancer.types <- PCAWG7::CancerTypes()[1:5]
+#' ID.synthetic.tumors <-
+#'   GenerateSyntheticTumors(seed = 191906,
+#'                           dir = file.path(tempdir(), "ID.synthetic.tumors"),
+#'                           cancer.types = cancer.types,
+#'                           samples.per.cancer.type = 30,
+#'                           input.sigs = input.sigs.ID,
+#'                           real.exposures = real.exposures.ID,
+#'                           distribution = "neg.binom",
+#'                           sample.prefix.name = "SP.Syn."
+#'   )
+#'
 #' # Plot the synthetic catalog and exposures
 #' ICAMS::PlotCatalogToPdf(catalog = DBS78.synthetic.tumors$ground.truth.catalog,
 #'                         file = file.path(tempdir(), "DBS78.synthetic.catalog.pdf"))
