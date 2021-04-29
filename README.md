@@ -33,7 +33,7 @@ Install from GitHub with the R command line:
 
 ``` r
 install.packages("remotes")
-remotes::install_github(repo = "steverozen/SynSigGen", ref = "master")
+remotes::install_github(repo = "steverozen/SynSigGen", ref = "1.0.8-branch")
 ```
 
 ## Example usage
@@ -65,4 +65,4 @@ CreateSBS1SBS5CorrelatedSyntheticData()
 
 ## Reference manual
 
-<https://github.com/steverozen/SynSigGen/blob/master/data-raw/SynSigGen_1.0.8.pdf>
+<https://github.com/steverozen/SynSigGen/blob/1.0.8-branch/data-raw/SynSigGen_1.0.8.pdf>
