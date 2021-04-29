@@ -11,7 +11,7 @@
 #'
 #' @param n.binom.size If non \code{NULL}, use negative binomial noise
 #'     with this size parameter; see \code{\link[stats]{NegBinomial}}.
-#'     If \code{NULL}, then use poisson distribution to do the resampling.
+#'     If \code{NULL}, then use Poisson distribution to do the resampling.
 #'
 #' @param overwrite If TRUE, overwrite existing directories and files.
 #'
