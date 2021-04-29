@@ -198,7 +198,7 @@ GenerateSyntheticTumors <- function(seed,
     cat("# Parameters derived from synthetic exposures\n",
         file = parm.file, append = TRUE)
     suppressWarnings(
-      WriteSynSigParams(check.params, parm.file, append = TRUE))
+      WriteSynSigParams(check.params, parm.file, append = TRUE, col.names = NA))
 
     missing.sig.names <- setdiff(colnames(parms), colnames(check.params))
     if (length(missing.sig.names) > 0) {
@@ -215,7 +215,7 @@ GenerateSyntheticTumors <- function(seed,
         "derived from synthetic exposures\n",
         file = parm.file, append = TRUE)
     WriteSynSigParams(parms - check.params, parm.file,
-                      append = TRUE)
+                      append = TRUE, col.names = NA)
     if (is.null(distribution)) {
       cat("# The difference should be small\n",
           file = parm.file, append = TRUE)

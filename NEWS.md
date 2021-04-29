@@ -2,6 +2,10 @@
 ### Added 
 * Added new exported function  `GenerateNoisyTumors`.
 
+* Minor change to function `GenerateSyntheticTumors` for always writing the
+signature names in the parameters CSV file in case some signature is not present
+in the synthetic data.
+
 <br> 
 
 ## SynSigGen 1.0.7
