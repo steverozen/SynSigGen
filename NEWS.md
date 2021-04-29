@@ -1,3 +1,10 @@
+## SynSigGen 1.0.8.90xx
+### Updated
+* Updated function  `GenerateSynExposureOneSample` to round the synthetic exposure to make
+it biologically reasonable.
+
+<br> 
+
 ## SynSigGen 1.0.8
 ### Added 
 * Added new exported function  `GenerateNoisyTumors`.

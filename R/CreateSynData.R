@@ -455,6 +455,10 @@ GenerateSynExposureOneSample <-
                                             sig.params = sig.params)
     }
 
+    # Round the mutations due to each signature as non integer values of
+    # mutations is impossible in biology
+    tumor <- round(tumor)
+
     tumor <- as.matrix(tumor)
     names(tumor) <- sig.interest
 
