@@ -10,7 +10,8 @@ test_that("CreateFromReal PancAdeno-CA", {
                               top.level.dir  = tempfile(pattern = "regress.pancadeno"),
                               regress.dir    = NULL, # "rdata/Panc-AdenoCA.123/",
                               unlink         = TRUE)
-   expect_equal(retval, reg$retval)
+   expect_equal(retval$info.list[[1]]$sp.syn.exp,
+                round(reg$retval$info.list[[1]]$sp.syn.exp))
 })
 
 test_that("CreateFromReal ManyTypes - Fast test - only generate 18 tumors", {

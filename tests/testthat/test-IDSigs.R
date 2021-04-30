@@ -58,8 +58,8 @@ ret.prob1 <- CreateAndWriteCatalog(
 reg.data <- new.env()
 load("testdata/ID.test.results.Rdata",envir = reg.data)
 
-testthat::expect_equal(expos.prob1,   reg.data$expos.prob1)
-testthat::expect_equal(expos.partial, reg.data$expos.partial)
+testthat::expect_equal(expos.prob1,   round(reg.data$expos.prob1))
+testthat::expect_equal(expos.partial, round(reg.data$expos.partial))
 cat("\nret.prob1", class(ret.prob1), "\n")
 cat("\nreg.data$ret.probl1", class(reg.data$ret.prob1), "\n")
 testthat::expect_equal(ret.prob1,     reg.data$ret.prob1)
