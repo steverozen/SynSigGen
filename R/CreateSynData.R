@@ -953,6 +953,7 @@ NewCreateAndWriteCatalog <-
 #'
 #' @param n.binom.size If non \code{NULL}, use negative binomial noise
 #'     with this size parameter; see \code{\link[stats]{NegBinomial}}.
+#'     If \code{NULL}, use poisson noise.
 #'
 #' @return A list with the elements \describe{
 #' \item{expsoures}{The numbers of mutations due to each signature
@@ -964,7 +965,7 @@ NewCreateAndWriteCatalog <-
 #'
 #' @export
 
-AddNoise <- function(input.exposure, signatures, n.binom.size = NULL) {
+AddNoise <- function(input.exposure, signatures, n.binom.size = 100) {
 
   if (is.data.frame(input.exposure)) {
     input.exposure <- as.matrix(input.exposure)

@@ -4,7 +4,7 @@
 \alias{AddNoise}
 \title{Exposures and spectra with Poisson or negative binomial noise in exposures.}
 \usage{
-AddNoise(input.exposure, signatures, n.binom.size = NULL)
+AddNoise(input.exposure, signatures, n.binom.size = 100)
 }
 \arguments{
 \item{input.exposure}{The exposures to which to add noise; a numeric matrix
@@ -18,7 +18,8 @@ of \code{signatures} have to include all row names in
 catalog or a numerical matrix or data frame.}
 
 \item{n.binom.size}{If non \code{NULL}, use negative binomial noise
-with this size parameter; see \code{\link[stats]{NegBinomial}}.}
+with this size parameter; see \code{\link[stats]{NegBinomial}}.
+If \code{NULL}, use poisson noise.}
 }
 \value{
 A list with the elements \describe{

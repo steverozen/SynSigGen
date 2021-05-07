@@ -3,6 +3,9 @@
 * Updated function  `GenerateSynExposureOneSample` to round the synthetic exposure to make
 it biologically reasonable.
 
+### Added
+* Added default value 100 for argument `n.binom.size` in function `AddNoise`.  
+
 <br> 
 
 ## SynSigGen 1.0.8
