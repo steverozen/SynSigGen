@@ -49,21 +49,21 @@ Create.3.5.40.Abstract <-
 
     sa.kidney.exp <-
       GetExpForOneCancerType("Kidney-RCC",
-                             SynSigGen::sa.no.hyper.real.exposures)
+                             SynSigGenX::sa.no.hyper.real.exposures)
     sa.kidney.parms <- GetSynSigParamsFromExposures(sa.kidney.exp)
     sa.ovary.exp <-
       GetExpForOneCancerType("Ovary-AdenoCA",
-                             SynSigGen::sa.no.hyper.real.exposures)
+                             SynSigGenX::sa.no.hyper.real.exposures)
     sa.ovary.parms  <- GetSynSigParamsFromExposures(sa.ovary.exp)
 
 
     sp.kidney.exp <-
       GetExpForOneCancerType("Kidney-RCC",
-                             SynSigGen::sp.no.hyper.real.exposures)
+                             SynSigGenX::sp.no.hyper.real.exposures)
     sp.kidney.parms <- GetSynSigParamsFromExposures(sp.kidney.exp)
     sp.ovary.exp <-
       GetExpForOneCancerType("Ovary-AdenoCA",
-                             SynSigGen::sp.no.hyper.real.exposures)
+                             SynSigGenX::sp.no.hyper.real.exposures)
     sp.ovary.parms  <- GetSynSigParamsFromExposures(sp.ovary.exp)
 
 
@@ -220,22 +220,22 @@ Create.2.7a.7b.Abstract <-
 
     sa.bladder.exp <-
       GetExpForOneCancerType("Bladder-TCC",
-                             SynSigGen::sa.no.hyper.real.exposures)
+                             SynSigGenX::sa.no.hyper.real.exposures)
     sa.bladder.parms <- GetSynSigParamsFromExposures(sa.bladder.exp)
     sa.skin.exp <-
       GetExpForOneCancerType("Skin-Melanoma",
-                             SynSigGen::sa.all.real.exposures)
+                             SynSigGenX::sa.all.real.exposures)
     sa.skin.parms  <-
       GetSynSigParamsFromExposures(sa.skin.exp)
 
 
     sp.bladder.exp <-
       GetExpForOneCancerType("Bladder-TCC",
-                             SynSigGen::sp.no.hyper.real.exposures)
+                             SynSigGenX::sp.no.hyper.real.exposures)
     sp.bladder.parms <- GetSynSigParamsFromExposures(sp.bladder.exp)
     sp.skin.exp <-
       GetExpForOneCancerType("Skin-Melanoma",
-                             SynSigGen::sp.all.real.exposures)
+                             SynSigGenX::sp.all.real.exposures)
     sp.skin.parms  <- GetSynSigParamsFromExposures(sp.skin.exp)
 
 
@@ -346,16 +346,16 @@ Defunct.How.We.Mapped.From.SP.to.SA.Sig <-
 
 
     ICAMSxtra::MatchSigs1Direction(
-      SynSigGen::sp.sigs[ , "SBS5", drop = F],
-      SynSigGen::sa.96.sigs[ , xFixSASigNames(rownames(rcc.sa.syn.exp))])
+      SynSigGenX::sp.sigs[ , "SBS5", drop = F],
+      SynSigGenX::sa.96.sigs[ , xFixSASigNames(rownames(rcc.sa.syn.exp))])
 
     ICAMSxtra::MatchSigs1Direction(
-      SynSigGen::sp.sigs[ , "SBS40", drop = F],
-      SynSigGen::sa.96.sigs[ , xFixSASigNames(rownames(rcc.sa.syn.exp))])
+      SynSigGenX::sp.sigs[ , "SBS40", drop = F],
+      SynSigGenX::sa.96.sigs[ , xFixSASigNames(rownames(rcc.sa.syn.exp))])
 
     ICAMSxtra::MatchSigs1Direction(
-      SynSigGen::sp.sigs[ , "SBS3", drop = F],
-      SynSigGen::sa.96.sigs[ , xFixSASigNames(rownames(ovary.sa.syn.exp))])
+      SynSigGenX::sp.sigs[ , "SBS3", drop = F],
+      SynSigGenX::sa.96.sigs[ , xFixSASigNames(rownames(ovary.sa.syn.exp))])
 
     # Both BI..SBS3 and BI..SBS39 are in every ovarian; we select BI..SBS3
   }

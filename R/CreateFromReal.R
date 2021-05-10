@@ -53,8 +53,8 @@ CreateMixedTumorTypeSyntheticData <- function(top.level.dir,
                local.sa.exp <- sa.exp
                local.sp.exp <- sp.exp
                if (bladder.regress.hack && ca.type.str == "Bladder-TCC") {
-                 local.sa.exp <- SynSigGen::sa.no.hyper.real.exposures
-                 local.sp.exp <- SynSigGen::sp.no.hyper.real.exposures
+                 local.sa.exp <- SynSigGenX::sa.no.hyper.real.exposures
+                 local.sp.exp <- SynSigGenX::sp.no.hyper.real.exposures
                  message("bladder.regress.hack deployed for ", ca.type.str)
                }
                retval <-
@@ -204,8 +204,8 @@ CreateFromReal <- function(seed,
                            num.syn.tumors,
                            cancer.types,
                            data.suite.name = NULL,
-                           sa.exp          = SynSigGen::sa.all.real.exposures,
-                           sp.exp          = SynSigGen::sp.all.real.exposures,
+                           sa.exp          = SynSigGenX::sa.all.real.exposures,
+                           sp.exp          = SynSigGenX::sp.all.real.exposures,
                            overwrite       = TRUE,
                            regress.dir     = NULL,
                            unlink          = FALSE,
@@ -299,8 +299,8 @@ PancAdenoCA1000 <- function(
     top.level.dir  = top.level.dir,
     num.syn.tumors = num.syn.tumors,
     cancer.types   = "Panc-AdenoCA",
-    sa.exp         = SynSigGen::sa.no.hyper.real.exposures,
-    sp.exp         = SynSigGen::sp.no.hyper.real.exposures,
+    sa.exp         = SynSigGenX::sa.no.hyper.real.exposures,
+    sp.exp         = SynSigGenX::sp.no.hyper.real.exposures,
     regress.dir    = regress.dir,
     unlink         = unlink
   )
@@ -348,8 +348,8 @@ RCCOvary1000 <- function(seed = 191905,
     num.syn.tumors = 500,
     cancer.types   = c("Kidney-RCC", "Ovary-AdenoCA" ),
     top.level.dir  = top.level.dir,
-    sa.exp         = SynSigGen::sa.no.hyper.real.exposures,
-    sp.exp         = SynSigGen::sp.no.hyper.real.exposures,
+    sa.exp         = SynSigGenX::sa.no.hyper.real.exposures,
+    sp.exp         = SynSigGenX::sp.no.hyper.real.exposures,
     regress.dir    = regress.dir,
     unlink         = unlink)
 }
@@ -396,8 +396,8 @@ BladderSkin1000 <- function(seed = 191906, regress = FALSE) {
     num.syn.tumors  = 500,
     cancer.types    = c("Bladder-TCC", "Skin-Melanoma" ),
     data.suite.name = "2.7a.7b.bladder.and.melanoma",
-    sa.exp          = SynSigGen::sa.all.real.exposures,
-    sp.exp          = SynSigGen::sp.all.real.exposures,
+    sa.exp          = SynSigGenX::sa.all.real.exposures,
+    sp.exp          = SynSigGenX::sp.all.real.exposures,
     regress.dir = regress.dir,
     bladder.regress.hack = TRUE
   )

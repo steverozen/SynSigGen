@@ -1,4 +1,4 @@
-Package: SynSigGen
+Package: SynSigGenX
 Type: Package
 Title: Create Catalogs of Synthetic Mutational Spectra
 Version: 1.0.8.9002

@@ -11,7 +11,7 @@ test_that("CreateFromReal PancAdeno-CA", {
                               regress.dir    = NULL, # "rdata/Panc-AdenoCA.123/",
                               unlink         = TRUE)
    expect_equal(retval$info.list[[1]]$sp.syn.exp,
-                round(reg$retval$info.list[[1]]$sp.syn.exp))
+                reg$retval$info.list[[1]]$sp.syn.exp)
 })
 
 test_that("CreateFromReal ManyTypes - Fast test - only generate 18 tumors", {

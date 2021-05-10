@@ -571,7 +571,7 @@ CreateSBS1SBS5CorrelatedSyntheticDataOneDataset <-
            dataset.name = NULL,
            overwrite = FALSE,
            seed = 1,
-           parameter.df = SynSigGen::SBS1SBS5parameter["S.0.5.Rsq.0.3",],
+           parameter.df = SynSigGenX::SBS1SBS5parameter["S.0.5.Rsq.0.3",],
            add.info = TRUE,
            verbose = FALSE)
   {
@@ -754,7 +754,7 @@ CreateSBS1SBS5CorrelatedSyntheticData <-
            add.info = TRUE,
            unlink = FALSE){
 
-    datasetNames <- rownames(SynSigGen::SBS1SBS5parameter)
+    datasetNames <- rownames(SynSigGenX::SBS1SBS5parameter)
 
     for(datasetName in datasetNames){
       # dataset.name <- datasetName
@@ -767,7 +767,7 @@ CreateSBS1SBS5CorrelatedSyntheticData <-
         dataset.name = datasetName,
         overwrite = overwrite,
         seed = 1,
-        parameter.df = SynSigGen::SBS1SBS5parameter[datasetName,],
+        parameter.df = SynSigGenX::SBS1SBS5parameter[datasetName,],
         add.info = add.info)
     }
 

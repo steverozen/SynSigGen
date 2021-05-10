@@ -65,7 +65,7 @@ GenerateNoisyTumors <-
            n.binom.size = NULL, overwrite = TRUE) {
     # Set seed using R's default random number generator kind "Mersenne-Twister"
     set.seed(seed = seed, kind = "Mersenne-Twister")
-    retval <- SynSigGen::AddNoise(input.exposure = input.exposure,
+    retval <- SynSigGenX::AddNoise(input.exposure = input.exposure,
                                   signatures = signatures,
                                   n.binom.size = n.binom.size)
 

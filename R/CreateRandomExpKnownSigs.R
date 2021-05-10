@@ -10,14 +10,14 @@ MeanAndSD1Sig <- function(exposure.row) {
 
 
 PerSigMeanAndSDSA <- function()  {
-  res1 <- apply(SynSigGen::sa.all.real.exposures, MARGIN = 1, FUN = MeanAndSD1Sig)
+  res1 <- apply(SynSigGenX::sa.all.real.exposures, MARGIN = 1, FUN = MeanAndSD1Sig)
   res1 <- res1[ , !is.na(res1[2, ])]
   return(res1)
 }
 
 
 PerSigMeanAndSDSP <- function() {
-  res1 <- apply(SynSigGen::sp.all.real.exposures, MARGIN = 1, FUN = MeanAndSD1Sig)
+  res1 <- apply(SynSigGenX::sp.all.real.exposures, MARGIN = 1, FUN = MeanAndSD1Sig)
   res1 <- res1[ , !is.na(res1[2, ])]
   return(res1)
 }
@@ -33,7 +33,7 @@ Generate.random.exp.SA.sigs <-
       GenerateMatrixRandomExpKnownSigs200(
         parm           = ParametersSALike(),
         top.level.dir  = top.level.dir,
-        sigs           = SynSigGen::sa.96.sigs,
+        sigs           = SynSigGenX::sa.96.sigs,
         sig.info       = PerSigMeanAndSDSA(),
         overwrite      = overwrite,
         verbose        = verbose,
@@ -54,7 +54,7 @@ Generate.random.exp.SP.sigs <-
       GenerateMatrixRandomExpKnownSigs200(
         parm           = ParametersSPLike(),
         top.level.dir  = top.level.dir,
-        sigs           = SynSigGen::sp.sigs,
+        sigs           = SynSigGenX::sp.sigs,
         sig.info       = PerSigMeanAndSDSP(),
         overwrite      = overwrite,
         verbose        = verbose,

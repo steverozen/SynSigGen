@@ -17,7 +17,7 @@ test_that("GenerateSyntheticExposures",
             foo <- GenerateSyntheticExposures(
               sa.test.param.out,
               num.samples = 50)
-            expect_equal(foo, round(sa.test.synthetic.exposures))
+            expect_equal(foo, sa.test.synthetic.exposures)
             new.param <-
               GetSynSigParamsFromExposures(foo)
             load("sa.test.param.in.Rdata")

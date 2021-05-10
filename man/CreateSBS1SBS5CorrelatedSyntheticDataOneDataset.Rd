@@ -9,7 +9,7 @@ CreateSBS1SBS5CorrelatedSyntheticDataOneDataset(
   dataset.name = NULL,
   overwrite = FALSE,
   seed = 1,
-  parameter.df = SynSigGen::SBS1SBS5parameter["S.0.5.Rsq.0.3", ],
+  parameter.df = SynSigGenX::SBS1SBS5parameter["S.0.5.Rsq.0.3", ],
   add.info = TRUE,
   verbose = FALSE
 )
