@@ -6,6 +6,10 @@ it biologically reasonable.
 ### Added
 * Added default value 100 for argument `n.binom.size` in function `AddNoise`.  
 
+### Fixed
+* Fixed a bug in function `GenerateSynExposureOneSample` to round the mutations
+due to each signature.
+
 <br> 
 
 ## SynSigGen 1.0.8
