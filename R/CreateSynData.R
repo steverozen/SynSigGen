@@ -25,18 +25,22 @@
 #' @keywords internal
 
 SynSigParamsOneSignature <- function(counts, target.size = 1, distribution = NULL) {
-  prevalence <-  length(counts[counts >= 1 ]) / length(counts)
+  # Check whether counts are whole numbers or not
+  if (all(counts %% 1 == 0)) {
+    # When counts are all whole numbers
+    prevalence <-  length(counts[counts >= 1 ]) / length(counts)
+    counts.per.mb <- counts[counts >= 1 ] / target.size
+  } else {
+    prevalence <-  length(counts[counts > 0 ]) / length(counts)
+    counts.per.mb <- counts[counts > 0 ] / target.size
+  }
 
   if (is.null(distribution)) {
-    counts.per.mb <- counts[counts >= 1 ] / target.size
-
     ## generate log10(mut/mb) values for mean and sd
     mean.per.mb <- mean(log10(counts.per.mb))
     sd.per.mb <- sd(log10(counts.per.mb))
     return(c(prob = prevalence, mean = mean.per.mb, stdev = sd.per.mb))
   } else if (distribution == "neg.binom") {
-    counts.per.mb <- counts[counts >= 1 ] / target.size
-
     if (length(counts.per.mb) == 1) {
       # If there is only one data point, don't try to fit the data
       return(c(prob = prevalence, size = NA, mu = NA))

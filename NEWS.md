@@ -3,6 +3,9 @@
 * Updated function  `GenerateSynExposureOneSample` to round the synthetic exposure to make
 it biologically reasonable.
 
+* Updated function `SynSigParamsOneSignature` to check whether the mutation
+counts are whole numbers or not.
+
 ### Added
 * Added default value 100 for argument `n.binom.size` in function `AddNoise`.  
 
