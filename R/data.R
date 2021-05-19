@@ -104,6 +104,14 @@ NULL
 #' @name SBS1SBS5datasetNames
 "SBS1SBS5datasetNames"
 
+#' Empirical signature parameters using negative binomial distribution
+#'
+#' @note These parameters were generated using all tumors in PCAWG7 exposure
+#'   irrespective of their cancer types.
+#'
+#' @name sig.params
+"sig.params"
+
 
 # Quiets concerns of R CMD check about no visible binding for global variable
 if(getRversion() >= "2.15.1") {
