@@ -27,8 +27,12 @@ necessary.}
 types. This function will search \code{real.exposures} for exposures from
 tumors matching these strings. See \code{PCAWG7::CancerTypes()} for example.}
 
-\item{samples.per.cancer.type}{Number of synthetic tumors to create
-for each cancer type.}
+\item{samples.per.cancer.type}{Number of synthetic tumors to create for each
+cancer type. If it is \strong{one} number, then generate the \strong{same}
+number of synthetic tumors for each \code{cancer.types}. Or if it is a
+\strong{vector} of numbers, then generate synthetic tumors for each
+\code{cancer.type} accordingly to the number specified in the vector. The length
+and order of \code{samples.per.cancer.type} should match that in \code{cancer.types}.}
 
 \item{input.sigs}{A matrix of signatures.}
 

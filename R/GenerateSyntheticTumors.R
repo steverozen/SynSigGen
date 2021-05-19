@@ -9,8 +9,12 @@
 #'   types. This function will search \code{real.exposures} for exposures from
 #'   tumors matching these strings. See \code{PCAWG7::CancerTypes()} for example.
 #'
-#' @param samples.per.cancer.type Number of synthetic tumors to create
-#' for each cancer type.
+#' @param samples.per.cancer.type Number of synthetic tumors to create for each
+#'   cancer type. If it is \strong{one} number, then generate the \strong{same}
+#'   number of synthetic tumors for each \code{cancer.types}. Or if it is a
+#'   \strong{vector} of numbers, then generate synthetic tumors for each
+#'   \code{cancer.type} accordingly to the number specified in the vector. The length
+#'   and order of \code{samples.per.cancer.type} should match that in \code{cancer.types}.
 #'
 #' @param input.sigs A matrix of signatures.
 #'
@@ -106,6 +110,16 @@ GenerateSyntheticTumors <- function(seed,
     }
   })
 
+  # Check whether to generate different number of synthetic tumors for each cancer type
+  if (length(samples.per.cancer.type) > 1) {
+    if (length(cancer.types) != length(samples.per.cancer.type)) {
+      stop("The number of values in samples.per.cancer.type should match the ",
+           "number of elements in cancer.types")
+    }
+  } else {
+    samples.per.cancer.type <- rep(samples.per.cancer.type, length(cancer.types))
+  }
+
   suppressWarnings(set.seed(seed = seed, sample.kind = "Rounding"))
 
   # Getting empirical estimates of key parameters describing exposures due to signatures
@@ -120,28 +134,29 @@ GenerateSyntheticTumors <- function(seed,
   names(params) <- cancer.types
 
   # Generate synthetic exposures from real exposures
-  synthetic.exposures <- lapply(cancer.types, FUN = function(x) {
-    params.one.type <- params[[x]]
+  synthetic.exposures <- lapply(1:length(cancer.types), FUN = function(x) {
+    one.cancer.type <- cancer.types[x]
+    params.one.type <- params[[one.cancer.type]]
 
-    sample.prefix.names <- paste0(sample.prefix.name, x, "::S")
+    sample.prefix.names <- paste0(sample.prefix.name, one.cancer.type, "::S")
 
     # In case there is only one contributing signature to the cancer type
     if (ncol(params.one.type) == 1) {
       synthetic.exposures <-
         GenerateSyntheticExposures(sig.params = params.one.type,
-                                   num.samples = samples.per.cancer.type,
+                                   num.samples = samples.per.cancer.type[x],
                                    name = sample.prefix.names,
                                    sig.matrix = input.sigs,
                                    distribution = distribution)
       synthetic.exposures <- matrix(data = synthetic.exposures,
-                                    ncol = samples.per.cancer.type,
+                                    ncol = samples.per.cancer.type[x],
                                     dimnames = list(colnames(params.one.type),
                                                     names(synthetic.exposures)))
       return(synthetic.exposures)
 
     } else {
       return(GenerateSyntheticExposures(sig.params = params.one.type,
-                                        num.samples = samples.per.cancer.type,
+                                        num.samples = samples.per.cancer.type[x],
                                         name = sample.prefix.names,
                                         sig.matrix = input.sigs,
                                         distribution = distribution))
