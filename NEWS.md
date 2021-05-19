@@ -8,7 +8,9 @@ that are present in only one sample when `distribution` is `neg.binom`. Instead,
 this function will use the empirical signature parameters from all cancer types.
 
 ### Added
-* Added default value 100 for argument `n.binom.size` in function `AddNoise`.  
+* Added default value 100 for argument `n.binom.size` in function `AddNoise`. 
+
+* Added new exported data `signature.params`.
 
 ### Fixed
 * Fixed a bug in function `GenerateSynExposureOneSample` to round the mutations

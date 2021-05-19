@@ -109,8 +109,8 @@ NULL
 #' @note These parameters were generated using all tumors in PCAWG7 exposure
 #'   irrespective of their cancer types.
 #'
-#' @name sig.params
-"sig.params"
+#' @name signature.params
+"signature.params"
 
 
 # Quiets concerns of R CMD check about no visible binding for global variable
@@ -125,6 +125,6 @@ if(getRversion() >= "2.15.1") {
       "BayesNMF.L1.KL.fixed_W.Z",
       "BayesNMF.L1.KL.fixed_W.Z.sample",
       "OutDir.dir",
-      "sig.params"
+      "signature.params"
       ))
 }

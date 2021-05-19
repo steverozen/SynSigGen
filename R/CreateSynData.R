@@ -152,9 +152,9 @@ GetSynSigParamsFromExposures <-
       mutation.type <- GetMutationType(sig.name = rare.sig.names)
       retval <- ret1
       retval["size", rare.sig.names] <-
-        sig.params[[mutation.type]]["size", rare.sig.names]
+        SynSigGen::signature.params[[mutation.type]]["size", rare.sig.names]
       retval["mu", rare.sig.names] <-
-        sig.params[[mutation.type]]["mu", rare.sig.names]
+        SynSigGen::signature.params[[mutation.type]]["mu", rare.sig.names]
     } else {
       retval <- ret1
     }
@@ -166,6 +166,58 @@ GetSynSigParamsFromExposures <-
   }
   return(retval)
 }
+
+#' @keywords internal
+GetSynSigParamsFromExposuresOld <-
+  function(exposures, verbose = 0, distribution = NULL, cancer.type = NULL) {
+    stopifnot(ncol(exposures) > 0)
+    integer.counts <- round(exposures, digits = 0)
+    integer.counts <- integer.counts[rowSums(integer.counts) > 0 , , drop = FALSE]
+    ret1 <- apply(X            = integer.counts,
+                  MARGIN       = 1,
+                  FUN          = SynSigParamsOneSignature,
+                  distribution = distribution)
+
+    ret2 <- sapply(rownames(integer.counts), FUN = function(x) {
+      sig.name <- x
+      exposure.one.sig <- integer.counts[sig.name, ]
+      retval <- SynSigParamsOneSignature(counts = exposure.one.sig,
+                                         distribution = distribution)
+      return(retval)
+    })
+
+    if (is.null(distribution)) {
+      # Some standard deviations can be NA (if there is only one tumor
+      # with mutations for that signature). We pretend we did not see
+      # these signatures. TODO(Steve): impute from similar signatures.
+      if (any(is.na(ret1['stdev', ]))) {
+        if (verbose > 0) {
+          cat("\nAnalyzing samples", cancer.type)
+          cat("\nWarning, some signatures present in only one sample, dropping:\n")
+          cat(colnames(ret1)[is.na(ret1['stdev', ])], "\n")
+        }
+      }
+      retval <- ret1[,!is.na(ret1['stdev',]) , drop = FALSE]
+    } else if (distribution == "neg.binom") {
+      # Some parameter estimates can be NA (if there is only one tumor
+      # with mutations for that signature). We pretend we did not see
+      # these signatures.
+      if (any(is.na(ret1['size', ]))) {
+        if (verbose > 0) {
+          cat("\nAnalyzing samples", cancer.type)
+          cat("\nWarning, some signatures present in only one sample, dropping:\n")
+          cat(colnames(ret1)[is.na(ret1['size', ])], "\n")
+        }
+      }
+      retval <- ret1[,!is.na(ret1['size',]) , drop = FALSE]
+    }
+
+    if (ncol(retval) == 0) {
+      stop("No signatures with usable parameters (> 1 sample with exposure) in samples ",
+           cancer.type)
+    }
+    return(retval)
+  }
 
 #' @title Write key parameters describing exposures due to a signature to a file.
 #'
