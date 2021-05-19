@@ -212,18 +212,22 @@ GenerateSyntheticTumors <- function(seed,
     # check.params should be similar to parms
     cat("# Parameters derived from synthetic exposures\n",
         file = parm.file, append = TRUE)
-    suppressWarnings(
-      WriteSynSigParams(check.params, parm.file, append = TRUE, col.names = NA))
 
     missing.sig.names <- setdiff(colnames(parms), colnames(check.params))
     if (length(missing.sig.names) > 0) {
-      cat("# Some signatures not represented in the synthetic data:\n",
-          file = parm.file, append =  TRUE)
-      cat("#", missing.sig.names, "\n", file = parm.file, append = TRUE)
       check.param2 <- matrix(NA, nrow = dim(parms)[1], ncol = dim(parms)[2])
       dimnames(check.param2) <- dimnames(parms)
       check.param2[ , colnames(check.params)] <- check.params
       check.params <- check.param2
+    }
+
+    suppressWarnings(
+      WriteSynSigParams(check.params, parm.file, append = TRUE, col.names = NA))
+
+    if (length(missing.sig.names) > 0) {
+      cat("# Some signatures not represented in the synthetic data:\n",
+          file = parm.file, append =  TRUE)
+      cat("#", missing.sig.names, "\n", file = parm.file, append = TRUE)
     }
 
     cat("# Difference between original parameters and parameters",
