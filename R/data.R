@@ -124,6 +124,7 @@ if(getRversion() >= "2.15.1") {
       "TEMPORARY",
       "BayesNMF.L1.KL.fixed_W.Z",
       "BayesNMF.L1.KL.fixed_W.Z.sample",
-      "OutDir.dir"
+      "OutDir.dir",
+      "sig.params"
       ))
 }
