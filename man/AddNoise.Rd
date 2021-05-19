@@ -19,7 +19,7 @@ catalog or a numerical matrix or data frame.}
 
 \item{n.binom.size}{If non \code{NULL}, use negative binomial noise
 with this size parameter; see \code{\link[stats]{NegBinomial}}.
-If \code{NULL}, use poisson noise.}
+If \code{NULL}, use Poisson noise.}
 }
 \value{
 A list with the elements \describe{

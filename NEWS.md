@@ -3,6 +3,10 @@
 * Updated function  `GenerateSynExposureOneSample` to round the synthetic exposure to make
 it biologically reasonable.
 
+* Updated function `GetSynSigParamsFromExposures` not to drop rare signatures
+that are present in only one sample when `distribution` is `neg.binom`. Instead,
+this function will use the empirical signature parameters from all cancer types.
+
 ### Added
 * Added default value 100 for argument `n.binom.size` in function `AddNoise`.  
 

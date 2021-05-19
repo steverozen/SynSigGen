@@ -53,11 +53,11 @@ SynSigParamsOneSignature <- function(counts, target.size = 1, distribution = NUL
 
 #' @keywords internal
 GetMutationType <- function(sig.name) {
-  if (grepl(pattern = "SBS", x = sig.name)) {
+  if (any(grepl(pattern = "SBS", x = sig.name))) {
     return("SBS96")
-  } else if (grepl(pattern = "DBS", x = sig.name)) {
+  } else if (any(grepl(pattern = "DBS", x = sig.name))) {
     return("DBS78")
-  } else if (grepl(pattern = "ID", x = sig.name)) {
+  } else if (any(grepl(pattern = "ID", x = sig.name))) {
     return("ID")
   }
 }
@@ -146,15 +146,18 @@ GetSynSigParamsFromExposures <-
       if (verbose > 0) {
         cat("\nAnalyzing samples", cancer.type)
         cat("\nWarning, some signatures present in only one sample:\n")
-        cat(rare.sig.names)
-        cat("\nUsing the empirical signature parameters from all cancer types")
+        cat(rare.sig.names, "\n")
+        cat("Using the empirical signature parameters from all cancer types\n")
       }
+      mutation.type <- GetMutationType(sig.name = rare.sig.names)
+      retval <- ret1
+      retval["size", rare.sig.names] <-
+        sig.params[[mutation.type]]["size", rare.sig.names]
+      retval["mu", rare.sig.names] <-
+        sig.params[[mutation.type]]["mu", rare.sig.names]
+    } else {
+      retval <- ret1
     }
-    mutation.type <-
-      GetMutationType(sig.name = rare.sig.names)
-    retval <- ret1
-    retval[2:3, rare.sig.names] <- sig.params[[mutation.type]][2:3, rare.sig.names]
-    retval <- ret1[,!is.na(ret1['size',]) , drop = FALSE]
   }
 
   if (ncol(retval) == 0) {
@@ -974,7 +977,7 @@ NewCreateAndWriteCatalog <-
 #'
 #' @param n.binom.size If non \code{NULL}, use negative binomial noise
 #'     with this size parameter; see \code{\link[stats]{NegBinomial}}.
-#'     If \code{NULL}, use poisson noise.
+#'     If \code{NULL}, use Poisson noise.
 #'
 #' @return A list with the elements \describe{
 #' \item{expsoures}{The numbers of mutations due to each signature
