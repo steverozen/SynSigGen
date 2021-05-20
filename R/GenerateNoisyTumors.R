@@ -77,11 +77,11 @@ GenerateNoisyTumors <-
 
     ICAMSxtra::WriteExposure(exposure = retval$exposures,
                              file = file.path(dir,
-                                              paste0("ground.truth.syn.exposures.noisy.n.binom.size.",
+                                              paste0("ground.truth.syn.exposures.noisy.neg.binom.size.",
                                                      n.binom.size, ".csv")))
     ICAMS::WriteCatalog(catalog = ICAMS::as.catalog(retval$spectra),
                         file = file.path(dir,
-                                         paste0("ground.truth.syn.catalog.noisy.n.binom.size.",
+                                         paste0("ground.truth.syn.catalog.noisy.neg.binom.size.",
                                                 n.binom.size, ".csv")))
     ICAMS::WriteCatalog(catalog = signatures,
                         file = file.path(dir, "ground.truth.syn.sigs.csv"))
