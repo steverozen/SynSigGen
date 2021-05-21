@@ -151,6 +151,16 @@ GetSynSigParamsFromExposures <-
       }
       mutation.type <- GetMutationType(sig.name = rare.sig.names)
       retval <- ret1
+      sig.with.no.params <-
+        setdiff(rare.sig.names,
+                colnames(SynSigGen::signature.params[[mutation.type]]))
+      if (length(sig.with.no.params) > 0) {
+        cat("\nWarning, some signatures present in only one sample across all the cancer types, dropping:\n")
+        cat(sig.with.no.params, "\n")
+        rare.sig.names <- setdiff(rare.sig.names, sig.with.no.params)
+        retval <- retval[, !colnames(retval) %in% sig.with.no.params]
+      }
+
       retval["size", rare.sig.names] <-
         SynSigGen::signature.params[[mutation.type]]["size", rare.sig.names]
       retval["mu", rare.sig.names] <-

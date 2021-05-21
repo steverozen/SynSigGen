@@ -10,6 +10,9 @@ this function will use the empirical signature parameters from all cancer types.
 * Updated function `GenerateSyntheticTumors` to enable generating different number 
 of synthetic tumors for each cancer type.
 
+* Updated function `GetSynSigParamsFromExposures` to drop signatures which do not
+have empirical signature parameters from all cancer types.
+
 ### Added
 * Added default value 100 for argument `n.binom.size` in function `AddNoise`. 
 
