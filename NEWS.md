@@ -13,6 +13,9 @@ of synthetic tumors for each cancer type.
 * Updated function `GetSynSigParamsFromExposures` to drop signatures which do not
 have empirical signature parameters from all cancer types.
 
+* Updated function `GenerateSyntheticTumors` and `GenerateNoisyTumors` to append
+mutation type information to the names of files generated.
+
 ### Added
 * Added default value 100 for argument `n.binom.size` in function `AddNoise`. 
 

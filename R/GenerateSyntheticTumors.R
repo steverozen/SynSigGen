@@ -120,6 +120,9 @@ GenerateSyntheticTumors <- function(seed,
     samples.per.cancer.type <- rep(samples.per.cancer.type, length(cancer.types))
   }
 
+  # Get the mutation type of the synthetic data
+  mutation.type <- GetMutationType(sig.name = colnames(input.sigs))
+
   suppressWarnings(set.seed(seed = seed, sample.kind = "Rounding"))
 
   # Getting empirical estimates of key parameters describing exposures due to signatures
@@ -196,7 +199,8 @@ GenerateSyntheticTumors <- function(seed,
     one.cancer.type <- x
     parms <- params[[one.cancer.type]]
 
-    parm.file <- file.path(froot, paste0(sample.prefix.name, one.cancer.type, ".parms.csv"))
+    parm.file <- file.path(froot, paste0(sample.prefix.name, one.cancer.type,
+                                         ".parms.", mutation.type, ".csv"))
     cat("# Original paramaters\n", file = parm.file)
     suppressWarnings( # Suppress warning on column names on append
       WriteSynSigParams(parms, parm.file, append = TRUE, col.names = NA))
@@ -245,7 +249,8 @@ GenerateSyntheticTumors <- function(seed,
   catalog <- CreateAndWriteCatalog(sigs = input.sigs,
                                    exp = merged.exposures.sorted.rowname,
                                    my.dir = dir,
-                                   overwrite = overwrite)
+                                   overwrite = overwrite,
+                                   extra.file.suffix = mutation.type)
   ground.truth.signatures <-
     input.sigs[, rownames(merged.exposures.sorted.rowname), drop = FALSE]
   return(list(ground.truth.catalog = catalog,

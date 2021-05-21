@@ -75,15 +75,19 @@ GenerateNoisyTumors <-
       stop("\nDirectory ", dir, " exists\n")
     }
 
+    # Get the mutation type of the noisy data
+    mutation.type <- GetMutationType(sig.name = colnames(signatures))
+
     ICAMSxtra::WriteExposure(exposure = retval$exposures,
                              file = file.path(dir,
                                               paste0("ground.truth.syn.exposures.noisy.neg.binom.size.",
-                                                     n.binom.size, ".csv")))
+                                                     n.binom.size, ".", mutation.type, ".csv")))
     ICAMS::WriteCatalog(catalog = ICAMS::as.catalog(retval$spectra),
                         file = file.path(dir,
                                          paste0("ground.truth.syn.catalog.noisy.neg.binom.size.",
-                                                n.binom.size, ".csv")))
+                                                n.binom.size, ".", mutation.type, ".csv")))
     ICAMS::WriteCatalog(catalog = signatures,
-                        file = file.path(dir, "ground.truth.syn.sigs.csv"))
+                        file = file.path(dir,
+                                         paste0("ground.truth.syn.sigs", ".", mutation.type, ".csv")))
     return(retval)
   }
