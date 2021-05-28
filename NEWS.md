@@ -23,6 +23,8 @@ mutation type information to the names of files generated.
 
 * Added new exported data `ID.MMR.params`.
 
+* Added two new internal functions `NumFromId` and `SortSigId`.
+
 ### Fixed
 * Fixed a bug in function `GenerateSynExposureOneSample` to round the mutations
 due to each signature.

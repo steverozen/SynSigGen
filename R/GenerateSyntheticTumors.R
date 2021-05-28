@@ -172,18 +172,6 @@ GenerateSyntheticTumors <- function(seed,
   merged.exposures <- MergeExposures(synthetic.exposures)
 
   # Sort the signatures according to number ID
-  NumFromId<- function(s) {
-    return(
-      as.numeric(
-        sub("[^0123456789]*(\\d+).*", "\\1", s, perl = TRUE)))
-  }
-
-  SortSigId <- function(sig.id) {
-    num <- NumFromId(sig.id)
-    sig.id2 <- sig.id[order(num)]
-    return(sig.id2)
-  }
-
   merged.exposures.sorted.rowname <-
     merged.exposures[SortSigId(rownames(merged.exposures)), ]
 
@@ -256,4 +244,18 @@ GenerateSyntheticTumors <- function(seed,
   return(list(ground.truth.catalog = catalog,
               ground.truth.signatures = ground.truth.signatures,
               ground.truth.exposures = merged.exposures.sorted.rowname))
+}
+
+#' @keywords internal
+NumFromId<- function(s) {
+  return(
+    as.numeric(
+      sub("[^0123456789]*(\\d+).*", "\\1", s, perl = TRUE)))
+}
+
+#' @keywords internal
+SortSigId <- function(sig.id) {
+  num <- NumFromId(sig.id)
+  sig.id2 <- sig.id[order(num)]
+  return(sig.id2)
 }
