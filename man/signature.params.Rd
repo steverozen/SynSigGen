@@ -3,7 +3,8 @@
 \docType{data}
 \name{signature.params}
 \alias{signature.params}
-\title{Empirical signature parameters using negative binomial distribution}
+\title{Empirical signature parameters of PCAWG7 platinum tumor exposures using
+negative binomial distribution}
 \format{
 An object of class \code{list} of length 3.
 }
@@ -11,10 +12,11 @@ An object of class \code{list} of length 3.
 signature.params
 }
 \description{
-Empirical signature parameters using negative binomial distribution
+Empirical signature parameters of PCAWG7 platinum tumor exposures using
+negative binomial distribution
 }
 \note{
-These parameters were generated using all tumors in PCAWG7 exposure
-  irrespective of their cancer types.
+These parameters were generated using all platinum tumors in PCAWG7
+  exposures irrespective of their cancer types.
 }
 \keyword{datasets}

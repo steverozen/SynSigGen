@@ -104,13 +104,22 @@ NULL
 #' @name SBS1SBS5datasetNames
 "SBS1SBS5datasetNames"
 
-#' Empirical signature parameters using negative binomial distribution
+#' Empirical signature parameters of PCAWG7 platinum tumor exposures using
+#' negative binomial distribution
 #'
-#' @note These parameters were generated using all tumors in PCAWG7 exposure
-#'   irrespective of their cancer types.
+#' @note These parameters were generated using all platinum tumors in PCAWG7
+#'   exposures irrespective of their cancer types.
 #'
 #' @name signature.params
 "signature.params"
+
+#' ID signature parameters from MMR (mismatch repair) deficient tumors
+#'
+#' @note These parameters were generated using the MMR deficient tumors in
+#'   PCAWG7 platinum ID exposures irrespective of their cancer types.
+#'
+#' @name ID.MMR.params
+"ID.MMR.params"
 
 
 # Quiets concerns of R CMD check about no visible binding for global variable
