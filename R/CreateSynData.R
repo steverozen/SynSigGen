@@ -333,7 +333,10 @@ GenerateSyntheticExposures <-
               sig.params)
     }
 
-    return(retval)
+    # Remove signatures that have zero exposure
+    retval1 <- retval[rowSums(retval) > 0, , drop = FALSE]
+
+    return(retval1)
   }
 
 #' Randomly assign present / absent to each of a set of signatures, and

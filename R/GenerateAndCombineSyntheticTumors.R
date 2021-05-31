@@ -56,6 +56,7 @@ GenerateAndCombineSyntheticTumors <- function(seed,
 
 MergeExposuresByCancerTypes <- function(list.of.exposures) {
   exposures.by.cancer.types <- lapply(list.of.exposures, FUN = function(x) {
+    one.exposure <- x
     return(PCAWG7::SplitPCAWGMatrixByTumorType(one.exposure))
   })
 
@@ -67,9 +68,4 @@ MergeExposuresByCancerTypes <- function(list.of.exposures) {
     one.cancer.type <- x
 
   })
-
-
-
-
-
 }

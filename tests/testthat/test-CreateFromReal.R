@@ -5,13 +5,15 @@ test_that("CreateFromReal PancAdeno-CA", {
   reg <- new.env()
   load("testdata/PancAdenoCA1000.retval.Rdata", envir = reg)
 
-    retval <- PancAdenoCA1000(seed = 123,
-                              num.syn.tumors = 5,
-                              top.level.dir  = tempfile(pattern = "regress.pancadeno"),
-                              regress.dir    = NULL, # "rdata/Panc-AdenoCA.123/",
-                              unlink         = TRUE)
-   expect_equal(retval$info.list[[1]]$sp.syn.exp,
-                round(reg$retval$info.list[[1]]$sp.syn.exp))
+  retval <- PancAdenoCA1000(seed = 123,
+                            num.syn.tumors = 5,
+                            top.level.dir  = tempfile(pattern = "regress.pancadeno"),
+                            regress.dir    = NULL, # "rdata/Panc-AdenoCA.123/",
+                            unlink         = TRUE)
+  to.compare <- round(reg$retval$info.list[[1]]$sp.syn.exp)
+  to.compare1 <- to.compare[rowSums(to.compare) > 0, , drop = FALSE]
+
+  expect_equal(retval$info.list[[1]]$sp.syn.exp, to.compare1)
 })
 
 test_that("CreateFromReal ManyTypes - Fast test - only generate 18 tumors", {
