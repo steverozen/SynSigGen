@@ -4,6 +4,11 @@
 about regenerating parameters from the synthetic exposures and compare with that
 from real exposures if `verbose > 0`.
 
+### Added
+* Added new argument `tumor.marker.name` in function `GenerateSyntheticTumors`. 
+
+* Added new argument `sig.params` in exported function `GetSynSigParamsFromExposures`.
+
 <br> 
 
 ## SynSigGen 1.0.9

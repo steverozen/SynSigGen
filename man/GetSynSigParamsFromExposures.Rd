@@ -8,7 +8,8 @@ GetSynSigParamsFromExposures(
   exposures,
   verbose = 0,
   distribution = NULL,
-  cancer.type = NULL
+  cancer.type = NULL,
+  sig.params = NULL
 )
 }
 \arguments{
@@ -26,6 +27,17 @@ log normal distribution with base 10.}
 
 \item{cancer.type}{Optional argument specifying the cancer type of the
 samples being analyzed.}
+
+\item{sig.params}{Empirical signature parameters generated using real
+exposures irrespective of their cancer types. If there
+is only one tumour having a signature in a cancer type in \code{exposures},
+we cannot fit the \code{distribution} to only one data point. Instead, we
+will use the empirical parameter from \code{sig.params}.
+Users can use \code{SynSigGen:::GetSynSigParamsFromExposuresOld} to generate
+their own signature parameters. If \code{NULL}(default), this function uses the
+PCAWG7 empirical signature parameters. See \code{signature.params} for more details.
+
+If \code{NULL}(default), this function uses}
 }
 \value{
 \itemize{

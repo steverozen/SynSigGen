@@ -79,6 +79,17 @@ GetMutationType <- function(sig.name) {
 #' @param cancer.type Optional argument specifying the cancer type of the
 #'   samples being analyzed.
 #'
+#' @param sig.params Empirical signature parameters generated using real
+#'   exposures irrespective of their cancer types. If there
+#'   is only one tumour having a signature in a cancer type in \code{exposures},
+#'   we cannot fit the \code{distribution} to only one data point. Instead, we
+#'   will use the empirical parameter from \code{sig.params}.
+#'   Users can use \code{SynSigGen:::GetSynSigParamsFromExposuresOld} to generate
+#'   their own signature parameters. If \code{NULL}(default), this function uses the
+#'   PCAWG7 empirical signature parameters. See \code{signature.params} for more details.
+#'
+#'   If \code{NULL}(default), this function uses
+#'
 #' @return
 #' * For log normal distribution,
 #' a data frame with one column for
@@ -108,7 +119,8 @@ GetMutationType <- function(sig.name) {
 #' @export
 
 GetSynSigParamsFromExposures <-
-  function(exposures, verbose = 0, distribution = NULL, cancer.type = NULL) {
+  function(exposures, verbose = 0, distribution = NULL, cancer.type = NULL,
+           sig.params = NULL) {
   stopifnot(ncol(exposures) > 0)
   integer.counts <- round(exposures, digits = 0)
   integer.counts <- integer.counts[rowSums(integer.counts) > 0 , , drop = FALSE]
@@ -151,9 +163,12 @@ GetSynSigParamsFromExposures <-
       }
       mutation.type <- GetMutationType(sig.name = rare.sig.names)
       retval <- ret1
+      if (is.null(sig.params)) {
+        sig.params <- SynSigGen::signature.params[[mutation.type]]
+      }
+
       sig.with.no.params <-
-        setdiff(rare.sig.names,
-                colnames(SynSigGen::signature.params[[mutation.type]]))
+        setdiff(rare.sig.names, colnames(sig.params))
       if (length(sig.with.no.params) > 0) {
         cat("\nWarning, some signatures present in only one sample across all the cancer types, dropping:\n")
         cat(sig.with.no.params, "\n")
@@ -161,10 +176,8 @@ GetSynSigParamsFromExposures <-
         retval <- retval[, !colnames(retval) %in% sig.with.no.params]
       }
 
-      retval["size", rare.sig.names] <-
-        SynSigGen::signature.params[[mutation.type]]["size", rare.sig.names]
-      retval["mu", rare.sig.names] <-
-        SynSigGen::signature.params[[mutation.type]]["mu", rare.sig.names]
+      retval["size", rare.sig.names] <- sig.params["size", rare.sig.names]
+      retval["mu", rare.sig.names] <- sig.params["mu", rare.sig.names]
     } else {
       retval <- ret1
     }
