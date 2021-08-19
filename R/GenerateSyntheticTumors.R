@@ -156,8 +156,12 @@ GenerateSyntheticTumors <- function(seed,
     one.cancer.type <- cancer.types[x]
     params.one.type <- params[[one.cancer.type]]
 
-    sample.prefix.names <- paste0(sample.prefix.name, one.cancer.type, "::",
-                                  tumor.marker.name, ".S")
+    if (is.null(tumor.marker.name)) {
+      sample.prefix.names <- paste0(sample.prefix.name, one.cancer.type, "::S")
+    } else {
+      sample.prefix.names <- paste0(sample.prefix.name, one.cancer.type, "::",
+                                    tumor.marker.name, ".S")
+    }
 
     # In case there is only one contributing signature to the cancer type
     if (ncol(params.one.type) == 1) {
