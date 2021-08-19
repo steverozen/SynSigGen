@@ -34,6 +34,15 @@
 #'
 #' @param verbose If > 0 cat various messages.
 #'
+#' @param sig.params Empirical signature parameters generated using real
+#'   exposures irrespective of their cancer types. If there
+#'   is only one tumour having a signature in a cancer type in \code{exposures},
+#'   we cannot fit the \code{distribution} to only one data point. Instead, we
+#'   will use the empirical parameter from \code{sig.params}.
+#'   Users can use \code{SynSigGen:::GetSynSigParamsFromExposuresOld} to generate
+#'   their own signature parameters. If \code{NULL}(default), this function uses the
+#'   PCAWG7 empirical signature parameters. See \code{signature.params} for more details.
+#'
 #' @return A list of three elements that comprise the
 #' synthetic data: \enumerate{
 #'  \item \code{ground.truth.catalog}: Spectra catalog with rows denoting mutation
@@ -93,7 +102,8 @@ GenerateSyntheticTumors <- function(seed,
                                     sample.prefix.name = "SP.Syn.",
                                     tumor.marker.name = NULL,
                                     overwrite       = TRUE,
-                                    verbose = 0)
+                                    verbose = 0,
+                                    sig.params = NULL)
 {
   # Check whether the signatures in real.exposures are all available in input.sigs
   sigs.not.available <- setdiff(rownames(real.exposures), colnames(input.sigs))
@@ -136,7 +146,8 @@ GenerateSyntheticTumors <- function(seed,
     return(GetSynSigParamsFromExposures(exposures = exposures.one.type,
                                         distribution = distribution,
                                         verbose = verbose,
-                                        cancer.type = x))
+                                        cancer.type = x,
+                                        sig.params = sig.params))
   })
   names(params) <- cancer.types
 
@@ -208,7 +219,8 @@ GenerateSyntheticTumors <- function(seed,
     check.params <- GetSynSigParamsFromExposures(exposures = syn.exp,
                                                  distribution = distribution,
                                                  verbose = verbose,
-                                                 cancer.type = one.cancer.type)
+                                                 cancer.type = one.cancer.type,
+                                                 sig.params = sig.params)
 
     # check.params should be similar to parms
     cat("# Parameters derived from synthetic exposures\n",

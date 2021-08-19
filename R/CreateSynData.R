@@ -88,8 +88,6 @@ GetMutationType <- function(sig.name) {
 #'   their own signature parameters. If \code{NULL}(default), this function uses the
 #'   PCAWG7 empirical signature parameters. See \code{signature.params} for more details.
 #'
-#'   If \code{NULL}(default), this function uses
-#'
 #' @return
 #' * For log normal distribution,
 #' a data frame with one column for

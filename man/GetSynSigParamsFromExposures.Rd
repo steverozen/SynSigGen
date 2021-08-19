@@ -35,9 +35,7 @@ we cannot fit the \code{distribution} to only one data point. Instead, we
 will use the empirical parameter from \code{sig.params}.
 Users can use \code{SynSigGen:::GetSynSigParamsFromExposuresOld} to generate
 their own signature parameters. If \code{NULL}(default), this function uses the
-PCAWG7 empirical signature parameters. See \code{signature.params} for more details.
-
-If \code{NULL}(default), this function uses}
+PCAWG7 empirical signature parameters. See \code{signature.params} for more details.}
 }
 \value{
 \itemize{

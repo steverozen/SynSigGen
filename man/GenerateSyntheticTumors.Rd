@@ -15,7 +15,8 @@ GenerateSyntheticTumors(
   sample.prefix.name = "SP.Syn.",
   tumor.marker.name = NULL,
   overwrite = TRUE,
-  verbose = 0
+  verbose = 0,
+  sig.params = NULL
 )
 }
 \arguments{
@@ -52,6 +53,15 @@ E.g. "MSI", "POLE".}
 \item{overwrite}{If TRUE, overwrite existing directories and files.}
 
 \item{verbose}{If > 0 cat various messages.}
+
+\item{sig.params}{Empirical signature parameters generated using real
+exposures irrespective of their cancer types. If there
+is only one tumour having a signature in a cancer type in \code{exposures},
+we cannot fit the \code{distribution} to only one data point. Instead, we
+will use the empirical parameter from \code{sig.params}.
+Users can use \code{SynSigGen:::GetSynSigParamsFromExposuresOld} to generate
+their own signature parameters. If \code{NULL}(default), this function uses the
+PCAWG7 empirical signature parameters. See \code{signature.params} for more details.}
 }
 \value{
 A list of three elements that comprise the

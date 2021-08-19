@@ -1,7 +1,7 @@
 Package: SynSigGen
 Type: Package
 Title: Create Catalogs of Synthetic Mutational Spectra
-Version: 1.0.9.9002
+Version: 1.0.9.9003
 Author: Steven G. Rozen, Yang Wu, Nanhai Jiang
 Maintainer: Steven G. Rozen <steverozen@gmail.com>
 Description: Create catalogs of synthetic mutational spectra for assessing the
