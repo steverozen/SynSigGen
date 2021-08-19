@@ -13,6 +13,7 @@ GenerateSyntheticTumors(
   real.exposures,
   distribution = NULL,
   sample.prefix.name = "SP.Syn.",
+  tumor.marker.name = NULL,
   overwrite = TRUE,
   verbose = 0
 )
@@ -44,6 +45,9 @@ which stands for negative binomial distribution. If \code{NULL} (Default),
 then this function uses log normal distribution with base 10.}
 
 \item{sample.prefix.name}{Prefix name to add to the synthetic tumors.}
+
+\item{tumor.marker.name}{Tumor marker name to add to the synthetic tumors.
+E.g. "MSI", "POLE".}
 
 \item{overwrite}{If TRUE, overwrite existing directories and files.}
 

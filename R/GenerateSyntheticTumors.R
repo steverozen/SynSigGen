@@ -27,6 +27,9 @@
 #'
 #' @param sample.prefix.name Prefix name to add to the synthetic tumors.
 #'
+#' @param tumor.marker.name Tumor marker name to add to the synthetic tumors.
+#'   E.g. "MSI", "POLE".
+#'
 #' @param overwrite If TRUE, overwrite existing directories and files.
 #'
 #' @param verbose If > 0 cat various messages.
@@ -88,6 +91,7 @@ GenerateSyntheticTumors <- function(seed,
                                     real.exposures,
                                     distribution = NULL,
                                     sample.prefix.name = "SP.Syn.",
+                                    tumor.marker.name = NULL,
                                     overwrite       = TRUE,
                                     verbose = 0)
 {
@@ -141,7 +145,8 @@ GenerateSyntheticTumors <- function(seed,
     one.cancer.type <- cancer.types[x]
     params.one.type <- params[[one.cancer.type]]
 
-    sample.prefix.names <- paste0(sample.prefix.name, one.cancer.type, "::S")
+    sample.prefix.names <- paste0(sample.prefix.name, one.cancer.type, "::",
+                                  tumor.marker.name, ".S")
 
     # In case there is only one contributing signature to the cancer type
     if (ncol(params.one.type) == 1) {
