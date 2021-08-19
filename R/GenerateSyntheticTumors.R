@@ -196,6 +196,10 @@ GenerateSyntheticTumors <- function(seed,
     syn.exp <- synthetic.exposures[[one.cancer.type]]
 
     # Sanity check; we regenerate the parameters from the synthetic exposures.
+    if (verbose > 0) {
+      cat("\nRegenerating parameters from the synthetic exposures and",
+          "compare with that from real exposures\n")
+    }
     check.params <- GetSynSigParamsFromExposures(exposures = syn.exp,
                                                  distribution = distribution,
                                                  verbose = verbose,

@@ -1,4 +1,12 @@
-## SynSigGen 1.0.8.90xx
+## SynSigGen 1.0.9.90xx
+### Updated 
+* Updated function `GenerateSyntheticTumors` to show informative messages
+about regenerating parameters from the synthetic exposures and compare with that
+from real exposures if `verbose > 0`.
+
+<br> 
+
+## SynSigGen 1.0.9
 ### Updated
 * Updated function  `GenerateSynExposureOneSample` to round the synthetic exposure to make
 it biologically reasonable.
