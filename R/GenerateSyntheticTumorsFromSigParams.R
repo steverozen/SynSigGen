@@ -1,4 +1,4 @@
-#' Generate synthetic tumors based on real exposures in one or more cancer types
+#' Generate synthetic tumors based on signature parameters in one or more cancer types
 #'
 #' @param seed A random seed to use.
 #'
@@ -6,8 +6,7 @@
 #'   necessary.
 #'
 #' @param cancer.types A vector of character strings denoting different cancer
-#'   types. This function will search \code{real.exposures} for exposures from
-#'   tumors matching these strings. See \code{PCAWG7::CancerTypes()} for example.
+#'   types. See \code{PCAWG7::CancerTypes()} for example.
 #'
 #' @param samples.per.cancer.type Number of synthetic tumors to create for each
 #'   cancer type. If it is \strong{one} number, then generate the \strong{same}
@@ -18,7 +17,10 @@
 #'
 #' @param input.sigs A matrix of signatures.
 #'
-#' @param real.exposures A matrix of real exposures.
+#' @param sig.params A list of empirical signature parameters generated using
+#'   real exposures for each \code{cancer.types}. This list should have names
+#'   that match \code{cancer.types}. Users can use
+#'   \code{GenerateListOfSigParams} to generate their own signature parameters.
 #'
 #' @param distribution Probability distribution used to generate synthetic
 #'   exposures due to active mutational signatures. Can be \code{neg.binom}
@@ -34,15 +36,6 @@
 #'
 #' @param verbose If > 0 cat various messages.
 #'
-#' @param sig.params Empirical signature parameters generated using real
-#'   exposures irrespective of their cancer types. If there
-#'   is only one tumour having a signature in a cancer type in \code{real.exposures},
-#'   we cannot fit the \code{distribution} to only one data point. Instead, we
-#'   will use the empirical parameter from \code{sig.params}.
-#'   Users can use \code{SynSigGen:::GetSynSigParamsFromExposuresOld} to generate
-#'   their own signature parameters. If \code{NULL}(default), this function uses the
-#'   PCAWG7 empirical signature parameters. See \code{signature.params} for more details.
-#'
 #' @return A list of three elements that comprise the
 #' synthetic data: \enumerate{
 #'  \item \code{ground.truth.catalog}: Spectra catalog with rows denoting mutation
@@ -53,38 +46,52 @@
 #'  in \code{ground.truth.catalog}.
 #' }
 #'
+#' @note See also \code{GenerateSyntheticTumors} which uses real exposure matrix
+#' instead of list of signature parameters to generate synthetic tumor.
+#'
 #' @export
 #'
 #' @examples
 #'
-#' # Generate synthetic tumors for DBS78
+#' # Generate synthetic tumors for DBS78 using log normal distribution
 #' input.sigs.DBS78 <- PCAWG7::signature$genome$DBS78
 #' real.exposures.DBS78 <- PCAWG7::exposure$PCAWG$DBS78
 #' cancer.types <- PCAWG7::CancerTypes()[1:5]
-#' DBS78.synthetic.tumors <-
-#'   GenerateSyntheticTumors(seed = 191906,
-#'                           dir = file.path(tempdir(), "DBS78.synthetic.tumors"),
+#' sig.params <- SynSigGen::signature.params$DBS78
+#' DBS78.sig.params <-
+#'   GenerateListOfSigParams(real.exposures = real.exposures.DBS78,
 #'                           cancer.types = cancer.types,
-#'                           samples.per.cancer.type = 30,
-#'                           input.sigs = input.sigs.DBS78,
-#'                           real.exposures = real.exposures.DBS78,
-#'                           sample.prefix.name = "SP.Syn."
-#'   )
+#'                           sig.params = sig.params)
+#'
+#' DBS78.synthetic.tumors <-
+#'   GenerateSyntheticTumorsFromSigParams(seed = 191906,
+#'                                        dir = file.path(tempdir(), "DBS78.synthetic.tumors"),
+#'                                        cancer.types = cancer.types,
+#'                                        samples.per.cancer.type = 30,
+#'                                        input.sigs = input.sigs.DBS78,
+#'                                        sig.params = DBS78.sig.params,
+#'                                        sample.prefix.name = "SP.Syn.")
 #'
 #' # Generate synthetic tumors for Indel (ID) using negative binomial distribution
 #' input.sigs.ID <- PCAWG7::signature$genome$ID
 #' real.exposures.ID <- PCAWG7::exposure$PCAWG$ID
 #' cancer.types <- PCAWG7::CancerTypes()[1:5]
-#' ID.synthetic.tumors <-
-#'   GenerateSyntheticTumors(seed = 191906,
-#'                           dir = file.path(tempdir(), "ID.synthetic.tumors"),
+#' sig.params <- SynSigGen::signature.params$ID
+#' ID.sig.params <-
+#'   GenerateListOfSigParams(real.exposures = real.exposures.ID,
 #'                           cancer.types = cancer.types,
-#'                           samples.per.cancer.type = 30,
-#'                           input.sigs = input.sigs.ID,
-#'                           real.exposures = real.exposures.ID,
 #'                           distribution = "neg.binom",
-#'                           sample.prefix.name = "SP.Syn."
-#'   )
+#'                           sig.params = sig.params)
+#'
+#' ID.synthetic.tumors <-
+#'   GenerateSyntheticTumorsFromSigParams(seed = 191906,
+#'                                        dir = file.path(tempdir(), "ID.synthetic.tumors"),
+#'                                        cancer.types = cancer.types,
+#'                                        samples.per.cancer.type = 30,
+#'                                        input.sigs = input.sigs.ID,
+#'                                        sig.params = ID.sig.params,
+#'                                        distribution = "neg.binom",
+#'                                        sample.prefix.name = "SP.Syn.")
 #'
 #' # Plot the synthetic catalog and exposures
 #' ICAMS::PlotCatalogToPdf(catalog = DBS78.synthetic.tumors$ground.truth.catalog,
@@ -92,37 +99,28 @@
 #' ICAMSxtra::PlotExposureToPdf(exposure = DBS78.synthetic.tumors$ground.truth.exposures,
 #'                              file = file.path(tempdir(), "DBS78.synthetic.exposures.pdf"),
 #'                              cex.xaxis = 0.7)
-GenerateSyntheticTumors <- function(seed,
-                                    dir,
-                                    cancer.types,
-                                    samples.per.cancer.type,
-                                    input.sigs,
-                                    real.exposures,
-                                    distribution = NULL,
-                                    sample.prefix.name = "SP.Syn.",
-                                    tumor.marker.name = NULL,
-                                    overwrite       = TRUE,
-                                    verbose = 0,
-                                    sig.params = NULL)
+GenerateSyntheticTumorsFromSigParams <- function(seed,
+                                                 dir,
+                                                 cancer.types,
+                                                 samples.per.cancer.type,
+                                                 input.sigs,
+                                                 sig.params,
+                                                 distribution = NULL,
+                                                 sample.prefix.name = "SP.Syn.",
+                                                 tumor.marker.name = NULL,
+                                                 overwrite       = TRUE,
+                                                 verbose = 0)
 {
-  # Check whether the signatures in real.exposures are all available in input.sigs
-  sigs.not.available <- setdiff(rownames(real.exposures), colnames(input.sigs))
-  if (length(sigs.not.available) > 0) {
-    stop("Some signatures in real.exposures are not available in input.sigs: ",
-         paste(sigs.not.available, collapse = " "))
+  # Check whether sig.params is a list and has names that can match cancer.types
+  if (!inherits(sig.params, "list")) {
+    stop("sig.params should be a list")
   }
 
-  # Check whether there are samples in real.exposures that belong to the specified
-  # cancer.types
-  to.check <- lapply(cancer.types, FUN = function(x) {
-    one.cancer.type <- x
-    sample.exists <- any(grepl(pattern = one.cancer.type, x = colnames(real.exposures)))
-    if(!sample.exists) {
-      stop("Cannot find any sample in real.exposures that belong to cancer type: ",
-           one.cancer.type,
-           ". Please make sure the sample names in real.exposure have cancer type information.")
-    }
-  })
+  if (!all(cancer.types %in% names(sig.params))) {
+    cancer.types.no.params <- setdiff(cancer.types, names(sig.params))
+    stop("Can not find signature parameters for some cancer types from sig.params: \n",
+         paste(cancer.types.no.params, collapse = " "))
+  }
 
   # Check whether to generate different number of synthetic tumors for each cancer type
   if (length(samples.per.cancer.type) > 1) {
@@ -138,18 +136,7 @@ GenerateSyntheticTumors <- function(seed,
   mutation.type <- GetMutationType(sig.name = colnames(input.sigs))
 
   suppressWarnings(set.seed(seed = seed, sample.kind = "Rounding"))
-
-  # Getting empirical estimates of key parameters describing exposures due to signatures
-  params <- lapply(cancer.types, FUN = function(x) {
-    indices.one.type <- grep(pattern = x, x = colnames(real.exposures))
-    exposures.one.type <- real.exposures[, indices.one.type, drop = FALSE]
-    return(GetSynSigParamsFromExposures(exposures = exposures.one.type,
-                                        distribution = distribution,
-                                        verbose = verbose,
-                                        cancer.type = x,
-                                        sig.params = sig.params))
-  })
-  names(params) <- cancer.types
+  params <- sig.params
 
   # Generate synthetic exposures from real exposures
   synthetic.exposures <- lapply(1:length(cancer.types), FUN = function(x) {
@@ -216,15 +203,11 @@ GenerateSyntheticTumors <- function(seed,
     syn.exp <- synthetic.exposures[[one.cancer.type]]
 
     # Sanity check; we regenerate the parameters from the synthetic exposures.
-    if (verbose > 0) {
-      cat("\nRegenerating parameters from the synthetic exposures and",
-          "compare with that from real exposures\n")
-    }
     check.params <- GetSynSigParamsFromExposures(exposures = syn.exp,
                                                  distribution = distribution,
                                                  verbose = verbose,
                                                  cancer.type = one.cancer.type,
-                                                 sig.params = sig.params)
+                                                 sig.params = parms)
 
     # check.params should be similar to parms
     cat("# Parameters derived from synthetic exposures\n",
@@ -271,16 +254,3 @@ GenerateSyntheticTumors <- function(seed,
               ground.truth.exposures = merged.exposures.sorted.rowname))
 }
 
-#' @keywords internal
-NumFromId<- function(s) {
-  return(
-    as.numeric(
-      sub("[^0123456789]*(\\d+).*", "\\1", s, perl = TRUE)))
-}
-
-#' @keywords internal
-SortSigId <- function(sig.id) {
-  num <- NumFromId(sig.id)
-  sig.id2 <- sig.id[order(num)]
-  return(sig.id2)
-}

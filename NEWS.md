@@ -10,6 +10,9 @@ from real exposures if `verbose > 0`.
 * Added new argument `sig.params` in exported functions
 `GetSynSigParamsFromExposures` and `GenerateSyntheticTumors`.
 
+* Added two new exported functions `GenerateListOfSigParams` and
+`GenerateSyntheticTumorsFromSigParams`.
+
 <br> 
 
 ## SynSigGen 1.0.9
