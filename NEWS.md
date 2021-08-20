@@ -1,4 +1,4 @@
-## SynSigGen 1.0.9.90xx
+## SynSigGen 1.0.10
 ### Updated 
 * Updated function `GenerateSyntheticTumors` to show informative messages
 about regenerating parameters from the synthetic exposures and compare with that
