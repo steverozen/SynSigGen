@@ -30,7 +30,7 @@ then this function uses log normal distribution with base 10.}
 exposures irrespective of their cancer types. If there
 is only one tumor having a signature in a cancer type in \code{real.exposures},
 we cannot fit the \code{distribution} to only one data point. Instead, we
-will use the empirical parameter from \code{sig.params}.
+will use the empirical parameter \code{size} from \code{sig.params}.
 Users can use \code{SynSigGen:::GetSynSigParamsFromExposuresOld} to generate
 their own signature parameters. If \code{NULL}(default), this function uses the
 PCAWG7 empirical signature parameters. See \code{signature.params} for more details.}

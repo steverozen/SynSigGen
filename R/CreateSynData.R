@@ -39,7 +39,9 @@ SynSigParamsOneSignature <- function(counts, target.size = 1, distribution = NUL
 
     if (length(counts.per.mb) == 1) {
       # If there is only one data point, don't try to fit the data
-      return(c(prob = prevalence, size = NA, mu = NA))
+      # But use the original mutation count be the value of parameter mu
+      names(counts.per.mb) <- NULL
+      return(c(prob = prevalence, size = NA, mu = counts.per.mb))
     } else {
       fit <- fitdistrplus::mledist(counts.per.mb, distr = "nbinom")
 
@@ -83,7 +85,7 @@ GetMutationType <- function(sig.name) {
 #'   exposures irrespective of their cancer types. If there
 #'   is only one tumor having a signature in a cancer type in \code{exposures},
 #'   we cannot fit the \code{distribution} to only one data point. Instead, we
-#'   will use the empirical parameter from \code{sig.params}.
+#'   will use the empirical parameter \code{size} from \code{sig.params}.
 #'   Users can use \code{SynSigGen:::GetSynSigParamsFromExposuresOld} to generate
 #'   their own signature parameters. If \code{NULL}(default), this function uses the
 #'   PCAWG7 empirical signature parameters. See \code{signature.params} for more details.
@@ -157,7 +159,7 @@ GetSynSigParamsFromExposures <-
         cat("\nAnalyzing samples", cancer.type)
         cat("\nWarning, some signatures present in only one sample:\n")
         cat(rare.sig.names, "\n")
-        cat("Using the empirical signature parameters from all cancer types\n")
+        cat("Using the empirical signature parameters 'size' from all cancer types\n")
       }
       mutation.type <- GetMutationType(sig.name = rare.sig.names)
       retval <- ret1
@@ -174,8 +176,9 @@ GetSynSigParamsFromExposures <-
         retval <- retval[, !colnames(retval) %in% sig.with.no.params]
       }
 
+      # Only use the size parameter from sig.params
       retval["size", rare.sig.names] <- sig.params["size", rare.sig.names]
-      retval["mu", rare.sig.names] <- sig.params["mu", rare.sig.names]
+      # retval["mu", rare.sig.names] <- sig.params["mu", rare.sig.names]
     } else {
       retval <- ret1
     }

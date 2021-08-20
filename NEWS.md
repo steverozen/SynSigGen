@@ -1,3 +1,12 @@
+## SynSigGen 1.0.11
+### **Important** Update 
+* Updated exported function `GetSynSigParamsFromExposures` and internal function
+`SynSigParamsOneSignature` to only use the `size` parameter from empirical
+signature parameters if there is only one data to fit the negative binomial
+distribution. The `mu` parameter will be using the original mutation count.
+
+<br> 
+
 ## SynSigGen 1.0.10
 ### Updated 
 * Updated function `GenerateSyntheticTumors` to show informative messages
