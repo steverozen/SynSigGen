@@ -56,7 +56,7 @@ E.g. "MSI", "POLE".}
 
 \item{sig.params}{Empirical signature parameters generated using real
 exposures irrespective of their cancer types. If there
-is only one tumour having a signature in a cancer type in \code{real.exposures},
+is only one tumor having a signature in a cancer type in \code{real.exposures},
 we cannot fit the \code{distribution} to only one data point. Instead, we
 will use the empirical parameter from \code{sig.params}.
 Users can use \code{SynSigGen:::GetSynSigParamsFromExposuresOld} to generate
