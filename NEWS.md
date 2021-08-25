@@ -1,3 +1,10 @@
+## SynSigGen 1.0.12
+### Update 
+* Updated exported function `MergeExposures` to sort the signature ids of the 
+merged exposure.
+
+<br> 
+
 ## SynSigGen 1.0.11
 ### **Important** Update 
 * Updated exported function `GetSynSigParamsFromExposures` and internal function

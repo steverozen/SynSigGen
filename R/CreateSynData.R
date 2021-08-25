@@ -729,7 +729,7 @@ MergeExposures <- function(list.of.exposures) {
   for (i in 2:length(list.of.exposures)) {
     start <- Merge2Exposures(start, list.of.exposures[[i]])
   }
-  start2 <- start[order(rownames(start)), ]
+  start2 <- start[SortSigId(rownames(start)), , drop = FALSE]
   return(as.matrix(start2))
 }
 
