@@ -3,6 +3,8 @@
 * Updated exported function `MergeExposures` to sort the signature ids of the 
 merged exposure.
 
+* Suppressed warning messages that came from internal function `NumFromId`.
+
 ### Bug fix
 * Fixed bug in internal function `GetMutationType` to check all the signature
 names to determine the mutation type.

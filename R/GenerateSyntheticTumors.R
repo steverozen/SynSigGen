@@ -270,8 +270,12 @@ GenerateSyntheticTumors <- function(seed,
 #' @keywords internal
 NumFromId<- function(s) {
   return(
-    as.numeric(
-      sub("[^0123456789]*(\\d+).*", "\\1", s, perl = TRUE)))
+    # If there is no digit in the sig id, sub will return the original string
+    # and as.numeric will return NA with warning
+    suppressWarnings(
+      as.numeric(
+        sub("[^0123456789]*(\\d+).*", "\\1", s, perl = TRUE))
+    ))
 }
 
 #' @keywords internal
