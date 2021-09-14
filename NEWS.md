@@ -1,7 +1,11 @@
-## SynSigGen 1.0.12
+## SynSigGen 1.0.12.90xx
 ### Update 
 * Updated exported function `MergeExposures` to sort the signature ids of the 
 merged exposure.
+
+### Bug fix
+* Fixed bug in internal function `GetMutationType` to check all the signature
+names to determine the mutation type.
 
 <br> 
 

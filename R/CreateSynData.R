@@ -55,11 +55,11 @@ SynSigParamsOneSignature <- function(counts, target.size = 1, distribution = NUL
 
 #' @keywords internal
 GetMutationType <- function(sig.name) {
-  if (any(grepl(pattern = "SBS", x = sig.name))) {
+  if (all(grepl(pattern = "SBS", x = sig.name))) {
     return("SBS96")
-  } else if (any(grepl(pattern = "DBS", x = sig.name))) {
+  } else if (all(grepl(pattern = "DBS", x = sig.name))) {
     return("DBS78")
-  } else if (any(grepl(pattern = "ID", x = sig.name))) {
+  } else if (all(grepl(pattern = "ID", x = sig.name))) {
     return("ID")
   }
 }
