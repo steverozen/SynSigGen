@@ -1,4 +1,4 @@
-## SynSigGen 1.0.12.90xx
+## SynSigGen 1.0.12
 ### Update 
 * Updated exported function `MergeExposures` to sort the signature ids of the 
 merged exposure.
