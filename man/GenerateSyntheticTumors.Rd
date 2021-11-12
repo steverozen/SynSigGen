@@ -48,7 +48,7 @@ then this function uses log normal distribution with base 10.}
 \item{sample.prefix.name}{Prefix name to add to the synthetic tumors.}
 
 \item{tumor.marker.name}{Tumor marker name to add to the synthetic tumors.
-E.g. "MSI", "POLE".}
+E.g. "MSI-H", "POLE".}
 
 \item{overwrite}{If TRUE, overwrite existing directories and files.}
 

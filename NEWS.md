@@ -1,3 +1,10 @@
+## SynSigGen 1.0.13
+### Removed
+* Removed exported data `ID.MMR.params` because the list of MSI-H tumors is not
+complete when generating the old data.
+
+<br> 
+
 ## SynSigGen 1.0.12
 ### Update 
 * Updated exported function `MergeExposures` to sort the signature ids of the 

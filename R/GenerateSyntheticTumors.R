@@ -28,7 +28,7 @@
 #' @param sample.prefix.name Prefix name to add to the synthetic tumors.
 #'
 #' @param tumor.marker.name Tumor marker name to add to the synthetic tumors.
-#'   E.g. "MSI", "POLE".
+#'   E.g. "MSI-H", "POLE".
 #'
 #' @param overwrite If TRUE, overwrite existing directories and files.
 #'
