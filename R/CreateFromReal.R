@@ -379,26 +379,33 @@ RCCOvary1000 <- function(seed = 191905,
 #'
 #' @param seed A random seed to use.
 #'
-#' @param regress Whether to compare the result with
-#' local copy of dataset using a \code{diff}.
+#' @param regress.dir If not \code{NULL}, compare the result to
+#' the contents of this directory with a \code{diff}.
+#'
+#' @param top.level.dir The directory in which to put the output; will
+#' be created if necessary.
+#'
+#' @param unlink If \code{TRUE} and \code{!is.null(regress.dir)}, then
+#' unlink the result directory if there are no differences.
 #'
 #' @export
 
-BladderSkin1000 <- function(seed = 191906, regress = FALSE) {
-  if (regress) {
-    regress.dir <-
-      "data-raw/long.test.regression.data/syn.2.7a.7b.bladder.and.melanoma/"
-  } else regress.dir <- NULL
+BladderSkin1000 <- function(
+  seed = 191906,
+  regress.dir = "data-raw/long.test.regression.data/syn.2.7a.7b.bladder.and.melanoma/",
+  top.level.dir  = "../2.7a.7b.bladder.and.melanoma.191906",
+  unlink = FALSE
+  ) {
 
   CreateFromReal(
     seed            = seed,
-    enclosing.dir   = "..",
+    top.level.dir   = top.level.dir,
     num.syn.tumors  = 500,
     cancer.types    = c("Bladder-TCC", "Skin-Melanoma" ),
-    data.suite.name = "2.7a.7b.bladder.and.melanoma",
     sa.exp          = SynSigGen::sa.all.real.exposures,
     sp.exp          = SynSigGen::sp.all.real.exposures,
     regress.dir = regress.dir,
+    unlink          = unlink,
     bladder.regress.hack = TRUE
   )
 }
@@ -411,31 +418,38 @@ BladderSkin1000 <- function(seed = 191906, regress = FALSE) {
 #'
 #' @param seed A random seed to use.
 #'
-#' @param regress Whether to compare the result with
-#' local copy of dataset using a \code{diff}.
+#' @param regress.dir If not \code{NULL}, compare the result to
+#' the contents of this directory with a \code{diff}.
+#'
+#' @param top.level.dir The directory in which to put the output; will
+#' be created if necessary.
+#'
+#' @param unlink If \code{TRUE} and \code{!is.null(regress.dir)}, then
+#' unlink the result directory if there are no differences.
 #'
 #' @export
 
-ManyTypes2700 <- function(seed = 191906, regress = FALSE) {
-  if (regress) {
-    regress.dir <-
-      "data-raw/long.test.regression.data/syn.many.types/"
-  } else regress.dir <- NULL
+ManyTypes2700 <- function(
+  seed = 191906,
+  regress.dir = "data-raw/long.test.regression.data/syn.many.types/",
+  top.level.dir = "../Many.types.191906",
+  unlink = FALSE) {
+
   # suppressWarnings(RNGkind(sample.kind = "Rounding"))
   # For compatibility with R < 3.6.0
   CreateFromReal(
     seed           = seed,
-    enclosing.dir  = "..",
+    top.level.dir  = top.level.dir,
     num.syn.tumors = 300,
     cancer.types   = c("Bladder-TCC",    "Eso-AdenoCA",
                        "Breast-AdenoCA", "Lung-SCC",
                        "Kidney-RCC",     "Ovary-AdenoCA",
                        "Bone-Osteosarc", "Cervix-AdenoCA",
                        "Stomach-AdenoCA"),
-    data.suite.name = "Many.types",
     sa.exp          = sa.all.real.exposures,
     sp.exp          = sp.all.real.exposures,
-    regress.dir     = regress.dir
+    regress.dir     = regress.dir,
+    unlink          = unlink
   )
 
 }

@@ -45,6 +45,7 @@ repertoire of mutational signatures in human cancer*
 (<https://doi.org/10.1038/s41586-020-1943-3>):
 
 ``` r
+## Users should specify regress.dir = NULL unless while debugging.
 PancAdenoCA1000()
 ManyTypes2700()
 RCCOvary1000()
