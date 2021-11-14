@@ -414,7 +414,7 @@ BladderSkin1000 <- function(seed = 191906, regress = FALSE) {
 #' @param regress Whether to compare the result with
 #' local copy of dataset using a \code{diff}.
 #'
-#' @keywords export
+#' @export
 
 ManyTypes2700 <- function(seed = 191906, regress = FALSE) {
   if (regress) {

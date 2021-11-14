@@ -18,7 +18,7 @@ Remotes:
     github::steverozen/ICAMSxtra@master,
     github::steverozen/PCAWG7@master
 Depends: R (>= 4.0)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Suggests: 
     testthat,
     knitr,
