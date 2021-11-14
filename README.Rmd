@@ -66,13 +66,13 @@ Use functions below to generate 11 spectra datasets used in paper
 PancAdenoCA1000()
 ManyTypes2700()
 RCCOvary1000()
-Create.3.4.40.Abstract()
+Create.3.5.40.Abstract()
 BladderSkin1000()
 Create.2.7a.7b.Abstract()
 CreateRandomSyn()
 ```
 
-### Generate synthetic spectra used in paper *"Performance of Mutational Signature Software on Correlated Signatures"*
+### Generate synthetic spectra used in paper *"Accuracy of Mutational Signature Software on Correlated Signatures"*
 
 To generate 20 spectra data sets with mutation load of 
 and correlation between SBS1 and SBS5 varied, use function 
