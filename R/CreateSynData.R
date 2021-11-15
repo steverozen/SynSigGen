@@ -347,6 +347,14 @@ GenerateSyntheticExposures <-
               sig.params)
     }
 
+    # In some rare cases, we only want to generate one synthetic tumor
+    # with only one signature. Then variable "retval" generated above
+    # will be a numeric number instead of a matrix. Using rowSums will
+    # cause an error
+    if (!inherits(retval, "matrix")) {
+      return(retval)
+    }
+
     # Remove signatures that have zero exposure
     retval1 <- retval[rowSums(retval) > 0, , drop = FALSE]
 
@@ -590,7 +598,6 @@ GenerateSynExposureOneSample <-
         i.cat <- round(catalog, digits = 0)
       }
     }
-
     return(tumor)
   }
 

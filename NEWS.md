@@ -1,3 +1,10 @@
+## SynSigGen 1.0.13.9000
+### Fixed
+* Fixed a bug in `GenerateSyntheticExposures` when generating only one synthetic tumor
+with only one signature.
+
+<br> 
+
 ## SynSigGen 1.0.13
 ### Removed
 * Removed exported data `ID.MMR.params` because the list of MSI-H tumors is not
