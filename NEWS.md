@@ -16,6 +16,8 @@ added examples.
 * Fixed a bug in `GetSynSigParamsFromExposures()` when the exposures only have one row that are
 not all zeros.
 
+* Fixed failed test `test-AddNoise.R` after upgrading dependent package [`PCAWG7`](https://github.com/steverozen/PCAWG7) to version 0.1.0+. This is done by changing `PCAWG7::signature` to `PCAWG7::COSMIC.v3.0$signature`, as the new `PCAWG7` package no longer used COSMIC-v3.0 as default signature set.
+
 ## SynSigGen 1.0.5
 ### Simplified
 * Simplified folder structure of SBS1-SBS5-correlated dataset,
