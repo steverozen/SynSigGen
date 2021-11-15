@@ -55,6 +55,10 @@ Create.2.7a.7b.Abstract()
 CreateRandomSyn()
 ```
 
+The description of 11 data sets are available at section *“Description
+of each suite of synthetic data sets”* in Supplementary Note 2 of the
+paper.
+
 ### Generate synthetic spectra used in paper *“Accuracy of Mutational Signature Software on Correlated Signatures”*
 
 To generate 20 spectra data sets with mutation load of and correlation

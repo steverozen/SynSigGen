@@ -1,14 +1,14 @@
 CMD
-CorrelatedSyntheticData
-CreateSBS
 DBS
 DNP
 ICAMS
 INDEL
+LF
 MultiModalMuSig
 PCAWG
 RCC
 RCCOvary
+README
 RNGInUse
 Rsq
 SBS
@@ -21,6 +21,7 @@ SomeCancerType
 SynSigGen’
 TCC
 TwoCorreSigGen
+WinMerge
 abc
 bioc
 csv
@@ -30,6 +31,7 @@ doi
 github
 https
 hypermutated
+md
 megabase
 megabases
 modelled
