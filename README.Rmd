@@ -87,10 +87,10 @@ CreateSBS1SBS5CorrelatedSyntheticData()
 ## Notes for functions to generate legacy data sets (1 & 2)
 
 * The wrapper functions used to generate data sets in [_Nature_ paper](https://doi.org/10.1038/s41586-020-1943-3) are in R files 
-with suffix "_Nature".
+with suffix "_Nat".
 
 * The wrapper functions used to generate data sets for paper on 20 
-correlated data sets are in R files with suffix "SBS1SBS5".
+correlated data sets are in file “CreateSynSBS1SBS5Correlated.R”.
 
 * These wrapper functions are primarily used to generate legacy data sets,
 as they don't round the exposures to integers. 
