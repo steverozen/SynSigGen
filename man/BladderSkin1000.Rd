@@ -4,13 +4,24 @@
 \alias{BladderSkin1000}
 \title{Generate synthetic data sets modeled on bladder TCC and skin melanoma.}
 \usage{
-BladderSkin1000(seed = 191906, regress = FALSE)
+BladderSkin1000(
+  seed = 191906,
+  regress.dir = "data-raw/long.test.regression.data/syn.2.7a.7b.bladder.and.melanoma/",
+  top.level.dir = "../2.7a.7b.bladder.and.melanoma.191906",
+  unlink = FALSE
+)
 }
 \arguments{
 \item{seed}{A random seed to use.}
 
-\item{regress}{Whether to compare the result with
-local copy of dataset using a \code{diff}.}
+\item{regress.dir}{If not \code{NULL}, compare the result to
+the contents of this directory with a \code{diff}.}
+
+\item{top.level.dir}{The directory in which to put the output; will
+be created if necessary.}
+
+\item{unlink}{If \code{TRUE} and \code{!is.null(regress.dir)}, then
+unlink the result directory if there are no differences.}
 }
 \description{
 Creates spectra dataset consists of 500 synthetic bladder

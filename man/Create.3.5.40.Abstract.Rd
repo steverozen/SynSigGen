@@ -7,7 +7,10 @@
 Create.3.5.40.Abstract(
   seed = 44,
   overwrite = TRUE,
-  regress.dir = "data-raw/long.test.regression.data/syn.3.5.40.abst/"
+  regress.dir = "data-raw/long.test.regression.data/syn.3.5.40.abst/",
+  num.syn.tumors = 1000,
+  top.level.dir = paste0("../syn.3.5.40.abst.", seed),
+  unlink = FALSE
 )
 }
 \arguments{
