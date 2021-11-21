@@ -1,3 +1,15 @@
+## SynSigGen 1.1.0
+### Backward compatibility fix
+
+Due to fix in function `GenerateSynExposureOneSample` to round the mutations
+due to each signature in version 1.0.9, the wrapper functions to generate 
+data sets for Nature paper and SBS1-SBS5 paper fail to reproduce the data sets
+used by these papers.
+
+In SynSigGen 1.1.0, we disabled the rounding of mutations due to each signature
+when running these data generators, so that these legacy data sets can be reproduced.
+
+
 ## SynSigGen 1.0.13
 ### Removed
 * Removed exported data `ID.MMR.params` because the list of MSI-H tumors is not
