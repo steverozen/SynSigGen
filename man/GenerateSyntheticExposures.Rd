@@ -9,7 +9,8 @@ GenerateSyntheticExposures(
   num.samples = 10,
   name = "synthetic",
   sig.matrix = NULL,
-  distribution = NULL
+  distribution = NULL,
+  round.exposure = TRUE
 )
 }
 \arguments{
@@ -35,6 +36,10 @@ GenerateSyntheticExposures(
 exposures due to active mutational signatures. Can be \code{neg.binom}
 which stands for negative binomial distribution. If \code{NULL} (Default),
 then this function uses log normal distribution with base 10.}
+
+\item{round.exposure}{Whether the exposures should be rounded to
+an integer. Set as \code{FALSE} only when reproducing legacy data
+sets.}
 }
 \value{
 A matrix with the rows being each signature and the columns being

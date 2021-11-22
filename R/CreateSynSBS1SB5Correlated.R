@@ -110,7 +110,8 @@ GenSBS1SBS5ExposureOneTumor <- function(
         GenerateSynExposureOneSample(tumor = sig.presence,
                                      sig.interest = main.signature,
                                      burden.per.sig = mean.per.sig,
-                                     sd.per.sig = sd.per.sig)
+                                     sd.per.sig = sd.per.sig,
+                                     round.exposure = FALSE)
       main.signature.count.log <- log10(exposure.counts[main.signature,1])
 
       if(exposure.counts[main.signature,1] >= main.signature.lower.thres )
@@ -145,7 +146,8 @@ GenSBS1SBS5ExposureOneTumor <- function(
         GenerateSynExposureOneSample(tumor = sig.presence,
                                      sig.interest = correlated.signature,
                                      burden.per.sig = mean.per.sig,
-                                     sd.per.sig = sd.per.sig)
+                                     sd.per.sig = sd.per.sig,
+                                     round.exposure = FALSE)
 
 
       if( exposure.counts[correlated.signature,1] >= correlated.signature.lower.thres )

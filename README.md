@@ -45,7 +45,10 @@ repertoire of mutational signatures in human cancer*
 (<https://doi.org/10.1038/s41586-020-1943-3>), published in *Nature*:
 
 ``` r
-## Users should specify regress.dir = NULL unless while debugging.
+# Users should specify regress.dir = NULL unless while debugging.
+#
+# Users should specify top.level.dir to the destination folder
+# for data sets. Otherwise default paths will be used.
 PancAdenoCA1000()
 ManyTypes2700()
 RCCOvary1000()
