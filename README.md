@@ -43,11 +43,17 @@ remotes::install_github(repo = "steverozen/SynSigGen", ref = "master")
 Use functions below to generate 11 spectra datasets used in paper *The
 repertoire of mutational signatures in human cancer*
 (<https://doi.org/10.1038/s41586-020-1943-3>), published in *Nature*.
-The data sets are avilable at
+The data sets are available at
 [Synapse](https://www.synapse.org/#!Synapse:syn18497223):
 
 ``` r
-# Users should specify regress.dir = NULL unless while debugging.
+# Users should specify regress.dir = NULL unless for comparison
+# with original data sets.
+# 
+# Compare tools (e.g. BeyondCompare, Meld) is recommended 
+# over specifying regress.dir,
+# because the latter might raise an error even when query 
+# and original data sets are identical.
 #
 # Users should specify top.level.dir to the destination folder
 # for data sets. Otherwise default paths will be used.
@@ -73,6 +79,9 @@ between SBS1 and SBS5 varied, use function
 CreateSBS1SBS5CorrelatedSyntheticData()
 ```
 
+The original data sets are available at
+[Zenodo](https://doi.org/10.5281/zenodo.2636980).
+
 ## Notes for functions to generate legacy data sets (1 & 2)
 
 -   The wrapper functions used to generate data sets in [*Nature*
@@ -90,4 +99,4 @@ CreateSBS1SBS5CorrelatedSyntheticData()
 
 ## Reference manual
 
-<https://github.com/steverozen/SynSigGen/blob/master/data-raw/SynSigGen_1.0.13.pdf>
+<https://github.com/steverozen/SynSigGen/blob/mSigHdp_plus_legacy/data-raw/SynSigGen_1.1.0.pdf>
