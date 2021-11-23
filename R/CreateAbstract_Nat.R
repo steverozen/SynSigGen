@@ -29,6 +29,15 @@ three.5.40.abstract.for.ludmil.2019.08.18 <- function() {
 #' @param regress.dir If not \code{NULL}, compare the result to
 #' the contents of this directory with a \code{diff}.
 #'
+#' @param num.syn.tumors The number of tumors to create \strong{for each cancer
+#'    type} in \code{cancer.types}.
+#'
+#' @param top.level.dir The directory in which to put the output; will
+#'        be created if necessary.
+#'
+#' @param unlink If \code{TRUE} and \code{!is.null(regress.dir)}, then
+#'       unlink the result directory if there are no differences.
+#'
 #' @export
 
 Create.3.5.40.Abstract <-
