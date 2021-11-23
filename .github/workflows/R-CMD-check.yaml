@@ -3,10 +3,10 @@
 on:
   push:
     branches:
-      - mSigHdp_plus_legacy
+      - 1.1.0-branch
   pull_request:
     branches:
-      - mSigHdp_plus_legacy
+      - 1.1.0-branch
 
 name: R-CMD-check
 
