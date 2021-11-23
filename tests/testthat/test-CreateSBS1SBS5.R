@@ -6,8 +6,6 @@ test_that("CreateSBS1SBS5CorrelatedSyntheticData", {
   if (run.manually) {
     skip_if_not_installed("ICAMS", minimum_version = "2.0.9")
 
-    tmp.top.level.dir <- "./tmp.SBS1.5/"
-
     expect_true(
       CreateSBS1SBS5CorrelatedSyntheticData(
         top.level.dir = "./tmp.SBS1.5/",

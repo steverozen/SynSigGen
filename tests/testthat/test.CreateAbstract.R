@@ -5,7 +5,7 @@ test_that("Create.2.7a.7b.Abstract", {
   expect_true(
     Create.2.7a.7b.Abstract(seed = 123,
                     num.syn.tumors = 5,
-                    top.level.dir  = tempfile(pattern = "regress.2.7a.7b.abstract."),
+                    top.level.dir  = tempfile(pattern = "regress.2.7a.7b.abstract"),
                     regress.dir    = "rdata/abst.2.7a.7b/",
                     unlink         = TRUE))
 })

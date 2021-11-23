@@ -1,6 +1,6 @@
 context("Generate spectra with random exposures and random synthetic signature profiles")
 
-test_that("GenerateAllRandomSP)", {
+test_that("GenerateAllRandomSP", {
   run.manually <- FALSE # If FALSE then skipped
   if (run.manually) {
     newdir <- "tmp.SP.rand.exp.rand.sigs"

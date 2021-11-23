@@ -42,7 +42,9 @@ remotes::install_github(repo = "steverozen/SynSigGen", ref = "master")
 
 Use functions below to generate 11 spectra datasets used in paper *The
 repertoire of mutational signatures in human cancer*
-(<https://doi.org/10.1038/s41586-020-1943-3>), published in *Nature*:
+(<https://doi.org/10.1038/s41586-020-1943-3>), published in *Nature*.
+The data sets are avilable at
+[Synapse](https://www.synapse.org/#!Synapse:syn18497223):
 
 ``` r
 # Users should specify regress.dir = NULL unless while debugging.
