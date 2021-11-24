@@ -10,6 +10,7 @@ GenerateNoisyTumors(
   input.exposure,
   signatures,
   n.binom.size = NULL,
+  gaussian.noise.level = NULL,
   overwrite = TRUE
 )
 }
@@ -19,26 +20,46 @@ GenerateNoisyTumors(
 \item{dir}{The directory in which to put the output; will be created if
 necessary.}
 
-\item{input.exposure}{A matrix of exposures.}
+\item{input.exposure}{The exposures to which to add noise; a numeric matrix
+or data frame in which the rows are signatures and the columns are
+samples. Each cell indicates the number of mutations due to a particular
+signature in a particular sample.}
 
-\item{signatures}{A matrix of signatures.}
+\item{signatures}{The signatures in the exposure; the column names
+of \code{signatures} have to include all row names in
+\code{input.exposure}; can be an \code{\link[ICAMS]{ICAMS}}
+catalog or a numerical matrix or data frame.}
 
 \item{n.binom.size}{If non \code{NULL}, use negative binomial noise
 with this size parameter; see \code{\link[stats]{NegBinomial}}.
-If \code{NULL}, then use Poisson distribution to do the resampling.}
+If \code{NULL}, use Poisson noise.}
+
+\item{gaussian.noise.level}{If non \code{NULL}, add Guassian noise to the
+original mutations of a mutation type in the sample.}
 
 \item{overwrite}{If TRUE, overwrite existing directories and files.}
-}
-\value{
-A list with the elements \describe{
-\item{expsoures}{The numbers of mutations due to each signature
-   after adding noise}
-\item{spectra}{The spectra based on the noisy signature exposures.}
-}
 }
 \description{
 Generate noisy tumors from available exposures
 }
+\section{Value}{
+
+If \code{gaussian.noise.level = NULL},
+a list with the elements:
+\itemize{
+\item \code{expsoures}: The numbers of mutations due to each signature
+after adding noise.
+\item \code{spectra}: The spectra based on the noisy signature exposures.
+}
+
+If \code{gaussian.noise.level} is not NULL, a list of the elements:
+\itemize{
+\item \code{expsoures}: The original \code{input.exposure}.
+\item \code{spectra}: Spectra with Guassian noise added to mutations of each mutation
+type in the sample according to \code{gaussian.noise.level}.
+}
+}
+
 \examples{
 
 # Generate synthetic tumors for Indel (ID) using negative binomial distribution

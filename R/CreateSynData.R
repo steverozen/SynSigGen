@@ -1042,7 +1042,7 @@ NewCreateAndWriteCatalog <-
   }
 
 
-#' Exposures and spectra with Poisson or negative binomial noise in exposures.
+#' Add noise to exposures
 #'
 #' @param input.exposure The exposures to which to add noise; a numeric matrix
 #'    or data frame in which the rows are signatures and the columns are
@@ -1058,17 +1058,29 @@ NewCreateAndWriteCatalog <-
 #'     with this size parameter; see \code{\link[stats]{NegBinomial}}.
 #'     If \code{NULL}, use Poisson noise.
 #'
-#' @return A list with the elements \describe{
-#' \item{expsoures}{The numbers of mutations due to each signature
-#'    after adding noise}
-#' \item{spectra}{The spectra based on the noisy signature exposures.}
-#' }
+#' @param gaussian.noise.level If non \code{NULL}, add Guassian noise to the
+#'   original mutations of a mutation type in the sample.
 #'
-#' @importFrom stats rpois rnbinom
+#' @section Value:
+#' If `gaussian.noise.level = NULL`,
+#' a list with the elements:
+#'   * `expsoures`: The numbers of mutations due to each signature
+#'    after adding noise.
+#'   * `spectra`: The spectra based on the noisy signature exposures.
+#'
+#' If `gaussian.noise.level` is not NULL, a list of the elements:
+#'   * `expsoures`: The original `input.exposure`.
+#'   * `spectra`: Spectra with Guassian noise added to mutations of each mutation
+#'      type in the sample according to `gaussian.noise.level`.
+#'
+#' @md
+#'
+#' @importFrom stats rpois rnbinom rnorm
 #'
 #' @export
 
-AddNoise <- function(input.exposure, signatures, n.binom.size = 100) {
+AddNoise <- function(input.exposure, signatures, n.binom.size = 100,
+                     gaussian.noise.level = NULL) {
 
   if (is.data.frame(input.exposure)) {
     input.exposure <- as.matrix(input.exposure)
@@ -1081,22 +1093,44 @@ AddNoise <- function(input.exposure, signatures, n.binom.size = 100) {
   rownames(spectra) <- rownames(signatures)
   colnames(spectra) <- colnames(input.exposure)
 
-  for (sig in rownames(input.exposure)) {
+  if (!is.null(gaussian.noise.level)) {
+    sigs.to.use <- signatures[, rownames(input.exposure), drop = FALSE]
+    original.spectra <- sigs.to.use %*% input.exposure
 
-    partial.spec <- signatures[ , sig] %*% input.exposure[sig, , drop = FALSE]
-    # Resample (add noise) to the "partial spectra" due to sig
-    if (is.null(n.binom.size)) {
-      noised.vec <-
-        rpois(n = length(partial.spec), lambda = partial.spec)
-    } else {
-      noised.vec <-
-        rnbinom(n = length(partial.spec), size = n.binom.size, mu = partial.spec)
+    # Add Guassian noise by resampling from a normal distribution with
+    # mean being the original mutations of a mutation type in the sample and
+    # standard deviation being
+    # gaussian.noise.level * the original mutations of a mutation type in the sample
+    noised.vec <- rnorm(n = length(original.spectra),
+                        mean = original.spectra,
+                        sd = gaussian.noise.level * original.spectra)
+    spectra <- spectra + matrix(noised.vec, nrow = nrow(spectra))
+
+    # Round the spectra
+    spectra <- round(spectra)
+
+    # The exposures will be the original input.exposure as the noise
+    # was added to the original mutations of a mutation type in the sample
+    # We do not know how much noise was added for each individual signature
+    exposures <- input.exposure
+  } else {
+    for (sig in rownames(input.exposure)) {
+
+      partial.spec <- signatures[ , sig] %*% input.exposure[sig, , drop = FALSE]
+      # Resample (add noise) to the "partial spectra" due to sig
+      if (is.null(n.binom.size)) {
+        noised.vec <-
+          rpois(n = length(partial.spec), lambda = partial.spec)
+      } else {
+        noised.vec <-
+          rnbinom(n = length(partial.spec), size = n.binom.size, mu = partial.spec)
+      }
+      # Turn the vector back into a matrix
+      noisy.partial.spec <- matrix(noised.vec, nrow = nrow(partial.spec))
+      exposures[sig, ] <- colSums(noisy.partial.spec)
+      spectra <- spectra + noisy.partial.spec
+
     }
-    # Turn the vector back into a matrix
-    noisy.partial.spec <- matrix(noised.vec, nrow = nrow(partial.spec))
-    exposures[sig, ] <- colSums(noisy.partial.spec)
-    spectra <- spectra + noisy.partial.spec
-
   }
 
   return(list(exposures = exposures, spectra = spectra))

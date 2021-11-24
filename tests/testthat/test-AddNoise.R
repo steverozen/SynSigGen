@@ -24,5 +24,12 @@ test_that("AddNoise", {
   # Run manually if necessary to check resulting spectra:
   # PlotCatalogToPdf(ICAMS::as.catalog(retval2$spectra), "foo2.pdf")
   expect_equal(add.noise.ret.2, reg.data$add.noise.ret.2)
+
+  set.seed(671)
+  add.noise.ret.3 <- AddNoise(input.exposure = in.exp,
+                              signatures     = PCAWG7::COSMIC.v3.0$signature$genome$SBS96,
+                              gaussian.noise.level = 0.05)
+  expect_equal(colSums(add.noise.ret.3$spectra), c(4927, 7055),
+               check.attributes = FALSE)
 })
 

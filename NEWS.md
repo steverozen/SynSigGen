@@ -1,3 +1,8 @@
+## SynSigGen 1.1.0.9000
+### Added
+* Added new argument `gaussian.noise.level` to functions `AddNoise` and 
+`GenerateNoisyTumors` to add Gaussian noise.
+
 ## SynSigGen 1.0.13
 ### Removed
 * Removed exported data `ID.MMR.params` because the list of MSI-H tumors is not

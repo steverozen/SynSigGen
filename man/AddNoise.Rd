@@ -2,9 +2,14 @@
 % Please edit documentation in R/CreateSynData.R
 \name{AddNoise}
 \alias{AddNoise}
-\title{Exposures and spectra with Poisson or negative binomial noise in exposures.}
+\title{Add noise to exposures}
 \usage{
-AddNoise(input.exposure, signatures, n.binom.size = 100)
+AddNoise(
+  input.exposure,
+  signatures,
+  n.binom.size = 100,
+  gaussian.noise.level = NULL
+)
 }
 \arguments{
 \item{input.exposure}{The exposures to which to add noise; a numeric matrix
@@ -20,14 +25,28 @@ catalog or a numerical matrix or data frame.}
 \item{n.binom.size}{If non \code{NULL}, use negative binomial noise
 with this size parameter; see \code{\link[stats]{NegBinomial}}.
 If \code{NULL}, use Poisson noise.}
-}
-\value{
-A list with the elements \describe{
-\item{expsoures}{The numbers of mutations due to each signature
-   after adding noise}
-\item{spectra}{The spectra based on the noisy signature exposures.}
-}
+
+\item{gaussian.noise.level}{If non \code{NULL}, add Guassian noise to the
+original mutations of a mutation type in the sample.}
 }
 \description{
-Exposures and spectra with Poisson or negative binomial noise in exposures.
+Add noise to exposures
 }
+\section{Value}{
+
+If \code{gaussian.noise.level = NULL},
+a list with the elements:
+\itemize{
+\item \code{expsoures}: The numbers of mutations due to each signature
+after adding noise.
+\item \code{spectra}: The spectra based on the noisy signature exposures.
+}
+
+If \code{gaussian.noise.level} is not NULL, a list of the elements:
+\itemize{
+\item \code{expsoures}: The original \code{input.exposure}.
+\item \code{spectra}: Spectra with Guassian noise added to mutations of each mutation
+type in the sample according to \code{gaussian.noise.level}.
+}
+}
+
