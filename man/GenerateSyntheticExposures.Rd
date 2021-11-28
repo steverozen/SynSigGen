@@ -15,16 +15,26 @@ GenerateSyntheticExposures(
 }
 \arguments{
 \item{sig.params}{Parameters from \code{\link{GetSynSigParamsFromExposures}}
-  or another source. Should be
-  a matrix or data frame with one column for
-  each signature and the following rows:
+or another source. Should be
+a matrix or data frame with one column for
+each signature and the following rows:
+\itemize{
+\item For log normal distribution,
 \describe{
 \item{prob}{The proportion of tumors with the signature.}
 \item{mean}{The mean(log_10(number of mutations)).}
 \item{stdev}{The stdev(log_10(number of mutations)).}
 }
-  The rownames need to be the column names of a signature
-  catalog.}
+\item For negative binomial distribution,
+\describe{
+\item{prob}{The proportion of tumors with the signature.}
+\item{size}{Dispersion parameter.}
+\item{mu}{Mean.}
+}
+}
+
+The rownames need to be the column names of a signature
+catalog.}
 
 \item{num.samples}{Number of samples to generate}
 

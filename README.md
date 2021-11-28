@@ -99,4 +99,4 @@ The original data sets are available at
 
 ## Reference manual
 
-<https://github.com/steverozen/SynSigGen/blob/mSigHdp_plus_legacy/data-raw/SynSigGen_1.1.0.pdf>
+<https://github.com/steverozen/SynSigGen/blob/1.1.0-branch/data-raw/SynSigGen_1.1.0.pdf>

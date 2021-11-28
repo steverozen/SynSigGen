@@ -10,6 +10,13 @@ In SynSigGen 1.1.0, we disabled the rounding of mutations due to each signature
 when running generator functions for legacy data sets, so that these legacy data
 sets can be reproduced.
 
+### Updated
+* Updated documentation for argument `sig.params` in function `GenerateSyntheticExposures`.
+
+### Added
+* Added two fields `URL` and `BugReports` in DESCRIPTION.
+
+<br> 
 
 ## SynSigGen 1.0.13
 ### Removed
