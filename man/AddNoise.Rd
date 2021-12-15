@@ -4,7 +4,7 @@
 \alias{AddNoise}
 \title{Exposures and spectra with Poisson or negative binomial noise in exposures.}
 \usage{
-AddNoise(input.exposure, signatures, n.binom.size = 100)
+AddNoise(input.exposure, signatures, n.binom.size = NULL, cp.factor = NULL)
 }
 \arguments{
 \item{input.exposure}{The exposures to which to add noise; a numeric matrix
@@ -20,6 +20,13 @@ catalog or a numerical matrix or data frame.}
 \item{n.binom.size}{If non \code{NULL}, use negative binomial noise
 with this size parameter; see \code{\link[stats]{NegBinomial}}.
 If \code{NULL}, use Poisson noise.}
+
+\item{cp.factor}{Concentration parameter factor. If non \code{NULL}, use
+Dirichlet-multinomial distribution to add noise. When adding noise, the
+parameter alpha of the Dirichlet multinomial distribution is equal to the
+probabilities derived from partial spectra due to signature times
+\code{cp.factor}. See \code{\link[MGLM]{rdirmn}} for more details about the
+parameterization. If \code{NULL}, use Poisson noise.}
 }
 \value{
 A list with the elements \describe{

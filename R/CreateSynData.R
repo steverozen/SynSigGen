@@ -1065,6 +1065,13 @@ NewCreateAndWriteCatalog <-
 #'     with this size parameter; see \code{\link[stats]{NegBinomial}}.
 #'     If \code{NULL}, use Poisson noise.
 #'
+#' @param cp.factor Concentration parameter factor. If non \code{NULL}, use
+#'   Dirichlet-multinomial distribution to add noise. When adding noise, the
+#'   parameter alpha of the Dirichlet multinomial distribution is equal to the
+#'   probabilities derived from partial spectra due to signature times
+#'   \code{cp.factor}. See \code{\link[MGLM]{rdirmn}} for more details about the
+#'   parameterization. If \code{NULL}, use Poisson noise.
+#'
 #' @return A list with the elements \describe{
 #' \item{expsoures}{The numbers of mutations due to each signature
 #'    after adding noise}
@@ -1075,7 +1082,8 @@ NewCreateAndWriteCatalog <-
 #'
 #' @export
 
-AddNoise <- function(input.exposure, signatures, n.binom.size = 100) {
+AddNoise <- function(input.exposure, signatures, n.binom.size = NULL,
+                     cp.factor = NULL) {
 
   if (is.data.frame(input.exposure)) {
     input.exposure <- as.matrix(input.exposure)
@@ -1092,15 +1100,48 @@ AddNoise <- function(input.exposure, signatures, n.binom.size = 100) {
 
     partial.spec <- signatures[ , sig] %*% input.exposure[sig, , drop = FALSE]
     # Resample (add noise) to the "partial spectra" due to sig
-    if (is.null(n.binom.size)) {
+    if (!is.null(n.binom.size)) {
       noised.vec <-
-        rpois(n = length(partial.spec), lambda = partial.spec)
+        stats::rnbinom(n = length(partial.spec), size = n.binom.size, mu = partial.spec)
+    } else if (!is.null(cp.factor)) {
+      # Get total number of objects that are put into d categories in the
+      # Dirichlet-multinomial distribution
+      total.counts <- colSums(partial.spec)
+
+      # Round the mutations due to signature as non integer values of
+      # mutations is impossible in biology
+      total.counts <- round(total.counts)
+
+      # Turn partial.spec into probabilities
+      prob <- apply(X = partial.spec, MARGIN = 2, FUN = function(x) {
+        return(x / sum(x))
+      })
+
+      # Get the parameter vector alpha in Dirichlet-multinomial distribution
+      # Need to transpose prob as the columns are representing the different
+      # categories
+      alpha <- t(prob) * cp.factor
+
+      # Draw random samples from Dirichlet-multinomial distribution
+      # No need to specify number of observations as alpha is a matrix,
+      # the number of rows of alpha will be treated as number of observations
+      noised.vec <-
+        MGLM::rdirmn(size = total.counts, alpha = alpha)
     } else {
       noised.vec <-
-        rnbinom(n = length(partial.spec), size = n.binom.size, mu = partial.spec)
+        rpois(n = length(partial.spec), lambda = partial.spec)
     }
-    # Turn the vector back into a matrix
-    noisy.partial.spec <- matrix(noised.vec, nrow = nrow(partial.spec))
+
+    if (!is.null(cp.factor)) {
+      # noised.vec is already a matrix when using Dirichlet-multinomial
+      # distribution to add noise. The rows of noised.vec represent number of
+      # observations, so we need to transpose it to the format of spectra
+      noisy.partial.spec <- t(noised.vec)
+    } else {
+      # Turn the vector back into a matrix
+      noisy.partial.spec <- matrix(noised.vec, nrow = nrow(partial.spec))
+    }
+
     exposures[sig, ] <- colSums(noisy.partial.spec)
     spectra <- spectra + noisy.partial.spec
 

@@ -1,3 +1,16 @@
+## SynSigGen 1.1.0.9000
+### Added
+* Added new dependency package `MGLM` to allow drawing random numbers from
+Dirichlet-multinomial distribution.
+
+* Added new argument `cp.factor` in function `AddNoise` to allow adding noise
+using Dirichlet-multinomial distribution.
+
+### Changed
+* Changed the default value of `n.binom.size` to `NULL` in function `AddNoise`.
+
+<br> 
+
 ## SynSigGen 1.0.13.9000
 ### Fixed
 * Fixed a bug in `GenerateSyntheticExposures` when generating only one synthetic tumor

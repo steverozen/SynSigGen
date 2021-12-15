@@ -24,5 +24,11 @@ test_that("AddNoise", {
   # Run manually if necessary to check resulting spectra:
   # PlotCatalogToPdf(ICAMS::as.catalog(retval2$spectra), "foo2.pdf")
   expect_equal(add.noise.ret.2, reg.data$add.noise.ret.2)
+
+  # Add noise using Dirichlet-multinomial distribution
+  add.noise.ret.3 <- AddNoise(input.exposure = in.exp,
+                              signatures     = PCAWG7::COSMIC.v3.0$signature$genome$SBS96,
+                              cp.factor      = 100)
+  expect_equal(add.noise.ret.3$exposures, in.exp)
 })
 
