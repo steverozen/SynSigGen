@@ -1122,11 +1122,26 @@ AddNoise <- function(input.exposure, signatures, n.binom.size = NULL,
       # categories
       alpha <- t(prob) * cp.factor
 
-      # Draw random samples from Dirichlet-multinomial distribution
-      # No need to specify number of observations as alpha is a matrix,
-      # the number of rows of alpha will be treated as number of observations
-      noised.vec <-
-        MGLM::rdirmn(size = total.counts, alpha = alpha)
+
+      noised.exp <- lapply(1:length(total.counts), FUN = function(index) {
+        total.count.one <- total.counts[index]
+        alpha.one <- alpha[index, , drop = FALSE]
+        if (total.count.one > 0) {
+          # Draw random samples from Dirichlet-multinomial distribution
+          # No need to specify number of observations as alpha is a matrix,
+          # the number of rows of alpha will be treated as number of observations
+          return(MGLM::rdirmn(size = total.count.one, alpha = alpha.one))
+        } else {
+          # When total.count.one is 0, it means that this particular sample does
+          # not have exposure to this signature, we just create a matrix with
+          # all 0
+          return(matrix(data = 0, nrow = 1, ncol = ncol(alpha)))
+        }
+      })
+
+      # Combined the partial spectra of all samples due to sig
+      noised.vec <- do.call("rbind", noised.exp)
+
     } else {
       noised.vec <-
         rpois(n = length(partial.spec), lambda = partial.spec)
