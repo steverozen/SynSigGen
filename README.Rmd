@@ -112,4 +112,4 @@ now rounds the exposures by default from version 1.0.10.
 
 
 ## Reference manual
-https://github.com/steverozen/SynSigGen/blob/1.1.0-branch/data-raw/SynSigGen_1.1.0.pdf
+https://github.com/steverozen/SynSigGen/blob/1.1.1-branch/data-raw/SynSigGen_1.1.1.pdf

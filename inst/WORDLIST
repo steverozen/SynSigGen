@@ -1,11 +1,11 @@
 CMD
 CorrelatedSyntheticData
 CreateSBS
+CreateSynSBS
 DBS
 DNP
 ICAMS
 INDEL
-MMR
 MSI
 MultiModalMuSig
 PCAWG
@@ -23,6 +23,7 @@ SomeCancerType
 SynSigGen’
 TCC
 TwoCorreSigGen
+Zenodo
 abc
 bioc
 csv
