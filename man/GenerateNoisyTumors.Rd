@@ -10,6 +10,7 @@ GenerateNoisyTumors(
   input.exposure,
   signatures,
   n.binom.size = NULL,
+  cp.factor = NULL,
   overwrite = TRUE
 )
 }
@@ -19,13 +20,26 @@ GenerateNoisyTumors(
 \item{dir}{The directory in which to put the output; will be created if
 necessary.}
 
-\item{input.exposure}{A matrix of exposures.}
+\item{input.exposure}{The exposures to which to add noise; a numeric matrix
+or data frame in which the rows are signatures and the columns are
+samples. Each cell indicates the number of mutations due to a particular
+signature in a particular sample.}
 
-\item{signatures}{A matrix of signatures.}
+\item{signatures}{The signatures in the exposure; the column names
+of \code{signatures} have to include all row names in
+\code{input.exposure}; can be an \code{\link[ICAMS]{ICAMS}}
+catalog or a numerical matrix or data frame.}
 
 \item{n.binom.size}{If non \code{NULL}, use negative binomial noise
 with this size parameter; see \code{\link[stats]{NegBinomial}}.
-If \code{NULL}, then use Poisson distribution to do the resampling.}
+If \code{NULL}, use Poisson noise.}
+
+\item{cp.factor}{Concentration parameter factor. If non \code{NULL}, use
+Dirichlet-multinomial distribution to add noise. When adding noise, the
+parameter alpha of the Dirichlet multinomial distribution is equal to the
+probabilities derived from partial spectra due to signature times
+\code{cp.factor}. See \code{\link[MGLM]{rdirmn}} for more details about the
+parameterization. If \code{NULL}, use Poisson noise.}
 
 \item{overwrite}{If TRUE, overwrite existing directories and files.}
 }

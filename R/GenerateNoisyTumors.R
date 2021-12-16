@@ -1,17 +1,11 @@
 #' Generate noisy tumors from available exposures
 #'
+#' @inheritParams AddNoise
+#'
 #' @param seed A random seed to use.
 #'
 #' @param dir The directory in which to put the output; will be created if
 #'   necessary.
-#'
-#' @param input.exposure A matrix of exposures.
-#'
-#' @param signatures A matrix of signatures.
-#'
-#' @param n.binom.size If non \code{NULL}, use negative binomial noise
-#'     with this size parameter; see \code{\link[stats]{NegBinomial}}.
-#'     If \code{NULL}, then use Poisson distribution to do the resampling.
 #'
 #' @param overwrite If TRUE, overwrite existing directories and files.
 #'
@@ -62,12 +56,13 @@
 #'
 GenerateNoisyTumors <-
   function(seed, dir, input.exposure, signatures,
-           n.binom.size = NULL, overwrite = TRUE) {
+           n.binom.size = NULL, cp.factor = NULL, overwrite = TRUE) {
     # Set seed using R's default random number generator kind "Mersenne-Twister"
     set.seed(seed = seed, kind = "Mersenne-Twister")
     retval <- SynSigGen::AddNoise(input.exposure = input.exposure,
                                   signatures = signatures,
-                                  n.binom.size = n.binom.size)
+                                  n.binom.size = n.binom.size,
+                                  cp.factor = cp.factor)
 
     if (overwrite == TRUE) {
       dir.create(path = dir, showWarnings = FALSE)
@@ -78,16 +73,31 @@ GenerateNoisyTumors <-
     # Get the mutation type of the noisy data
     mutation.type <- GetMutationType(sig.name = colnames(signatures))
 
+    if (!is.null(cp.factor)) {
+      exposure.file.suffix <- ""
+      catalog.file.suffix <-
+        paste0(".dirichlet.multinom.noise.cp.factor.", cp.factor)
+    } else if (!is.null(n.binom.size)) {
+      exposure.file.suffix <- paste0(".noisy.neg.binom.size.", n.binom.size)
+      catalog.file.suffix <- paste0(".noisy.neg.binom.size.", n.binom.size)
+    } else {
+      exposure.file.suffix <- ".poisson.noise"
+      catalog.file.suffix <- ".poisson.noise"
+    }
+
     ICAMSxtra::WriteExposure(exposure = retval$exposures,
                              file = file.path(dir,
-                                              paste0("ground.truth.syn.exposures.noisy.neg.binom.size.",
-                                                     n.binom.size, ".", mutation.type, ".csv")))
+                                              paste0("ground.truth.syn.exposures",
+                                                     exposure.file.suffix,
+                                                     ".", mutation.type, ".csv")))
     ICAMS::WriteCatalog(catalog = ICAMS::as.catalog(retval$spectra),
                         file = file.path(dir,
-                                         paste0("ground.truth.syn.catalog.noisy.neg.binom.size.",
-                                                n.binom.size, ".", mutation.type, ".csv")))
+                                         paste0("ground.truth.syn.catalog",
+                                                catalog.file.suffix,
+                                                ".", mutation.type, ".csv")))
     ICAMS::WriteCatalog(catalog = signatures,
                         file = file.path(dir,
-                                         paste0("ground.truth.syn.sigs", ".", mutation.type, ".csv")))
+                                         paste0("ground.truth.syn.sigs",
+                                                ".", mutation.type, ".csv")))
     return(retval)
   }
