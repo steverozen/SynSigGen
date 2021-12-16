@@ -4,6 +4,9 @@
 Dirichlet-multinomial (some samples may not have exposures to a particular
 signature).
 
+* Fixed a bug in function `GenerateNoisyTumors` to only write signatures
+that are present in exposures to CSV file.
+
 ## SynSigGen 1.1.0.9000
 ### Added
 * Added new dependency package `MGLM` to allow drawing random numbers from
