@@ -1,3 +1,10 @@
+## SynSigGen 1.1.1
+### Fixed
+* Fixed a bug in function `GenerateNoisyTumors` to only write signatures that
+are present in exposures to CSV file.
+
+<br> 
+
 ## SynSigGen 1.1.0
 ### Backward compatibility fix
 

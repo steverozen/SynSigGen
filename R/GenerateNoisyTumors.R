@@ -86,6 +86,17 @@ GenerateNoisyTumors <-
                         file = file.path(dir,
                                          paste0("ground.truth.syn.catalog.noisy.neg.binom.size.",
                                                 n.binom.size, ".", mutation.type, ".csv")))
+
+    exposed.sigs <- rownames(retval$exposures)
+
+    # VERY IMPORTANT, the next statement guarantees that
+    # the order of signatures in rows of exposures is the same as
+    # the order of columns in signatures. In addition,
+    # it ensure that signatures contains only signatures
+    # that are present in exposures.
+    #
+    signatures <- signatures[ , exposed.sigs, drop = FALSE]
+
     ICAMS::WriteCatalog(catalog = signatures,
                         file = file.path(dir,
                                          paste0("ground.truth.syn.sigs", ".", mutation.type, ".csv")))
