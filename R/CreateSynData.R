@@ -1096,71 +1096,64 @@ AddNoise <- function(input.exposure, signatures, n.binom.size = NULL,
   rownames(spectra) <- rownames(signatures)
   colnames(spectra) <- colnames(input.exposure)
 
-  for (sig in rownames(input.exposure)) {
+  signatures <- signatures[, rownames(input.exposure), drop = FALSE]
 
-    partial.spec <- signatures[ , sig] %*% input.exposure[sig, , drop = FALSE]
-    # Resample (add noise) to the "partial spectra" due to sig
-    if (!is.null(n.binom.size)) {
-      noised.vec <-
-        stats::rnbinom(n = length(partial.spec), size = n.binom.size, mu = partial.spec)
-    } else if (!is.null(cp.factor)) {
-      # Get total number of objects that are put into d categories in the
-      # Dirichlet-multinomial distribution
-      total.counts <- colSums(partial.spec)
+  partial.spec <- signatures %*% input.exposure
 
-      # Round the mutations due to signature as non integer values of
-      # mutations is impossible in biology
-      total.counts <- round(total.counts)
+  # Get total number of objects that are put into d categories in the
+  # Dirichlet-multinomial distribution
+  total.counts <- colSums(partial.spec)
 
-      # Turn partial.spec into probabilities
-      prob <- apply(X = partial.spec, MARGIN = 2, FUN = function(x) {
-        return(x / sum(x))
-      })
+  # Round the mutations due to signature as non integer values of
+  # mutations is impossible in biology
+  total.counts <- round(total.counts)
 
-      # Get the parameter vector alpha in Dirichlet-multinomial distribution
-      # Need to transpose prob as the columns are representing the different
-      # categories
-      alpha <- t(prob) * cp.factor
+  # Turn partial.spec into probabilities
+  prob <- apply(X = partial.spec, MARGIN = 2, FUN = function(x) {
+    return(x / sum(x))
+  })
+
+  # Get the parameter vector alpha in Dirichlet-multinomial distribution
+  # Need to transpose prob as the columns are representing the different
+  # categories
+  alpha <- t(prob) * cp.factor
 
 
-      noised.exp <- lapply(1:length(total.counts), FUN = function(index) {
-        total.count.one <- total.counts[index]
-        alpha.one <- alpha[index, , drop = FALSE]
-        if (total.count.one > 0) {
-          # Draw random samples from Dirichlet-multinomial distribution
-          # No need to specify number of observations as alpha is a matrix,
-          # the number of rows of alpha will be treated as number of observations
-          return(MGLM::rdirmn(size = total.count.one, alpha = alpha.one))
-        } else {
-          # When total.count.one is 0, it means that this particular sample does
-          # not have exposure to this signature, we just create a matrix with
-          # all 0
-          return(matrix(data = 0, nrow = 1, ncol = ncol(alpha)))
-        }
-      })
-
-      # Combined the partial spectra of all samples due to sig
-      noised.vec <- do.call("rbind", noised.exp)
-
+  noised.exp <- lapply(1:length(total.counts), FUN = function(index) {
+    total.count.one <- total.counts[index]
+    alpha.one <- alpha[index, , drop = FALSE]
+    if (total.count.one > 0) {
+      # Draw random samples from Dirichlet-multinomial distribution
+      # No need to specify number of observations as alpha is a matrix,
+      # the number of rows of alpha will be treated as number of observations
+      return(MGLM::rdirmn(size = total.count.one, alpha = alpha.one))
     } else {
-      noised.vec <-
-        rpois(n = length(partial.spec), lambda = partial.spec)
+      # When total.count.one is 0, it means that this particular sample does
+      # not have exposure to this signature, we just create a matrix with
+      # all 0
+      return(matrix(data = 0, nrow = 1, ncol = ncol(alpha)))
     }
+  })
 
-    if (!is.null(cp.factor)) {
-      # noised.vec is already a matrix when using Dirichlet-multinomial
-      # distribution to add noise. The rows of noised.vec represent number of
-      # observations, so we need to transpose it to the format of spectra
-      noisy.partial.spec <- t(noised.vec)
-    } else {
-      # Turn the vector back into a matrix
-      noisy.partial.spec <- matrix(noised.vec, nrow = nrow(partial.spec))
-    }
+  # Combined the partial spectra of all samples due to sig
+  noised.vec <- do.call("rbind", noised.exp)
 
-    exposures[sig, ] <- colSums(noisy.partial.spec)
-    spectra <- spectra + noisy.partial.spec
 
+  if (!is.null(cp.factor)) {
+    # noised.vec is already a matrix when using Dirichlet-multinomial
+    # distribution to add noise. The rows of noised.vec represent number of
+    # observations, so we need to transpose it to the format of spectra
+    noisy.partial.spec <- t(noised.vec)
+  } else {
+    # Turn the vector back into a matrix
+    noisy.partial.spec <- matrix(noised.vec, nrow = nrow(partial.spec))
   }
+
+  exposures <- input.exposure
+  spectra <- noisy.partial.spec
+
+  colnames(spectra) <- colnames(input.exposure)
+  rownames(spectra) <- rownames(signatures)
 
   return(list(exposures = exposures, spectra = spectra))
 
