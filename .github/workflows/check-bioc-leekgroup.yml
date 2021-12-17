@@ -23,10 +23,10 @@
 on:
   push:
     branches:
-      - 1.1.1-branch
+      - main
   pull_request:
     branches:
-      - 1.1.1-branch
+      - main
 
 name: R-CMD-check-bioc
 
@@ -56,9 +56,9 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - { os: ubuntu-latest, r: '4.0', bioc: '3.12', cont: "bioconductor/bioconductor_docker:RELEASE_3_12", rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest" }
-          - { os: macOS-latest, r: '4.0', bioc: '3.12'}
-          - { os: windows-latest, r: '4.0', bioc: '3.12'}
+          - { os: ubuntu-latest, r: '4.1', bioc: '3.14', cont: "bioconductor/bioconductor_docker:RELEASE_3_12", rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest" }
+          - { os: macOS-latest, r: '4.1', bioc: '3.14'}
+          - { os: windows-latest, r: '4.1', bioc: '3.14'}
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       RSPM: ${{ matrix.config.rspm }}

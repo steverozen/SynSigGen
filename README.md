@@ -5,9 +5,9 @@
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/steverozen/SynSigGen/workflows/R-CMD-check/badge.svg?branch=1.1.1-branch)](https://github.com/steverozen/SynSigGen/actions?query=workflow%3AR-CMD-check+branch%3A1.1.1-branch)
+[![R-CMD-check](https://github.com/steverozen/SynSigGen/workflows/R-CMD-check/badge.svg?branch=main)](https://github.com/steverozen/SynSigGen/actions?query=workflow%3AR-CMD-check+branch%3Amain)
 
-[![R-CMD-check-bioc](https://github.com/steverozen/SynSigGen/workflows/R-CMD-check-bioc/badge.svg?branch=1.1.1-branch)](https://github.com/steverozen/SynSigGen/actions?query=workflow%3AR-CMD-check-bioc+branch%3A1.1.1-branch)
+[![R-CMD-check-bioc](https://github.com/steverozen/SynSigGen/workflows/R-CMD-check-bioc/badge.svg?branch=main)](https://github.com/steverozen/SynSigGen/actions?query=workflow%3AR-CMD-check-bioc+branch%3Amain)
 
 <!-- badges: end -->
 
@@ -99,4 +99,4 @@ The original data sets are available at
 
 ## Reference manual
 
-<https://github.com/steverozen/SynSigGen/blob/1.1.1-branch/data-raw/SynSigGen_1.1.1.pdf>
+<https://github.com/steverozen/SynSigGen/blob/main/data-raw/SynSigGen_1.1.1.pdf>
