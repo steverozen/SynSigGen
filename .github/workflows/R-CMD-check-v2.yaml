@@ -84,6 +84,7 @@ jobs:
           extra-packages: |
             cran::rcmdcheck
           needs: check
+          dependencies: 'TRUE'
 
       - name: Session info
         run: |
