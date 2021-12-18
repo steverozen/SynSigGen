@@ -6,7 +6,6 @@
 <!-- badges: start -->
 
 [![R-CMD-check-v1](https://github.com/steverozen/SynSigGen/workflows/R-CMD-check-v1/badge.svg?branch=1.1.1-branch)](https://github.com/steverozen/SynSigGen/actions?query=workflow%3AR-CMD-check-v1+branch%3A1.1.1-branch)
-[![R-CMD-check-v2](https://github.com/steverozen/SynSigGen/workflows/R-CMD-check-v2/badge.svg?branch=1.1.1-branch)](https://github.com/steverozen/SynSigGen/actions?query=workflow%3AR-CMD-check-v2+branch%3A1.1.1-branch)
 [![R-CMD-check-bioc-3.14](https://github.com/steverozen/SynSigGen/workflows/R-CMD-check-bioc-3.14/badge.svg?branch=1.1.1-branch)](https://github.com/steverozen/SynSigGen/actions?query=workflow%3AR-CMD-check-bioc-3.14+branch%3A1.1.1-branch)
 <!-- badges: end -->
 
