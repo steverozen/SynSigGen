@@ -1,0 +1,105 @@
+# For help debugging build failures open an issue on the RStudio community with the 'github-actions' tag.
+# https://community.rstudio.com/new-topic?category=Package%20development&tags=github-actions
+on:
+  push:
+    branches:
+      - 1.1.1-branch
+  pull_request:
+    branches:
+      - 1.1.1-branch
+
+name: R-CMD-check-v2
+
+jobs:
+  R-CMD-check:
+    runs-on: ${{ matrix.config.os }}
+
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - {os: ubuntu-latest, r: 'release'}
+          - {os: macOS-latest,   r: 'release'}
+          - {os: windows-latest, r: 'release'}
+
+
+    env:
+      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      R_KEEP_PKG_SOURCE: yes
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Setup pandoc from r-lib
+        uses: r-lib/actions/setup-pandoc@v2
+
+      - name: Setup R from r-lib
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: ${{ matrix.config.r }}
+          http-user-agent: ${{ matrix.config.http-user-agent }}
+          use-public-rspm: true
+
+      - name: Query dependencies
+        run: |
+          install.packages('remotes')
+          saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
+          writeLines(sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), ".github/R-version")
+        shell: Rscript {0}
+
+      - name: Install Linux system dependencies
+        if: runner.os == 'Linux'
+        run: |
+          sysreqs=$(Rscript -e 'cat("apt-get update -y && apt-get install -y", paste(gsub("apt-get install -y ", "", remotes::system_requirements("ubuntu", "20.04")), collapse = " "))')
+          echo $sysreqs
+          sudo -s eval "$sysreqs"
+
+      - name: Install macOS system dependencies
+        if: matrix.config.os == 'macOS'
+        run: |
+          ## Enable installing XML from source if needed
+          brew install libxml2
+          echo "XML_CONFIG=/usr/local/opt/libxml2/bin/xml2-config" >> $GITHUB_ENV
+          ## Required to install magick as noted at
+          ## https://github.com/r-lib/actions/tree/v2-branch/setup-r-dependencies
+          brew install imagemagick@6
+          ## For textshaping, required by ragg, and required by pkgdown
+          brew install harfbuzz fribidi
+          ## For installing usethis's dependency gert
+          brew install libgit2
+
+      - name: Install most Windows system dependencies
+        if: runner.os == 'Windows'
+        run: |
+          pacman -Syu mingw-w64-x86_64-make --noconfirm
+
+      - name: Install dependencies, including pak and Ubuntu system dependencies
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: |<
+            cran::BiocManager
+            bioc::BiocVersion
+            bioc::BSgenome
+            bioc::BSgenome.Mmusculus.UCSC.mm10
+            bioc::BSgenome.Hsapiens.UCSC.hg38
+            bioc::BSgenome.Hsapiens.1000genomes.hs37d5
+            github::steverozen/ICAMS
+            github::steverozen/ICAMSxtra
+            github::steverozen/PCAWG7
+            cran::rcmdcheck
+          needs: check
+
+      - name: Session info
+        run: |
+          options(width = 100)
+          pkgs <- installed.packages()[, "Package"]
+          sessioninfo::session_info(pkgs, include_base = TRUE)
+        shell: Rscript {0}
+
+      - name: Check
+      - uses: r-lib/actions/check-r-package@v2
