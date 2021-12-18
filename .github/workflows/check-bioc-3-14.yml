@@ -28,7 +28,7 @@ on:
     branches:
       - 1.1.1-branch
 
-name: R-CMD-check-bioc
+name: R-CMD-check-bioc-3.14
 
 ## These environment variables control whether to run GHA code later on that is
 ## specific to testthat, covr, and pkgdown.
