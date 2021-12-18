@@ -81,7 +81,7 @@ jobs:
       - name: Install dependencies, including pak and Ubuntu system dependencies
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: |<
+          extra-packages: |
             cran::BiocManager
             bioc::BiocVersion
             bioc::BSgenome
