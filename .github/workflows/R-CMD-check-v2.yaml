@@ -82,15 +82,6 @@ jobs:
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: |
-            cran::BiocManager
-            bioc::BiocVersion
-            bioc::BSgenome
-            bioc::BSgenome.Mmusculus.UCSC.mm10
-            bioc::BSgenome.Hsapiens.UCSC.hg38
-            bioc::BSgenome.Hsapiens.1000genomes.hs37d5
-            github::steverozen/ICAMS
-            github::steverozen/ICAMSxtra
-            github::steverozen/PCAWG7
             cran::rcmdcheck
           needs: check
 
