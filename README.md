@@ -17,6 +17,8 @@ Create catalogs of synthetic mutational spectra for assessing the
 performance of mutational signature analysis programs. ‘SynSigGen’
 stands for Generation of Synthetic Signatures and Spectra.
 
+<br>
+
 ## Installation
 
 Before installation, prerequisites in
@@ -24,19 +26,23 @@ Before installation, prerequisites in
 
 ``` r
 install.packages("BiocManager")
-BiocManager::install(c("Biostrings","BSgenome","GenomeInfoDb","GenomicRanges"))
+BiocManager::install(
+  c("Biostrings", "BSgenome", "GenomeInfoDb", "GenomicRanges")
+)
 ```
 
 Install from GitHub with the R command line:
 
 ``` r
 install.packages("remotes")
-remotes::install_github(repo = "steverozen/SynSigGen", ref = "master")
+remotes::install_github(repo = "steverozen/SynSigGen", ref = "1.1.1-branch")
 ```
+
+<br>
 
 ## Example usage
 
-### 1. Generate synthetic tumor spectra used in paper *The repertoire of mutational signatures in human cancer*
+### 1. Generate synthetic tumor spectra used in *The repertoire of mutational signatures in human cancer*, Alexandrov et al. (2020)
 
 Use functions below to generate 11 spectra datasets used in paper *The
 repertoire of mutational signatures in human cancer*
@@ -68,7 +74,7 @@ The description of 11 data sets are available at section *“Description
 of each suite of synthetic data sets”* in Supplementary Note 2 of the
 paper.
 
-### Generate synthetic spectra used in paper *“Accuracy of Mutational Signature Software on Correlated Signatures”*
+### 2. Generate synthetic spectra used in paper *Accuracy of Mutational Signature Software on Correlated Signatures*, Wu et al. (2022)
 
 To generate 20 spectra data sets with mutation load of and correlation
 between SBS1 and SBS5 varied, use function
@@ -77,8 +83,18 @@ between SBS1 and SBS5 varied, use function
 CreateSBS1SBS5CorrelatedSyntheticData()
 ```
 
-The original data sets are available at
-[Zenodo](https://doi.org/10.5281/zenodo.2636980).
+This paper is accepted by [*Scientific
+Reports*](https://www.nature.com/srep/), and the original data sets are
+available at [Zenodo](https://doi.org/10.5281/zenodo.2636980).
+
+### 3. Generate synthetic spectra used in paper *mSigHdp: hierarchical Dirichlet processes for mutational signature discovery*, Liu et al. (2022)
+
+To generate 3 spectra data sets on single base substitution (SBS)
+mutation channels and 3 spectra datasets on indel channels, check GitHub
+repository Liu_et_al_Sup_Files. The dataset generation codes in this
+repository requires SynSigGen \>= 1.1.1 as a dependency.
+
+<br>
 
 ## Notes for functions to generate legacy data sets (1 & 2)
 
@@ -94,6 +110,8 @@ The original data sets are available at
 
 -   By contrast, `GenerateSyntheticExposures()` now rounds the exposures
     by default from version 1.0.10.
+
+<br>
 
 ## Reference manual
 
