@@ -54,7 +54,7 @@ The data sets are available at
 # Users should specify regress.dir = NULL unless for comparison
 # with original data sets.
 # 
-# Compare tools (e.g. BeyondCompare, Meld) is recommended 
+# Compare tools (e.g., BeyondCompare, Meld) are recommended 
 # over specifying regress.dir,
 # because the latter might raise an error even when query 
 # and original data sets are identical.
@@ -83,9 +83,10 @@ between SBS1 and SBS5 varied, use function
 CreateSBS1SBS5CorrelatedSyntheticData()
 ```
 
-This paper is accepted by [*Scientific
-Reports*](https://www.nature.com/srep/), and the original data sets are
-available at [Zenodo](https://doi.org/10.5281/zenodo.2636980).
+This paper is published at [*Scientific
+Reports*](https://doi.org/10.1038/s41598-021-04207-6), and the original
+data sets are available at
+[Zenodo](https://doi.org/10.5281/zenodo.2636980).
 
 ### 3. Generate synthetic spectra used in paper *mSigHdp: hierarchical Dirichlet processes for mutational signature discovery*, Liu et al. (2022)
 
