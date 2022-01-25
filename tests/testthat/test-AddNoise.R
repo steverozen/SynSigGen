@@ -12,14 +12,14 @@ test_that("AddNoise", {
 
   set.seed(20200601)
   add.noise.ret.1 <- AddNoise(input.exposure = in.exp,
-                              signatures     = PCAWG7::COSMIC.v3.0$signature$genome$SBS96,
+                              signatures     = cosmicsig::COSMIC_v3.0$signature$GRCh37$SBS96,
                               n.binom.size = NULL)
   # Run manually if necessary to check resulting spectra:
   # PlotCatalogToPdf(ICAMS::as.catalog(retval$spectra), "foo.pdf")
   expect_equal(add.noise.ret.1, reg.data$add.noise.ret.1)
 
   add.noise.ret.2 <- AddNoise(input.exposure = in.exp,
-                              signatures     = PCAWG7::COSMIC.v3.0$signature$genome$SBS96,
+                              signatures     = cosmicsig::COSMIC_v3.0$signature$GRCh37$SBS96,
                               n.binom.size   = 10)
   # Run manually if necessary to check resulting spectra:
   # PlotCatalogToPdf(ICAMS::as.catalog(retval2$spectra), "foo2.pdf")

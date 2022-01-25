@@ -42,7 +42,7 @@ Generate noisy tumors from available exposures
 \examples{
 
 # Generate synthetic tumors for Indel (ID) using negative binomial distribution
-input.sigs.ID <- PCAWG7::signature$genome$ID
+input.sigs.ID <- cosmicsig::COSMIC_v3.2$signature$GRCh37$ID
 real.exposures.ID <- PCAWG7::exposure$PCAWG$ID
 cancer.types <- PCAWG7::CancerTypes()[1:5]
 ID.synthetic.tumors <-

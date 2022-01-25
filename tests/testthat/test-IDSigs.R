@@ -35,7 +35,7 @@ write.csv(param.partial, file = file.path(partial.dir, "param.partial.csv"))
 write.csv(param.prob1,   file = file.path(prob1.dir,   "param.prob1.csv"))
 
 ret.partial <- CreateAndWriteCatalog(
-  sigs         = PCAWG7::signature$genome$ID,
+  sigs         = cosmicsig::COSMIC_v3.2$signature$GRCh37$ID,
   exp          = expos.partial,
   dir          = NULL,
   write.cat.fn = ICAMS::WriteCatalog,
@@ -43,7 +43,7 @@ ret.partial <- CreateAndWriteCatalog(
   my.dir       = partial.dir)
 
 ret.prob1 <- CreateAndWriteCatalog(
-  sigs         = PCAWG7::signature$genome$ID,
+  sigs         = cosmicsig::COSMIC_v3.2$signature$GRCh37$ID,
   exp          = expos.prob1,
   dir          = NULL,
   write.cat.fn = ICAMS::WriteCatalog,

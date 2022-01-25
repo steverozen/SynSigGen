@@ -5,7 +5,7 @@ test_that("Generate synthetic exposures for DBS78 using log-normal distribution"
   real.exposures.DBS78 <- PCAWG7::exposure$PCAWG$DBS78
   params.DBS78 <- GetSynSigParamsFromExposures(exposures = real.exposures.DBS78)
   synthetic.exposures.DBS78 <- GenerateSyntheticExposures(sig.params = params.DBS78)
-  sigs.DBS78 <- PCAWG7::signature$genome$DBS78
+  sigs.DBS78 <- cosmicsig::COSMIC_v3.2$signature$GRCh37$DBS78
   out <- CreateAndWriteCatalog(sigs = sigs.DBS78,
                                exp = synthetic.exposures.DBS78,
                                my.dir = file.path(tempdir(), "DBS78"),
@@ -19,7 +19,7 @@ test_that("Generate synthetic exposures for DBS78 using log-normal distribution"
 test_that("Generate synthetic exposures for DBS78 using negative binomial distribution", {
   set.seed(2586)
   real.exposures.DBS78 <- PCAWG7::exposure$PCAWG$DBS78
-  sigs.DBS78 <- PCAWG7::signature$genome$DBS78
+  sigs.DBS78 <- cosmicsig::COSMIC_v3.2$signature$GRCh37$DBS78
   params.DBS78.neg.binom <-
     GetSynSigParamsFromExposures(exposures = real.exposures.DBS78,
                                  distribution = "neg.binom")
@@ -38,7 +38,7 @@ test_that("Generate synthetic exposures for DBS78 using negative binomial distri
 
 test_that("Generate synthetic tumors for DBS78 by cancer types using log-normal distribution", {
   # Generate synthetic tumors for DBS78
-  input.sigs.DBS78 <- PCAWG7::signature$genome$DBS78
+  input.sigs.DBS78 <- cosmicsig::COSMIC_v3.2$signature$GRCh37$DBS78
   real.exposures.DBS78 <- PCAWG7::exposure$PCAWG$DBS78
   cancer.types <- PCAWG7::CancerTypes()[1:5]
   DBS78.synthetic.tumors <-
@@ -59,7 +59,7 @@ test_that("Generate synthetic tumors for DBS78 by cancer types using log-normal 
 
 test_that("Generate synthetic tumors for DBS78 by cancer types using negative binomial distribution", {
   # Generate synthetic tumors for DBS78
-  input.sigs.DBS78 <- PCAWG7::signature$genome$DBS78
+  input.sigs.DBS78 <- cosmicsig::COSMIC_v3.2$signature$GRCh37$DBS78
   real.exposures.DBS78 <- PCAWG7::exposure$PCAWG$DBS78
   cancer.types <- PCAWG7::CancerTypes()[1:5]
   DBS78.synthetic.tumors <-
@@ -81,7 +81,7 @@ test_that("Generate synthetic tumors for DBS78 by cancer types using negative bi
 
 test_that("Generate synthetic tumors for ID by cancer types using log-normal distribution", {
   # Generate synthetic tumors for ID
-  input.sigs.ID <- PCAWG7::signature$genome$ID
+  input.sigs.ID <- cosmicsig::COSMIC_v3.2$signature$GRCh37$ID
   real.exposures.ID <- PCAWG7::exposure$PCAWG$ID
   cancer.types <- PCAWG7::CancerTypes()[1:5]
   ID.synthetic.tumors <-
@@ -102,7 +102,7 @@ test_that("Generate synthetic tumors for ID by cancer types using log-normal dis
 
 test_that("Generate synthetic tumors for ID by cancer types using negative binomial distribution", {
   # Generate synthetic tumors for ID
-  input.sigs.ID <- PCAWG7::signature$genome$ID
+  input.sigs.ID <- cosmicsig::COSMIC_v3.2$signature$GRCh37$ID
   real.exposures.ID <- PCAWG7::exposure$PCAWG$ID
   cancer.types <- PCAWG7::CancerTypes()[1:5]
   ID.synthetic.tumors <-

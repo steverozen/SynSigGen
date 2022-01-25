@@ -1,7 +1,7 @@
 context("Generate synthetic tumors from a list of signature parameters")
 
 test_that("Generate synthetic exposures for SBS96", {
-  input.sigs.SBS96 <- PCAWG7::signature$genome$SBS96
+  input.sigs.SBS96 <- cosmicsig::COSMIC_v3.2$signature$GRCh37$SBS96
   real.exposures.SBS96 <- PCAWG7::exposure$PCAWG$SBS96
   cancer.types <- PCAWG7::CancerTypes()[1:5]
   sig.params <- SynSigGen::signature.params$SBS96
@@ -43,7 +43,7 @@ test_that("Generate synthetic exposures for SBS96", {
 )
 
 test_that("Generate synthetic exposures for DBS78", {
-  input.sigs.DBS78 <- PCAWG7::signature$genome$DBS78
+  input.sigs.DBS78 <- cosmicsig::COSMIC_v3.2$signature$GRCh37$DBS78
   real.exposures.DBS78 <- PCAWG7::exposure$PCAWG$DBS78
   cancer.types <- PCAWG7::CancerTypes()[1:5]
   sig.params <- SynSigGen::signature.params$DBS78
@@ -85,7 +85,7 @@ test_that("Generate synthetic exposures for DBS78", {
 )
 
 test_that("Generate synthetic exposures for ID", {
-  input.sigs.ID <- PCAWG7::signature$genome$ID
+  input.sigs.ID <- cosmicsig::COSMIC_v3.2$signature$GRCh37$ID
   real.exposures.ID <- PCAWG7::exposure$PCAWG$ID
   cancer.types <- PCAWG7::CancerTypes()[1:5]
   sig.params <- SynSigGen::signature.params$ID
