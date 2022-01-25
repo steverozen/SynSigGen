@@ -1,3 +1,4 @@
+Alexandrov
 CMD
 CorrelatedSyntheticData
 CreateSBS
@@ -6,6 +7,7 @@ DBS
 DNP
 ICAMS
 INDEL
+Liu
 MSI
 MultiModalMuSig
 PCAWG
@@ -25,14 +27,18 @@ TCC
 TwoCorreSigGen
 Zenodo
 abc
+al
 bioc
 csv
 datasetNames
 dev
 doi
+et
 github
 https
 hypermutated
+indel
+mSigHdp
 megabase
 megabases
 modelled

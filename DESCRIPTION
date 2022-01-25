@@ -14,15 +14,18 @@ Language: en-US
 Encoding: UTF-8
 LazyData: true
 biocViews:
-Imports: data.table, 
+Imports: cosmicsig,
+    data.table, 
     fitdistrplus, 
     ICAMS, 
     ICAMSxtra, 
+    mSigAct,
     PCAWG7
 Remotes:
-    github::steverozen/ICAMS@master,
-    github::steverozen/ICAMSxtra@master,
-    github::steverozen/PCAWG7@master
+    github::steverozen/ICAMS@*release,
+    github::steverozen/ICAMSxtra@*release,
+    github::steverozen/mSigAct@*release,
+    github::steverozen/PCAWG7@*release
 Depends: R (>= 4.0)
 RoxygenNote: 7.1.2
 Suggests: 

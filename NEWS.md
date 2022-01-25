@@ -3,6 +3,9 @@
 * Fixed a bug in function `GenerateNoisyTumors` to only write signatures that
 are present in exposures to CSV file.
 
+### Added
+* Added new dependency packages `cosmicsig` and `mSigAct`.
+
 <br> 
 
 ## SynSigGen 1.1.0

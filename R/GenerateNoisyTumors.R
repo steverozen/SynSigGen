@@ -51,14 +51,14 @@
 #' # Plot the synthetic and noisy catalog and exposures
 #' ICAMS::PlotCatalogToPdf(catalog = ID.synthetic.tumors$ground.truth.catalog,
 #'                         file = file.path(tempdir(), "ID.synthetic.catalog.pdf"))
-#' ICAMSxtra::PlotExposureToPdf(exposure = ID.synthetic.tumors$ground.truth.exposures,
-#'                              file = file.path(tempdir(), "ID.synthetic.exposures.pdf"),
-#'                              cex.xaxis = 0.7)
+#' mSigAct::PlotExposureToPdf(exposure = ID.synthetic.tumors$ground.truth.exposures,
+#'                            file = file.path(tempdir(), "ID.synthetic.exposures.pdf"),
+#'                            cex.xaxis = 0.7)
 #' ICAMS::PlotCatalogToPdf(catalog = ID.noisy.tumors$spectra,
 #'                         file = file.path(tempdir(), "ID.noisy.catalog.pdf"))
-#' ICAMSxtra::PlotExposureToPdf(exposure = ID.noisy.tumors$exposures,
-#'                              file = file.path(tempdir(), "ID.noisy.exposures.pdf"),
-#'                              cex.xaxis = 0.7)
+#' mSigAct::PlotExposureToPdf(exposure = ID.noisy.tumors$exposures,
+#'                            file = file.path(tempdir(), "ID.noisy.exposures.pdf"),
+#'                            cex.xaxis = 0.7)
 #'
 GenerateNoisyTumors <-
   function(seed, dir, input.exposure, signatures,
@@ -78,10 +78,10 @@ GenerateNoisyTumors <-
     # Get the mutation type of the noisy data
     mutation.type <- GetMutationType(sig.name = colnames(signatures))
 
-    ICAMSxtra::WriteExposure(exposure = retval$exposures,
-                             file = file.path(dir,
-                                              paste0("ground.truth.syn.exposures.noisy.neg.binom.size.",
-                                                     n.binom.size, ".", mutation.type, ".csv")))
+    mSigAct::WriteExposure(exposure = retval$exposures,
+                           file = file.path(dir,
+                                            paste0("ground.truth.syn.exposures.noisy.neg.binom.size.",
+                                                   n.binom.size, ".", mutation.type, ".csv")))
     ICAMS::WriteCatalog(catalog = ICAMS::as.catalog(retval$spectra),
                         file = file.path(dir,
                                          paste0("ground.truth.syn.catalog.noisy.neg.binom.size.",
