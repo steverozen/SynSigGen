@@ -31,7 +31,7 @@ If \code{NULL}, then use Poisson distribution to do the resampling.}
 }
 \value{
 A list with the elements \describe{
-\item{expsoures}{The numbers of mutations due to each signature
+\item{exposures}{The numbers of mutations due to each signature
    after adding noise}
 \item{spectra}{The spectra based on the noisy signature exposures.}
 }

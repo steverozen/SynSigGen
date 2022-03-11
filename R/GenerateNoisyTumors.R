@@ -16,7 +16,7 @@
 #' @param overwrite If TRUE, overwrite existing directories and files.
 #'
 #' @return A list with the elements \describe{
-#' \item{expsoures}{The numbers of mutations due to each signature
+#' \item{exposures}{The numbers of mutations due to each signature
 #'    after adding noise}
 #' \item{spectra}{The spectra based on the noisy signature exposures.}
 #' }
