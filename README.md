@@ -116,4 +116,4 @@ repository requires SynSigGen \>= 1.1.1 as a dependency.
 
 ## Reference manual
 
-<https://github.com/steverozen/SynSigGen/blob/1.1.1-branch/data-raw/SynSigGen_1.1.1.pdf>
+<https://github.com/steverozen/SynSigGen/blob/1.2.0-branch/data-raw/SynSigGen_1.2.0.pdf>
