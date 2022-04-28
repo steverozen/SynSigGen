@@ -11,7 +11,8 @@ GenerateSynExposureOneSample(
   sd.per.sig,
   sig.matrix = NULL,
   distribution = NULL,
-  sig.params = NULL
+  sig.params = NULL,
+  round.exposure = TRUE
 )
 }
 \arguments{
@@ -59,6 +60,10 @@ each signature and the following rows:
 
 The rownames need to be the column names of a signature
 catalog.}
+
+\item{round.exposure}{Whether the exposures should be rounded to
+an integer. Set as \code{FALSE} only when reproducing legacy data
+sets.}
 }
 \description{
 Using parameters given to generate exposures for synthetic tumors

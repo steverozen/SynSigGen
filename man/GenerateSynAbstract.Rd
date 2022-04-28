@@ -9,7 +9,8 @@ GenerateSynAbstract(
   num.syn.tumors,
   file.prefix = NULL,
   sample.id.prefix,
-  froot = NULL
+  froot = NULL,
+  round.exposure = FALSE
 )
 }
 \arguments{
@@ -23,6 +24,10 @@ to indicate the organization of the data.}
 
 \item{sample.id.prefix}{Prefix for sample identifiers for the
 synthetic samples.}
+
+\item{round.exposure}{Whether the exposures should be rounded to
+an integer. Set as \code{FALSE} only when reproducing legacy data
+sets.}
 }
 \value{
 A list with elements:

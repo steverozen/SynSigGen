@@ -9,7 +9,6 @@
 #' @examples
 #'
 #' # Generate a list of signature parameters for Indel (ID) using negative binomial distribution
-#' input.sigs.ID <- PCAWG7::signature$genome$ID
 #' real.exposures.ID <- PCAWG7::exposure$PCAWG$ID
 #' cancer.types <- PCAWG7::CancerTypes()[1:5]
 #' sig.params <- SynSigGen::signature.params$ID

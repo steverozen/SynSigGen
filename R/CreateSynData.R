@@ -121,75 +121,75 @@ GetMutationType <- function(sig.name) {
 GetSynSigParamsFromExposures <-
   function(exposures, verbose = 0, distribution = NULL, cancer.type = NULL,
            sig.params = NULL) {
-  stopifnot(ncol(exposures) > 0)
-  integer.counts <- round(exposures, digits = 0)
-  integer.counts <- integer.counts[rowSums(integer.counts) > 0 , , drop = FALSE]
-  ret1 <- apply(X            = integer.counts,
-                MARGIN       = 1,
-                FUN          = SynSigParamsOneSignature,
-                distribution = distribution)
+    stopifnot(ncol(exposures) > 0)
+    integer.counts <- round(exposures, digits = 0)
+    integer.counts <- integer.counts[rowSums(integer.counts) > 0 , , drop = FALSE]
+    ret1 <- apply(X            = integer.counts,
+                  MARGIN       = 1,
+                  FUN          = SynSigParamsOneSignature,
+                  distribution = distribution)
 
-  ret2 <- sapply(rownames(integer.counts), FUN = function(x) {
-    sig.name <- x
-    exposure.one.sig <- integer.counts[sig.name, ]
-    retval <- SynSigParamsOneSignature(counts = exposure.one.sig,
-                                       distribution = distribution)
+    ret2 <- sapply(rownames(integer.counts), FUN = function(x) {
+      sig.name <- x
+      exposure.one.sig <- integer.counts[sig.name, ]
+      retval <- SynSigParamsOneSignature(counts = exposure.one.sig,
+                                         distribution = distribution)
+      return(retval)
+    })
+
+    if (is.null(distribution)) {
+      # Some standard deviations can be NA (if there is only one tumor
+      # with mutations for that signature). We pretend we did not see
+      # these signatures. TODO(Steve): impute from similar signatures.
+      if (any(is.na(ret1['stdev', ]))) {
+        if (verbose > 0) {
+          cat("\nAnalyzing samples", cancer.type)
+          cat("\nWarning, some signatures present in only one sample, dropping:\n")
+          cat(colnames(ret1)[is.na(ret1['stdev', ])], "\n")
+        }
+      }
+      retval <- ret1[,!is.na(ret1['stdev',]) , drop = FALSE]
+    } else if (distribution == "neg.binom") {
+      # Some parameter estimates can be NA (if there is only one tumor
+      # with mutations for that signature). We pretend we did not see
+      # these signatures.
+      if (any(is.na(ret1['size', ]))) {
+        rare.sig.names <- colnames(ret1)[is.na(ret1['size', ])]
+        if (verbose > 0) {
+          cat("\nAnalyzing samples", cancer.type)
+          cat("\nWarning, some signatures present in only one sample:\n")
+          cat(rare.sig.names, "\n")
+          cat("Using the empirical signature parameters 'size' from all cancer types\n")
+        }
+        mutation.type <- GetMutationType(sig.name = rare.sig.names)
+        retval <- ret1
+        if (is.null(sig.params)) {
+          sig.params <- SynSigGen::signature.params[[mutation.type]]
+        }
+
+        sig.with.no.params <-
+          setdiff(rare.sig.names, colnames(sig.params))
+        if (length(sig.with.no.params) > 0) {
+          cat("\nWarning, some signatures present in only one sample across all the cancer types, dropping:\n")
+          cat(sig.with.no.params, "\n")
+          rare.sig.names <- setdiff(rare.sig.names, sig.with.no.params)
+          retval <- retval[, !colnames(retval) %in% sig.with.no.params]
+        }
+
+        # Only use the size parameter from sig.params
+        retval["size", rare.sig.names] <- sig.params["size", rare.sig.names]
+        # retval["mu", rare.sig.names] <- sig.params["mu", rare.sig.names]
+      } else {
+        retval <- ret1
+      }
+    }
+
+    if (ncol(retval) == 0) {
+      stop("No signatures with usable parameters (> 1 sample with exposure) in samples ",
+           cancer.type)
+    }
     return(retval)
-  })
-
-  if (is.null(distribution)) {
-    # Some standard deviations can be NA (if there is only one tumor
-    # with mutations for that signature). We pretend we did not see
-    # these signatures. TODO(Steve): impute from similar signatures.
-    if (any(is.na(ret1['stdev', ]))) {
-      if (verbose > 0) {
-        cat("\nAnalyzing samples", cancer.type)
-        cat("\nWarning, some signatures present in only one sample, dropping:\n")
-        cat(colnames(ret1)[is.na(ret1['stdev', ])], "\n")
-      }
-    }
-    retval <- ret1[,!is.na(ret1['stdev',]) , drop = FALSE]
-  } else if (distribution == "neg.binom") {
-    # Some parameter estimates can be NA (if there is only one tumor
-    # with mutations for that signature). We pretend we did not see
-    # these signatures.
-    if (any(is.na(ret1['size', ]))) {
-      rare.sig.names <- colnames(ret1)[is.na(ret1['size', ])]
-      if (verbose > 0) {
-        cat("\nAnalyzing samples", cancer.type)
-        cat("\nWarning, some signatures present in only one sample:\n")
-        cat(rare.sig.names, "\n")
-        cat("Using the empirical signature parameters 'size' from all cancer types\n")
-      }
-      mutation.type <- GetMutationType(sig.name = rare.sig.names)
-      retval <- ret1
-      if (is.null(sig.params)) {
-        sig.params <- SynSigGen::signature.params[[mutation.type]]
-      }
-
-      sig.with.no.params <-
-        setdiff(rare.sig.names, colnames(sig.params))
-      if (length(sig.with.no.params) > 0) {
-        cat("\nWarning, some signatures present in only one sample across all the cancer types, dropping:\n")
-        cat(sig.with.no.params, "\n")
-        rare.sig.names <- setdiff(rare.sig.names, sig.with.no.params)
-        retval <- retval[, !colnames(retval) %in% sig.with.no.params]
-      }
-
-      # Only use the size parameter from sig.params
-      retval["size", rare.sig.names] <- sig.params["size", rare.sig.names]
-      # retval["mu", rare.sig.names] <- sig.params["mu", rare.sig.names]
-    } else {
-      retval <- ret1
-    }
   }
-
-  if (ncol(retval) == 0) {
-    stop("No signatures with usable parameters (> 1 sample with exposure) in samples ",
-         cancer.type)
-  }
-  return(retval)
-}
 
 #' @keywords internal
 GetSynSigParamsFromExposuresOld <-
@@ -283,17 +283,7 @@ WriteSynSigParams <-
 #' generated samples. Each entry is the count of mutations due to one
 #' signature in one sample.
 #'
-#' @param sig.params Parameters from \code{\link{GetSynSigParamsFromExposures}}
-#'   or another source. Should be
-#'   a matrix or data frame with one column for
-#'   each signature and the following rows:
-#' \describe{
-#' \item{prob}{The proportion of tumors with the signature.}
-#' \item{mean}{The mean(log_10(number of mutations)).}
-#' \item{stdev}{The stdev(log_10(number of mutations)).}
-#' }
-#'   The rownames need to be the column names of a signature
-#'   catalog.
+#' @inheritParams GenerateSynExposureOneSample
 #'
 #' @param num.samples Number of samples to generate
 #'
@@ -306,6 +296,10 @@ WriteSynSigParams <-
 #'   which stands for negative binomial distribution. If \code{NULL} (Default),
 #'   then this function uses log normal distribution with base 10.
 #'
+#' @param round.exposure Whether the exposures should be rounded to
+#' an integer. Set as \code{FALSE} only when reproducing legacy data
+#' sets.
+#'
 #' @export
 
 GenerateSyntheticExposures <-
@@ -313,7 +307,8 @@ GenerateSyntheticExposures <-
            num.samples = 10,
            name = 'synthetic',
            sig.matrix = NULL,
-           distribution = NULL) {
+           distribution = NULL,
+           round.exposure = TRUE) {
 
     sigs <- colnames(sig.params)
     stopifnot(!is.null(sigs))
@@ -333,7 +328,8 @@ GenerateSyntheticExposures <-
               sigs,
               sig.burden, ## burden is in mutation per megabase
               sig.sd,
-              sig.matrix)
+              sig.matrix,
+              round.exposure = round.exposure)
     } else if (distribution == "neg.binom") {
       retval <-
         apply(sig.present,
@@ -344,7 +340,8 @@ GenerateSyntheticExposures <-
               NULL,
               sig.matrix,
               distribution,
-              sig.params)
+              sig.params,
+              round.exposure = round.exposure)
     }
 
     # In some rare cases, we only want to generate one synthetic tumor
@@ -486,6 +483,10 @@ present.sigs <-
 #'   The rownames need to be the column names of a signature
 #'   catalog.
 #'
+#' @param round.exposure Whether the exposures should be rounded to
+#' an integer. Set as \code{FALSE} only when reproducing legacy data
+#' sets.
+#'
 #' @details Determine the intensity of each
 #' mutational signature in a tumor, returning the number of mutations
 #' using the mean mutation burden per signature and the std dev
@@ -502,7 +503,8 @@ GenerateSynExposureOneSample <-
            sd.per.sig,
            sig.matrix = NULL,
            distribution = NULL,
-           sig.params = NULL
+           sig.params = NULL,
+           round.exposure = TRUE
   ) {
 
     ## starts with individual tumors, only generate exposures for signatures
@@ -563,8 +565,12 @@ GenerateSynExposureOneSample <-
     }
 
     # Round the mutations due to each signature as non integer values of
-    # mutations is impossible in biology
-    tumor <- round(tumor)
+    # mutations is impossible in biology.
+    #
+    # However, rounding should be disabled to reproduce legacy data sets.
+    if(round.exposure) {
+      tumor <- round(tumor)
+    }
 
     tumor <- as.matrix(tumor)
     names(tumor) <- sig.interest
@@ -630,70 +636,70 @@ GenerateSynExposureOneSample <-
 CreateSynCatalogs <-
   function(signatures, exposures, sample.id.suffix = NULL) {
 
-  # if (any(colSums(exposures) < 1)) warning("Some exposures < 1")
+    # if (any(colSums(exposures) < 1)) warning("Some exposures < 1")
 
-  exposed.sigs <- rownames(exposures)
+    exposed.sigs <- rownames(exposures)
 
-  # It is an error if there are signatures in exposures that are not
-  # in signatures.
-  stopifnot(setequal(setdiff(exposed.sigs, colnames(signatures)), c()))
+    # It is an error if there are signatures in exposures that are not
+    # in signatures.
+    stopifnot(setequal(setdiff(exposed.sigs, colnames(signatures)), c()))
 
-  # VERY IMPORTANT, the next statement guarantees that
-  # the order of signatures in rows of exposures is the same as
-  # the order of columns in signatures. In addition,
-  # it ensure that signatures contains only signatures
-  # that are present in exposures.
-  #
-  signatures <- signatures[ , exposed.sigs]
+    # VERY IMPORTANT, the next statement guarantees that
+    # the order of signatures in rows of exposures is the same as
+    # the order of columns in signatures. In addition,
+    # it ensure that signatures contains only signatures
+    # that are present in exposures.
+    #
+    signatures <- signatures[ , exposed.sigs]
 
-  # TODO(Steve): in a future versions, for each
-  # synthetic tumor, for each signature, accounting
-  # for e mutations in that tumor, sample e mutations
-  # from the signature profile.
-  catalog <- signatures %*% exposures
+    # TODO(Steve): in a future versions, for each
+    # synthetic tumor, for each signature, accounting
+    # for e mutations in that tumor, sample e mutations
+    # from the signature profile.
+    catalog <- signatures %*% exposures
 
-  i.cat <- round(catalog, digits = 0)
+    i.cat <- round(catalog, digits = 0)
 
-  if (any(colSums(i.cat) == 0))
-    warning("Some tumors with 0 mutations")
+    if (any(colSums(i.cat) == 0))
+      warning("Some tumors with 0 mutations")
 
-  if (!is.null(sample.id.suffix)) {
-    newcolnames <-
-      gsub(".", paste0("-", sample.id.suffix, "."),
-           colnames(i.cat), fixed = TRUE)
-    stopifnot(colnames(i.cat == colnames(exposures))) #NEW
-    colnames(i.cat) <- newcolnames
-    colnames(exposures) <- newcolnames
-  }
+    if (!is.null(sample.id.suffix)) {
+      newcolnames <-
+        gsub(".", paste0("-", sample.id.suffix, "."),
+             colnames(i.cat), fixed = TRUE)
+      stopifnot(colnames(i.cat == colnames(exposures))) #NEW
+      colnames(i.cat) <- newcolnames
+      colnames(exposures) <- newcolnames
+    }
 
-  ## Convert ground.truth.catalog and ground.truth.signatures
-  ## into ICAMS acceptable catalogs before outputting the list
-  i.cat <- ICAMS::as.catalog(
-    object = i.cat,
-    # ref.genome = "hg19",
-    # WARNING, there
-    abundance = NULL,
+    ## Convert ground.truth.catalog and ground.truth.signatures
+    ## into ICAMS acceptable catalogs before outputting the list
+    i.cat <- ICAMS::as.catalog(
+      object = i.cat,
+      # ref.genome = "hg19",
+      # WARNING, there
+      abundance = NULL,
       # ICAMS::all.abundance$BSgenome.Hsapiens.1000genomes.hs37d5$genome$`96`,
-    region = "genome",
-    catalog.type = "counts")
+      region = "genome",
+      catalog.type = "counts")
 
-  signatures <- ICAMS::as.catalog(
-    object = signatures,
-    # ref.genome = "hg19",
-    abundance = NULL,
-    #  ICAMS::all.abundance$BSgenome.Hsapiens.1000genomes.hs37d5$genome$`96`,
-    region = "genome",
-    catalog.type = "counts.signature")
+    signatures <- ICAMS::as.catalog(
+      object = signatures,
+      # ref.genome = "hg19",
+      abundance = NULL,
+      #  ICAMS::all.abundance$BSgenome.Hsapiens.1000genomes.hs37d5$genome$`96`,
+      region = "genome",
+      catalog.type = "counts.signature")
 
-  ## Return a list with:
-  ## $ground.truth.catalog: Spectra catalog for the software input
-  ## $ground.truth.signatures: Signatures active in $ground.truth.catalog
-  ## $ground.truth.exposures: Exposures of $ground.truth.signatures in
-  ## $ground.truth.catalog.
-  return(list(ground.truth.catalog = i.cat,
-              ground.truth.signatures = signatures,
-              ground.truth.exposures = exposures))
-  # TODO(Steve) In future, add noise
+    ## Return a list with:
+    ## $ground.truth.catalog: Spectra catalog for the software input
+    ## $ground.truth.signatures: Signatures active in $ground.truth.catalog
+    ## $ground.truth.exposures: Exposures of $ground.truth.signatures in
+    ## $ground.truth.catalog.
+    return(list(ground.truth.catalog = i.cat,
+                ground.truth.signatures = signatures,
+                ground.truth.exposures = exposures))
+    # TODO(Steve) In future, add noise
   }
 
 
@@ -788,6 +794,10 @@ OutDir <- function(file.name) {
 #' @param sample.id.prefix Prefix for sample identifiers for the
 #' synthetic samples.
 #'
+#' @param round.exposure Whether the exposures should be rounded to
+#' an integer. Set as \code{FALSE} only when reproducing legacy data
+#' sets.
+#'
 #' @return A list with elements:
 #' \enumerate{
 #'  \item \code{parms} The parameters inferred from \code{real.exp}.
@@ -797,7 +807,12 @@ OutDir <- function(file.name) {
 #' @keywords internal
 
 GenerateSynAbstract <-
-  function(parms, num.syn.tumors, file.prefix = NULL, sample.id.prefix, froot = NULL) {
+  function(parms,
+           num.syn.tumors,
+           file.prefix = NULL,
+           sample.id.prefix,
+           froot = NULL,
+           round.exposure = FALSE) {
     stopifnot(!is.null(parms))
 
     if (is.null(froot)) {
@@ -808,10 +823,14 @@ GenerateSynAbstract <-
     cat("# Original paramaters\n", file = parm.file)
     suppressWarnings( # Suppress warning on column names on append
       WriteSynSigParams(parms, parm.file, append = TRUE,
-                      col.names = NA))
+                        col.names = NA))
 
     syn.exp <-
-      GenerateSyntheticExposures(parms, num.syn.tumors, sample.id.prefix)
+      GenerateSyntheticExposures(
+        parms,
+        num.syn.tumors,
+        sample.id.prefix,
+        round.exposure = round.exposure)
 
     WriteExposure(syn.exp, paste0(froot, ".generic.syn.exposure.csv"))
 
@@ -966,7 +985,7 @@ CreateAndWriteCatalog <-
       suffix = paste0(".", extra.file.suffix, ".csv")
     }
     write.cat.fn(info$ground.truth.signatures,
-                  paste0(my.dir, "/ground.truth.syn.sigs", suffix))
+                 paste0(my.dir, "/ground.truth.syn.sigs", suffix))
 
     zero.mutation <- base::which(colSums(info$ground.truth.catalog) == 0)
 

@@ -16,7 +16,7 @@
 #' @param overwrite If TRUE, overwrite existing directories and files.
 #'
 #' @return A list with the elements \describe{
-#' \item{expsoures}{The numbers of mutations due to each signature
+#' \item{exposures}{The numbers of mutations due to each signature
 #'    after adding noise}
 #' \item{spectra}{The spectra based on the noisy signature exposures.}
 #' }
@@ -26,7 +26,7 @@
 #' @examples
 #'
 #' # Generate synthetic tumors for Indel (ID) using negative binomial distribution
-#' input.sigs.ID <- PCAWG7::signature$genome$ID
+#' input.sigs.ID <- cosmicsig::COSMIC_v3.2$signature$GRCh37$ID
 #' real.exposures.ID <- PCAWG7::exposure$PCAWG$ID
 #' cancer.types <- PCAWG7::CancerTypes()[1:5]
 #' ID.synthetic.tumors <-
@@ -51,14 +51,14 @@
 #' # Plot the synthetic and noisy catalog and exposures
 #' ICAMS::PlotCatalogToPdf(catalog = ID.synthetic.tumors$ground.truth.catalog,
 #'                         file = file.path(tempdir(), "ID.synthetic.catalog.pdf"))
-#' ICAMSxtra::PlotExposureToPdf(exposure = ID.synthetic.tumors$ground.truth.exposures,
-#'                              file = file.path(tempdir(), "ID.synthetic.exposures.pdf"),
-#'                              cex.xaxis = 0.7)
+#' mSigAct::PlotExposureToPdf(exposure = ID.synthetic.tumors$ground.truth.exposures,
+#'                            file = file.path(tempdir(), "ID.synthetic.exposures.pdf"),
+#'                            cex.xaxis = 0.7)
 #' ICAMS::PlotCatalogToPdf(catalog = ID.noisy.tumors$spectra,
 #'                         file = file.path(tempdir(), "ID.noisy.catalog.pdf"))
-#' ICAMSxtra::PlotExposureToPdf(exposure = ID.noisy.tumors$exposures,
-#'                              file = file.path(tempdir(), "ID.noisy.exposures.pdf"),
-#'                              cex.xaxis = 0.7)
+#' mSigAct::PlotExposureToPdf(exposure = ID.noisy.tumors$exposures,
+#'                            file = file.path(tempdir(), "ID.noisy.exposures.pdf"),
+#'                            cex.xaxis = 0.7)
 #'
 GenerateNoisyTumors <-
   function(seed, dir, input.exposure, signatures,
@@ -78,14 +78,25 @@ GenerateNoisyTumors <-
     # Get the mutation type of the noisy data
     mutation.type <- GetMutationType(sig.name = colnames(signatures))
 
-    ICAMSxtra::WriteExposure(exposure = retval$exposures,
-                             file = file.path(dir,
-                                              paste0("ground.truth.syn.exposures.noisy.neg.binom.size.",
-                                                     n.binom.size, ".", mutation.type, ".csv")))
+    mSigAct::WriteExposure(exposure = retval$exposures,
+                           file = file.path(dir,
+                                            paste0("ground.truth.syn.exposures.noisy.neg.binom.size.",
+                                                   n.binom.size, ".", mutation.type, ".csv")))
     ICAMS::WriteCatalog(catalog = ICAMS::as.catalog(retval$spectra),
                         file = file.path(dir,
                                          paste0("ground.truth.syn.catalog.noisy.neg.binom.size.",
                                                 n.binom.size, ".", mutation.type, ".csv")))
+
+    exposed.sigs <- rownames(retval$exposures)
+
+    # VERY IMPORTANT, the next statement guarantees that
+    # the order of signatures in rows of exposures is the same as
+    # the order of columns in signatures. In addition,
+    # it ensure that signatures contains only signatures
+    # that are present in exposures.
+    #
+    signatures <- signatures[ , exposed.sigs, drop = FALSE]
+
     ICAMS::WriteCatalog(catalog = signatures,
                         file = file.path(dir,
                                          paste0("ground.truth.syn.sigs", ".", mutation.type, ".csv")))

@@ -80,7 +80,7 @@ Generate synthetic tumors based on real exposures in one or more cancer types
 \examples{
 
 # Generate synthetic tumors for DBS78
-input.sigs.DBS78 <- PCAWG7::signature$genome$DBS78
+input.sigs.DBS78 <- cosmicsig::COSMIC_v3.2$signature$GRCh37$DBS78
 real.exposures.DBS78 <- PCAWG7::exposure$PCAWG$DBS78
 cancer.types <- PCAWG7::CancerTypes()[1:5]
 DBS78.synthetic.tumors <-
@@ -94,7 +94,7 @@ DBS78.synthetic.tumors <-
   )
 
 # Generate synthetic tumors for Indel (ID) using negative binomial distribution
-input.sigs.ID <- PCAWG7::signature$genome$ID
+input.sigs.ID <- cosmicsig::COSMIC_v3.2$signature$GRCh37$ID
 real.exposures.ID <- PCAWG7::exposure$PCAWG$ID
 cancer.types <- PCAWG7::CancerTypes()[1:5]
 ID.synthetic.tumors <-
@@ -111,7 +111,7 @@ ID.synthetic.tumors <-
 # Plot the synthetic catalog and exposures
 ICAMS::PlotCatalogToPdf(catalog = DBS78.synthetic.tumors$ground.truth.catalog,
                         file = file.path(tempdir(), "DBS78.synthetic.catalog.pdf"))
-ICAMSxtra::PlotExposureToPdf(exposure = DBS78.synthetic.tumors$ground.truth.exposures,
-                             file = file.path(tempdir(), "DBS78.synthetic.exposures.pdf"),
-                             cex.xaxis = 0.7)
+mSigAct::PlotExposureToPdf(exposure = DBS78.synthetic.tumors$ground.truth.exposures,
+                           file = file.path(tempdir(), "DBS78.synthetic.exposures.pdf"),
+                           cex.xaxis = 0.7)
 }

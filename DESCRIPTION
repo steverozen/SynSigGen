@@ -1,26 +1,31 @@
 Package: SynSigGen
 Type: Package
 Title: Create Catalogs of Synthetic Mutational Spectra
-Version: 1.0.13
+Version: 1.1.1
 Author: Steven G. Rozen, Yang Wu, Nanhai Jiang
 Maintainer: Steven G. Rozen <steverozen@gmail.com>
 Description: Create catalogs of synthetic mutational spectra for assessing the
   performance of mutational signature analysis programs. 'SynSigGen' stands
   for Synthetic Signature Generation.
 License: GPL-3
+URL: https://github.com/steverozen/SynSigGen
+BugReports: https://github.com/steverozen/SynSigGen/issues
 Language: en-US
 Encoding: UTF-8
 LazyData: true
 biocViews:
-Imports: data.table, 
+Imports: cosmicsig,
+    data.table, 
     fitdistrplus, 
     ICAMS, 
     ICAMSxtra, 
+    mSigAct,
     PCAWG7
 Remotes:
-    github::steverozen/ICAMS@master,
-    github::steverozen/ICAMSxtra@master,
-    github::steverozen/PCAWG7@master
+    github::steverozen/ICAMS@*release,
+    github::steverozen/ICAMSxtra@*release,
+    github::steverozen/mSigAct@*release,
+    github::steverozen/PCAWG7@*release
 Depends: R (>= 4.0)
 RoxygenNote: 7.1.2
 Suggests: 

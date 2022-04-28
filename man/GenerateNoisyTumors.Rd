@@ -31,7 +31,7 @@ If \code{NULL}, then use Poisson distribution to do the resampling.}
 }
 \value{
 A list with the elements \describe{
-\item{expsoures}{The numbers of mutations due to each signature
+\item{exposures}{The numbers of mutations due to each signature
    after adding noise}
 \item{spectra}{The spectra based on the noisy signature exposures.}
 }
@@ -42,7 +42,7 @@ Generate noisy tumors from available exposures
 \examples{
 
 # Generate synthetic tumors for Indel (ID) using negative binomial distribution
-input.sigs.ID <- PCAWG7::signature$genome$ID
+input.sigs.ID <- cosmicsig::COSMIC_v3.2$signature$GRCh37$ID
 real.exposures.ID <- PCAWG7::exposure$PCAWG$ID
 cancer.types <- PCAWG7::CancerTypes()[1:5]
 ID.synthetic.tumors <-
@@ -67,13 +67,13 @@ ID.noisy.tumors <-
 # Plot the synthetic and noisy catalog and exposures
 ICAMS::PlotCatalogToPdf(catalog = ID.synthetic.tumors$ground.truth.catalog,
                         file = file.path(tempdir(), "ID.synthetic.catalog.pdf"))
-ICAMSxtra::PlotExposureToPdf(exposure = ID.synthetic.tumors$ground.truth.exposures,
-                             file = file.path(tempdir(), "ID.synthetic.exposures.pdf"),
-                             cex.xaxis = 0.7)
+mSigAct::PlotExposureToPdf(exposure = ID.synthetic.tumors$ground.truth.exposures,
+                           file = file.path(tempdir(), "ID.synthetic.exposures.pdf"),
+                           cex.xaxis = 0.7)
 ICAMS::PlotCatalogToPdf(catalog = ID.noisy.tumors$spectra,
                         file = file.path(tempdir(), "ID.noisy.catalog.pdf"))
-ICAMSxtra::PlotExposureToPdf(exposure = ID.noisy.tumors$exposures,
-                             file = file.path(tempdir(), "ID.noisy.exposures.pdf"),
-                             cex.xaxis = 0.7)
+mSigAct::PlotExposureToPdf(exposure = ID.noisy.tumors$exposures,
+                           file = file.path(tempdir(), "ID.noisy.exposures.pdf"),
+                           cex.xaxis = 0.7)
 
 }

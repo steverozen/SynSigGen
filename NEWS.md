@@ -1,7 +1,37 @@
-## SynSigGen 1.0.13.9000
+## SynSigGen 1.2.0
 ### Fixed
 * Fixed a bug in `GenerateSyntheticExposures` when generating only one synthetic tumor
 with only one signature.
+
+<br> 
+
+## SynSigGen 1.1.1
+### Fixed
+* Fixed a bug in function `GenerateNoisyTumors` to only write signatures that
+are present in exposures to CSV file.
+
+### Added
+* Added new dependency packages `cosmicsig` and `mSigAct`.
+
+<br> 
+
+## SynSigGen 1.1.0
+### Backward compatibility fix
+
+Due to fix in function `GenerateSynExposureOneSample` to round the mutations
+due to each signature in version 1.0.9, the wrapper functions to generate 
+data sets for Nature paper and SBS1-SBS5 paper fail to reproduce the data sets
+used by these papers.
+
+In SynSigGen 1.1.0, we disabled the rounding of mutations due to each signature
+when running generator functions for legacy data sets, so that these legacy data
+sets can be reproduced.
+
+### Updated
+* Updated documentation for argument `sig.params` in function `GenerateSyntheticExposures`.
+
+### Added
+* Added two fields `URL` and `BugReports` in DESCRIPTION.
 
 <br> 
 
