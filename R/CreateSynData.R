@@ -245,7 +245,7 @@ GetSynSigParamsFromExposuresOld <-
 
 #' @title Write key parameters describing exposures due to a signature to a file.
 #'
-#' The parameters written are prevalence, mean(log(exposure)), and sd(log(exposure)).
+#' @details The parameters written are prevalence, mean(log(exposure)), and sd(log(exposure)).
 #'
 #' @param params The parameters to write.
 #'

@@ -89,9 +89,9 @@
 #' # Plot the synthetic catalog and exposures
 #' ICAMS::PlotCatalogToPdf(catalog = DBS78.synthetic.tumors$ground.truth.catalog,
 #'                         file = file.path(tempdir(), "DBS78.synthetic.catalog.pdf"))
-#' mSigAct::PlotExposureToPdf(exposure = DBS78.synthetic.tumors$ground.truth.exposures,
-#'                            file = file.path(tempdir(), "DBS78.synthetic.exposures.pdf"),
-#'                            cex.xaxis = 0.7)
+#' mSigTools::plot_exposure_to_pdf(exposure = DBS78.synthetic.tumors$ground.truth.exposures,
+#'                                 file = file.path(tempdir(), "DBS78.synthetic.exposures.pdf"),
+#'                                 cex.xaxis = 0.7)
 GenerateSyntheticTumors <- function(seed,
                                     dir,
                                     cancer.types,

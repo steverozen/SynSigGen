@@ -2,15 +2,7 @@
 % Please edit documentation in R/CreateSynSBS1SB5Correlated.R
 \name{PlotCorrelationScatterplotForExposures}
 \alias{PlotCorrelationScatterplotForExposures}
-\title{Plot scatter plot for correlation between exposures of two signatures
-
-Plot scatter plot for correlation between exposures of two signatures,
-SBS1 and SBS5 in this study.
-
-\code{PlotCorrelationScatterplotForExposures}
-is a wrapper around \code{\link{PlotCorrelationScatterplot}}.
-It lets \code{exposure.counts <-} the exposure matrix,
-and will draw a scatterplot for exposures of two signatures.}
+\title{Plot scatter plot for correlation between exposures of two signatures}
 \usage{
 PlotCorrelationScatterplotForExposures(
   pdf.filename,
@@ -49,7 +41,8 @@ Default: NULL}
 }
 \description{
 Plot scatter plot for correlation between exposures of two signatures
-
+}
+\details{
 Plot scatter plot for correlation between exposures of two signatures,
 SBS1 and SBS5 in this study.
 

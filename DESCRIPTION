@@ -1,7 +1,7 @@
 Package: SynSigGen
 Type: Package
 Title: Create Catalogs of Synthetic Mutational Spectra
-Version: 1.2.0
+Version: 1.2.1
 Author: Steven G. Rozen, Yang Wu, Nanhai Jiang
 Maintainer: Steven G. Rozen <steverozen@gmail.com>
 Description: Create catalogs of synthetic mutational spectra for assessing the
@@ -14,12 +14,11 @@ Language: en-US
 Encoding: UTF-8
 LazyData: true
 biocViews:
-Imports: cosmicsig,
-    data.table, 
+Imports: data.table, 
     fitdistrplus, 
     ICAMS, 
     ICAMSxtra, 
-    mSigAct,
+    mSigTools,
     PCAWG7
 Remotes:
     github::steverozen/ICAMS@*release,
@@ -27,8 +26,9 @@ Remotes:
     github::steverozen/mSigAct@*release,
     github::steverozen/PCAWG7@*release
 Depends: R (>= 4.0)
-RoxygenNote: 7.1.2
-Suggests: 
+RoxygenNote: 7.2.1
+Suggests:
+    cosmicsig,
     testthat,
     knitr,
     rmarkdown,

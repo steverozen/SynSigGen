@@ -2,9 +2,7 @@
 % Please edit documentation in R/CreateSynData.R
 \name{WriteSynSigParams}
 \alias{WriteSynSigParams}
-\title{Write key parameters describing exposures due to a signature to a file.
-
-The parameters written are prevalence, mean(log(exposure)), and sd(log(exposure)).}
+\title{Write key parameters describing exposures due to a signature to a file.}
 \usage{
 WriteSynSigParams(
   params,
@@ -25,6 +23,7 @@ exists.}
 }
 \description{
 Write key parameters describing exposures due to a signature to a file.
-
+}
+\details{
 The parameters written are prevalence, mean(log(exposure)), and sd(log(exposure)).
 }

@@ -2,10 +2,7 @@
 % Please edit documentation in R/CreateSynSBS1SB5Correlated.R
 \name{GenSBS1SBS5ExposureOneTumor}
 \alias{GenSBS1SBS5ExposureOneTumor}
-\title{Generate correlated exposures for one tumor
-
-Function to generate exposure of two correlated signatures
-(Example: SBS1 and SBS5) for ONE synthetic tumor.}
+\title{Generate correlated exposures for one tumor}
 \usage{
 GenSBS1SBS5ExposureOneTumor(
   tumor.name = "TwoCorreSigsGen::1",
@@ -60,7 +57,8 @@ induced by \code{correlated.signature} in each tumor.}
 }
 \description{
 Generate correlated exposures for one tumor
-
+}
+\details{
 Function to generate exposure of two correlated signatures
 (Example: SBS1 and SBS5) for ONE synthetic tumor.
 }

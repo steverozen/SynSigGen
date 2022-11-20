@@ -56,7 +56,7 @@ OLD.SplitCatCOMPOSITE <- function(catalog) {
 
   # Read COMPOSITE catalog. Either from file or matrix-like
   stopifnot(is.character(catalog) | is.data.frame(catalog) | is.matrix(catalog))
-  if (class(catalog) == "character")
+  if (inherits(catalog, "character"))
     catMatrix <- ReadCatCOMPOSITE(catalog)
   else
     catMatrix <- catalog

@@ -7,7 +7,7 @@
 
 #' @title Generate correlated exposures for one tumor
 #'
-#' Function to generate exposure of two correlated signatures
+#' @details Function to generate exposure of two correlated signatures
 #' (Example: SBS1 and SBS5) for ONE synthetic tumor.
 #'
 #' @param tumor.name Name of synthetic tumor you want to generate.
@@ -175,7 +175,7 @@ GenSBS1SBS5ExposureOneTumor <- function(
 
 #' @title Generate correlated exposures for multiple tumors
 #'
-#' Wrapper function around \code{\link{GenSBS1SBS5ExposureOneTumor}}:
+#' @details Wrapper function around \code{\link{GenSBS1SBS5ExposureOneTumor}}:
 #' A function to generate exposure of two correlated signatures
 #' (Example: SBS1 and SBS5) for \code{sample.number} (e.g. 500) synthetic tumors.
 #'
@@ -298,8 +298,7 @@ GenSBS1SBS5Exposure <- function(
 
 #' @title Plot scatter plot for correlation between two vectors.
 #'
-#'
-#' \code{PlotCorrelationScatterplot} is a wrapper around \code{graphics::plot()},
+#' @details \code{PlotCorrelationScatterplot} is a wrapper around \code{graphics::plot()},
 #' and a function to plot the correlation between two vectors,
 #' \code{x} and \code{y}. These vectors are expected to be
 #' exposures of two signatures.
@@ -371,7 +370,7 @@ PlotCorrelationScatterplot <- function(
 
 #' @title Plot scatter plot for correlation between exposures of two signatures
 #'
-#' Plot scatter plot for correlation between exposures of two signatures,
+#' @details Plot scatter plot for correlation between exposures of two signatures,
 #' SBS1 and SBS5 in this study.
 #'
 #' \code{PlotCorrelationScatterplotForExposures}

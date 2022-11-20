@@ -2,15 +2,7 @@
 % Please edit documentation in R/CreateSynSBS1SB5Correlated.R
 \name{GenSBS1SBS5Exposure}
 \alias{GenSBS1SBS5Exposure}
-\title{Generate correlated exposures for multiple tumors
-
-Wrapper function around \code{\link{GenSBS1SBS5ExposureOneTumor}}:
-A function to generate exposure of two correlated signatures
-(Example: SBS1 and SBS5) for \code{sample.number} (e.g. 500) synthetic tumors.
-
-NOTE: \code{pearson.r.2.lower.thres} and \code{pearson.r2.higher.thres}
-are used to constraint the Pearson's R^2 of mutation burdens of two signatures
-in multiple tumors.}
+\title{Generate correlated exposures for multiple tumors}
 \usage{
 GenSBS1SBS5Exposure(
   main.signature = "SBS5",
@@ -79,7 +71,8 @@ of two signatures in \code{sample.number} tumors.}
 }
 \description{
 Generate correlated exposures for multiple tumors
-
+}
+\details{
 Wrapper function around \code{\link{GenSBS1SBS5ExposureOneTumor}}:
 A function to generate exposure of two correlated signatures
 (Example: SBS1 and SBS5) for \code{sample.number} (e.g. 500) synthetic tumors.

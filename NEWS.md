@@ -1,3 +1,10 @@
+## SynSigGen 1.2.1
+### Fixed
+* Changed functions that were moved from mSigAct to mSigTools.
+* Minor documentation fixes and fixed use of == to test class.
+
+<br>
+
 ## SynSigGen 1.2.0
 ### Fixed
 * Fixed a bug in `GenerateSyntheticExposures` when generating only one synthetic tumor

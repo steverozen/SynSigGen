@@ -2,17 +2,7 @@
 % Please edit documentation in R/CreateSynSBS1SB5Correlated.R
 \name{PlotCorrelationScatterplot}
 \alias{PlotCorrelationScatterplot}
-\title{Plot scatter plot for correlation between two vectors.
-
-
-\code{PlotCorrelationScatterplot} is a wrapper around \code{graphics::plot()},
-and a function to plot the correlation between two vectors,
-\code{x} and \code{y}. These vectors are expected to be
-exposures of two signatures.
-
-It will draw a scatterplot, and it will also print information
-onto the plot, including correlation between \code{x} and \code{y},
-mean and stdev of \code{x} and \code{y}, etc.}
+\title{Plot scatter plot for correlation between two vectors.}
 \usage{
 PlotCorrelationScatterplot(
   x,
@@ -46,8 +36,8 @@ Default: NULL}
 }
 \description{
 Plot scatter plot for correlation between two vectors.
-
-
+}
+\details{
 \code{PlotCorrelationScatterplot} is a wrapper around \code{graphics::plot()},
 and a function to plot the correlation between two vectors,
 \code{x} and \code{y}. These vectors are expected to be
