@@ -23,10 +23,9 @@ Imports: data.table,
 Remotes:
     github::steverozen/ICAMS@*release,
     github::steverozen/ICAMSxtra@*release,
-    github::steverozen/mSigAct@*release,
     github::steverozen/PCAWG7@*release
 Depends: R (>= 4.0)
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.2
 Suggests:
     cosmicsig,
     testthat,

@@ -1096,35 +1096,90 @@ NewCreateAndWriteCatalog <-
 
 AddNoise <- function(input.exposure, signatures, n.binom.size = 100) {
 
-  if (is.data.frame(input.exposure)) {
-    input.exposure <- as.matrix(input.exposure)
+  retval <- AddNoiseInternal(input.exposure = input.exposure,
+                             signatures = signatures,
+                             n.binom.size = n.binom.size)
+
+  exposures <- retval$exposures
+  spectra <- retval$spectra
+
+  # Check whether there is any synthetic sample which has 0 mutation after
+  # adding noise
+  to.check <- which(colSums(spectra) == 0)
+
+  if (length(to.check) == 0) {
+    return(list(exposures = exposures, spectra = spectra))
+  } else {
+    xx <- names(to.check)
+    # Add noise to xx using original input.exposure and signatures
+    # again until the noisy spectra has mutation > 0
+    yy <- lapply(xx, FUN = function(x) {
+      GetNonZeroNoisySample(one.sample = x,
+                            input.exposure = input.exposure,
+                            signatures = signatures,
+                            n.binom.size = n.binom.size)
+    })
+
+    exposure.to.change <- do.call(cbind, lapply(yy, FUN = "[[", 1))
+    spectra.to.change <- do.call(cbind, lapply(yy, FUN = "[[", 2))
+    exposures[, xx] <- exposure.to.change
+    spectra[, xx] <- spectra.to.change
+    return(list(exposures = exposures, spectra = spectra))
   }
-  stopifnot(is.numeric(input.exposure))
-  exposures <- input.exposure
-  exposures[ , ] <- NA
+}
 
-  spectra <- matrix(0, ncol = ncol(input.exposure), nrow = nrow(signatures))
-  rownames(spectra) <- rownames(signatures)
-  colnames(spectra) <- colnames(input.exposure)
-
-  for (sig in rownames(input.exposure)) {
-
-    partial.spec <- signatures[ , sig] %*% input.exposure[sig, , drop = FALSE]
-    # Resample (add noise) to the "partial spectra" due to sig
-    if (is.null(n.binom.size)) {
-      noised.vec <-
-        rpois(n = length(partial.spec), lambda = partial.spec)
-    } else {
-      noised.vec <-
-        rnbinom(n = length(partial.spec), size = n.binom.size, mu = partial.spec)
+AddNoiseInternal <-
+  function(input.exposure, signatures, n.binom.size = 100) {
+    if (is.data.frame(input.exposure)) {
+      input.exposure <- as.matrix(input.exposure)
     }
-    # Turn the vector back into a matrix
-    noisy.partial.spec <- matrix(noised.vec, nrow = nrow(partial.spec))
-    exposures[sig, ] <- colSums(noisy.partial.spec)
-    spectra <- spectra + noisy.partial.spec
+    stopifnot(is.numeric(input.exposure))
+    exposures <- input.exposure
+    exposures[ , ] <- NA
 
+    spectra <- matrix(0, ncol = ncol(input.exposure), nrow = nrow(signatures))
+    rownames(spectra) <- rownames(signatures)
+    colnames(spectra) <- colnames(input.exposure)
+
+    for (sig in rownames(input.exposure)) {
+
+      partial.spec <- signatures[ , sig] %*% input.exposure[sig, , drop = FALSE]
+      # Resample (add noise) to the "partial spectra" due to sig
+      if (is.null(n.binom.size)) {
+        noised.vec <-
+          rpois(n = length(partial.spec), lambda = partial.spec)
+      } else {
+        noised.vec <-
+          rnbinom(n = length(partial.spec), size = n.binom.size, mu = partial.spec)
+      }
+      # Turn the vector back into a matrix
+      noisy.partial.spec <- matrix(noised.vec, nrow = nrow(partial.spec))
+      exposures[sig, ] <- colSums(noisy.partial.spec)
+      spectra <- spectra + noisy.partial.spec
+    }
+
+    return(list(exposures = exposures, spectra = spectra))
   }
 
-  return(list(exposures = exposures, spectra = spectra))
+#' Add noise to one sample until the final spectrum has mutation > 0
+#'
+#' @param one.sample Name of one sample to add noise.
+#'
+#' @inheritParams AddNoise
+#'
+GetNonZeroNoisySample <-
+  function(one.sample, input.exposure, signatures, n.binom.size = 100) {
+  input.exposure <- input.exposure[, one.sample, drop = FALSE]
 
+  spectra <- matrix(0, ncol = 1, nrow = nrow(signatures),
+                    dimnames = list(rownames(signatures), one.sample))
+
+  while (colSums(spectra) == 0) {
+    retval <- AddNoiseInternal(input.exposure = input.exposure,
+                               signatures = signatures,
+                               n.binom.size = n.binom.size)
+    spectra <- retval$spectra
+  }
+
+  return(retval)
 }

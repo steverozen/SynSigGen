@@ -35,7 +35,7 @@ Install from GitHub with the R command line:
 
 ``` r
 install.packages("remotes")
-remotes::install_github(repo = "steverozen/SynSigGen", ref = "1.1.1-branch")
+remotes::install_github(repo = "steverozen/SynSigGen", ref = "1.2.1-branch")
 ```
 
 <br>
@@ -116,4 +116,4 @@ repository requires SynSigGen \>= 1.1.1 as a dependency.
 
 ## Reference manual
 
-<https://github.com/steverozen/SynSigGen/blob/1.2.0-branch/data-raw/SynSigGen_1.2.0.pdf>
+<https://github.com/steverozen/SynSigGen/blob/1.2.1-branch/data-raw/SynSigGen_1.2.1.pdf>

@@ -3,6 +3,12 @@
 * Changed functions that were moved from mSigAct to mSigTools.
 * Minor documentation fixes and fixed use of == to test class.
 
+### Added
+* Added new internal function `GetNonZeroNoisySample` to add noise to one sample until the final spectrum has mutation > 0.
+
+### Updated
+* Updated exported function `AddNoise` to make sure the samples in the final noisy spectra all have mutations > 0.
+
 <br>
 
 ## SynSigGen 1.2.0
