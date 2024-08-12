@@ -1,3 +1,7 @@
+## SynSigGen 1.2.2
+### Fixed
+* Fixed a bug in function `GenerateSyntheticTumorsFromSigParams` when there is only synthetic tumor to generate.
+
 ## SynSigGen 1.2.1
 ### Fixed
 * Changed functions that were moved from mSigAct to mSigTools.

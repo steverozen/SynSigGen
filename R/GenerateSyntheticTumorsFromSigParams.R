@@ -180,7 +180,7 @@ GenerateSyntheticTumorsFromSigParams <- function(seed,
 
   # Sort the signatures according to number ID
   merged.exposures.sorted.rowname <-
-    merged.exposures[SortSigId(rownames(merged.exposures)), ]
+    merged.exposures[SortSigId(rownames(merged.exposures)), , drop = FALSE]
 
   # Write parameters into files
   froot <- file.path(dir, "parameters")
